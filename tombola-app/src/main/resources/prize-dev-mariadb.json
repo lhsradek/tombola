@@ -1,0 +1,72 @@
+{
+	"prizes": [
+		{
+			"prize_name": "Kanec",
+			"cnt": 1
+		},
+		{
+			"prize_name": "Zajíc",
+			"cnt": 3
+		},
+		{
+			"prize_name": "Zájezd",
+			"cnt": 4
+		},
+		{
+			"prize_name": "Telefon",
+			"cnt": 4
+		},
+		{
+			"prize_name": "Outdoorové hodinky",
+			"cnt": 8
+		},
+		{
+			"prize_name": "Porcelánový servis",
+			"cnt": 5
+		},
+		{
+			"prize_name": "Květinový koš",
+			"cnt": 6
+		},
+		{
+			"prize_name": "Pytel brambor",
+			"cnt": 7
+		},
+		{
+			"prize_name": "Pytel cibule",
+			"cnt": 7
+		},
+		{
+			"prize_name": "Hasící přístroj",
+			"cnt": 7
+		},
+		{
+			"prize_name": "Váza",
+			"cnt": 8
+		},
+		{
+			"prize_name": "Sauna",
+			"cnt": 9
+		},
+		{
+			"prize_name": "Kuchyňské hodiny",
+			"cnt": 10
+		},
+		{
+			"prize_name": "Pláštěnka",
+			"cnt": 11
+		},
+		{
+			"prize_name": "Kniha",
+			"cnt": 12
+		},
+		{
+			"prize_name": "Sportovní prádlo",
+			"cnt": 15
+		},
+		{
+			"prize_name": "Kalendář",
+			"cnt": 15
+		}
+	]
+}
