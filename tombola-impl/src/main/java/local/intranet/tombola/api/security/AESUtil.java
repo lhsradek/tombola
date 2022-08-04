@@ -37,39 +37,14 @@ public class AESUtil {
 	private static final String AESUTIL_AES_PADDING = "AES/CBC/PKCS5Padding";
 	private static final String AESUTIL_PBKDF2_WITH_HMAC_SHA256 = "PBKDF2WithHmacSHA256";
 
-    /**
-     * 
-     * Encrypt
-     * 
-     * @param input      {@link String}
-     * @param key        {@link SecretKey}
-     * @param iv         {@link IvParameterSpec}
-     * @return {@link String}
-     * @throws NoSuchPaddingException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidAlgorithmParameterException
-     * @throws InvalidKeyException
-     * @throws BadPaddingException
-     * @throws IllegalBlockSizeException
-     */
-	public static String encrypt(String input, SecretKey key, IvParameterSpec iv) 
-    		throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
-    		InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-        Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING);
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-        byte[] cipherText = cipher.doFinal(input.getBytes());
-        String ret = Base64.getEncoder().encodeToString(cipherText); 
-        return ret;
-    }
-
-	/**
+        /**
 	 * 
-	 * Decrypt
+	 * Encrypt
 	 * 
-	 * @param cipherText {@link String}
-     * @param key        {@link SecretKey}
-     * @param iv         {@link IvParameterSpec}
-     * @return {@link String}
+	 * @param input      {@link String}
+	 * @param key        {@link SecretKey}
+	 * @param iv         {@link IvParameterSpec}
+	 * @return {@link String}
 	 * @throws NoSuchPaddingException
 	 * @throws NoSuchAlgorithmException
 	 * @throws InvalidAlgorithmParameterException
@@ -77,77 +52,102 @@ public class AESUtil {
 	 * @throws BadPaddingException
 	 * @throws IllegalBlockSizeException
 	 */
-    public static String decrypt(String cipherText, SecretKey key, IvParameterSpec iv)
+	public static String encrypt(String input, SecretKey key, IvParameterSpec iv) 
     		throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
     		InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-    	Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING.toUpperCase());
-        cipher.init(Cipher.DECRYPT_MODE, key, iv);
-        byte[] ret = cipher.doFinal(Base64.getDecoder().decode(cipherText));
-        return new String(ret);
-    }
+        	Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING);
+        	cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        	byte[] cipherText = cipher.doFinal(input.getBytes());
+        	String ret = Base64.getEncoder().encodeToString(cipherText); 
+        	return ret;
+    	}
 
-    /**
-     * 
-     * Generate key
-     * 
-     * @param n (128, 192 a 256) 
-     * @return {@link SecretKey}
-     * @throws NoSuchAlgorithmException
-     */
-    public static SecretKey generateKey(int n) {
+	/**
+	 * 
+	 * Decrypt
+	 * 
+	 * @param cipherText {@link String}
+	 * @param key        {@link SecretKey}
+	 * @param iv         {@link IvParameterSpec}
+	 * @return {@link String}
+	 * @throws NoSuchPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidAlgorithmParameterException
+	 * @throws InvalidKeyException
+	 * @throws BadPaddingException
+	 * @throws IllegalBlockSizeException
+	 */
+	public static String decrypt(String cipherText, SecretKey key, IvParameterSpec iv)
+    		throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
+    		InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    		Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING.toUpperCase());
+        	cipher.init(Cipher.DECRYPT_MODE, key, iv);
+        	byte[] ret = cipher.doFinal(Base64.getDecoder().decode(cipherText));
+        	return new String(ret);
+	}
+
+	/**
+	 * 
+	 * Generate key
+     	 * 
+       	 * @param n (128, 192 a 256) 
+         * @return {@link SecretKey}
+     	 * @throws NoSuchAlgorithmException
+	 */
+    	public static SecretKey generateKey(int n) {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(AESUTIL_AES);
-	        keyGenerator.init(n);
-	        SecretKey ret = keyGenerator.generateKey();
-	        return ret;
+			keyGenerator.init(n);
+	        	SecretKey ret = keyGenerator.generateKey();
+	        	return ret;
 		} catch (NoSuchAlgorithmException e) {
 			return null;
 		}
-    }
+    	}
     
-    /**
-     * 
-     * Generate salt
-     * 
-     * @return {@link String}
-     */
-    public static String generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte ret[] = new byte[20];
-        random.nextBytes(ret);
-        return new String(ret);
-    }
+	/**
+         * 
+         * Generate salt
+         * 
+         * @return {@link String}
+         */
+    	public static String generateSalt() {
+        	SecureRandom random = new SecureRandom();
+        	byte ret[] = new byte[20];
+        	random.nextBytes(ret);
+        	return new String(ret);
+	}
 
-    /**
-     * 
-     * Get key from password
-     * 
-     * @param password {@link String}
-     * @param salt     {@link String}
-     * @return {@link SecretKey}
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
-     */
-    public static SecretKey getKeyFromPassword(String password, String salt)
+	/**
+	 * 
+     	 * Get key from password
+     	 * 
+         * @param password {@link String}
+         * @param salt     {@link String}
+         * @return {@link SecretKey}
+         * @throws NoSuchAlgorithmException
+         * @throws InvalidKeySpecException
+         */
+	public static SecretKey getKeyFromPassword(String password, String salt)
     		throws NoSuchAlgorithmException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance(AESUTIL_PBKDF2_WITH_HMAC_SHA256);
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
-        SecretKey ret = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), AESUTIL_AES);
-        return ret;
-    }
+        	SecretKeyFactory factory = SecretKeyFactory.getInstance(AESUTIL_PBKDF2_WITH_HMAC_SHA256);
+        	KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
+        	SecretKey ret = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), AESUTIL_AES);
+        	return ret;
+	}
 
-    /**
-     * 
-     * Generate Iv
-     * 
-     * @return {@link IvParameterSpec}
-     */
-    public static IvParameterSpec generateIv() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-        IvParameterSpec ret = new IvParameterSpec(iv); 
-        return ret;
-    }
+	/**
+     	 * 
+         * Generate Iv
+     	 * 
+     	 * @return {@link IvParameterSpec}
+     	 */
+	public static IvParameterSpec generateIv() {
+        	byte[] iv = new byte[16];
+        	new SecureRandom().nextBytes(iv);
+        	IvParameterSpec ret = new IvParameterSpec(iv); 
+        	return ret;
+    	}
 
 	/**
 	 * 
@@ -158,10 +158,10 @@ public class AESUtil {
 	 */
 	public static String getBase64(String data) {
 		String ret = "";
-        if (data != null) {
-        	ret = new String(Base64.getDecoder().decode(data));
-        }
-        return ret;
+        	if (data != null) {
+        		ret = new String(Base64.getDecoder().decode(data));
+        	}
+        	return ret;
 	}
 
 	/**
@@ -172,9 +172,9 @@ public class AESUtil {
 	 * @return base64
 	 */
 	public static String setBase64(String data) {
-        String ret = new String(Base64.getEncoder()
+        	String ret = new String(Base64.getEncoder()
         		.encode(data.getBytes(Charset.forName("UTF-8"))));
-        return ret;
+        	return ret;
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class AESUtil {
 		if (data != null) {
 			ret = new String(Hex.decode(data));
 		}
-        return ret;
+        	return ret;
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class AESUtil {
 	 * @return hex
 	 */
 	public static String setHex(String data) {
-        String ret = new String(Hex.encode(data.getBytes(Charset.forName("UTF-8"))));
+        	String ret = new String(Hex.encode(data.getBytes(Charset.forName("UTF-8"))));
 		return ret;
 	}
 	
