@@ -22,31 +22,25 @@ import local.intranet.tombola.api.domain.DefaultFieldLengths;
 
 /**
  * 
- * {@link Role} is entity for CRUD with {@link local.intranet.tombola.api.model.repository.RoleRepository}
+ * {@link Role} is entity for CRUD with
+ * {@link local.intranet.tombola.api.model.repository.RoleRepository}
  * 
  * @author Radek Kádner
  *
  */
 @Entity
-@Table(name = "tombola_role" /* ,
-	indexes = {
-		// @Index(name = "tombola_role_pkey", columnList = "id")},
-		@Index(columnList = "id")
-	},
-	uniqueConstraints = {
-		// @UniqueConstraint(name = "tombola_role_name_uk", columnNames = "role_name")
-		@UniqueConstraint(columnNames = { "role_name" })
-	} */
+@Table(name = "tombola_role" /*
+								 * , indexes = { // @Index(name = "tombola_role_pkey", columnList = "id")},
+								 * 
+								 * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
+								 * = "tombola_role_name_uk", columnNames = "role_name")
+								 * 
+								 * @UniqueConstraint(columnNames = { "role_name" }) }
+								 */
 )
-@GenericGenerator(
-        name = "RoleGenerator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-                @Parameter(name = "sequence_name", value = "ROLE_SEQUENCE"),
-                @Parameter(name = "initial_value", value = "1"),
-                @Parameter(name = "increment_size", value = "1")
-        }
-)
+@GenericGenerator(name = "RoleGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+		@Parameter(name = "sequence_name", value = "ROLE_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),
+		@Parameter(name = "increment_size", value = "1") })
 public class Role {
 
 	/**
@@ -78,7 +72,7 @@ public class Role {
 		setRoleName(roleName);
 		setEnabled(true);
 	}
-	
+
 	/**
 	 * Constructor for {@link local.intranet.tombola.api.config.ApplicationConfig}
 	 * 
@@ -89,35 +83,38 @@ public class Role {
 		setRoleName(roleName);
 		setEnabled(enabled);
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-    @NotNull
+
+	@NotNull
 	@Column(name = "role_name", nullable = false)
-    @Size(max = DefaultFieldLengths.DEFAULT_NAME)
-    private String roleName;
+	@Size(max = DefaultFieldLengths.DEFAULT_NAME)
+	private String roleName;
 
 	private Boolean enabled;
-	
-    @ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tombola_user_role" /*,
-		/* indexes = {
-				// @Index(name = "tombola_user_role_user_id", columnList = "user_id"),
-				@Index(columnList = "user_id"),
-				// @Index(name = "tombola_user_role_role_id", columnList = "role_id")
-				@Index(columnList = "role_id")
-		},
-		uniqueConstraints = {
-				// @UniqueConstraint(name = "tombola_user_role_uk", columnNames = {"user_id", "role_id"})},
-		 		@UniqueConstraint(columnNames = {"user_id", "role_id"})
-		},
-		joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"), 
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName="id")  */
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tombola_user_role" /*
+											 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList
+											 * = "user_id"),
+											 * 
+											 * @Index(columnList = "user_id"), // @Index(name =
+											 * "tombola_user_role_role_id", columnList = "role_id")
+											 * 
+											 * @Index(columnList = "role_id") }, uniqueConstraints = {
+											 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames =
+											 * {"user_id", "role_id"})},
+											 * 
+											 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
+											 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
+											 * inverseJoinColumns = @JoinColumn(name = "role_id",
+											 * referencedColumnName="id")
+											 */
 	)
 	private Set<User> user = new HashSet<>();
-    
+
 	/**
 	 * 
 	 * Get id
@@ -206,5 +203,5 @@ public class Role {
 	public String toString() {
 		return "Role [id=" + id + ", roleName=" + roleName + ", enabled=" + enabled + ", user=" + user + "]";
 	}
-	
+
 }

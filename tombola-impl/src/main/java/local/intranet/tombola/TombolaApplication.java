@@ -25,9 +25,9 @@ import local.intranet.tombola.api.controller.StatusController;
 
 /**
  * 
- * {@link TombolaApplication} extends SpringBootServletInitializer for Tombola API
- * that it uses controllers in {@link local.intranet.tombola.api.controller} and
- * early services in {@link local.intranet.tombola.api.service}
+ * {@link TombolaApplication} extends SpringBootServletInitializer for Tombola
+ * API that it uses controllers in {@link local.intranet.tombola.api.controller}
+ * and early services in {@link local.intranet.tombola.api.service}
  * <p>
  * Security and configuration is defined in
  * {@link local.intranet.tombola.api.security.SecurityConfig} and
@@ -48,8 +48,7 @@ import local.intranet.tombola.api.controller.StatusController;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAutoConfiguration
-@EnableRedisHttpSession(
-		maxInactiveIntervalInSeconds = 120, cleanupCron = "0 */5 * * * *", redisNamespace = "spring:session:tombola")
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 120, cleanupCron = "0 */5 * * * *", redisNamespace = "spring:session:tombola")
 public class TombolaApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(TombolaApplication.class);
@@ -59,7 +58,7 @@ public class TombolaApplication extends SpringBootServletInitializer implements 
 	 * Log API beans = false
 	 */
 	public final Boolean logApiBeans = false;
-	
+
 	private static final String ENTERING_APPLICATION = "Entering application.";
 
 	/**
@@ -69,10 +68,10 @@ public class TombolaApplication extends SpringBootServletInitializer implements 
 	 * Comment is from overrides
 	 * {@link org.springframework.boot.web.servlet.support.SpringBootServletInitializer#configure}
 	 * <p>
-	 * Configure the application. Normally all you would need to do is to add sources
-	 * (e.g. config classes) because other settings have sensible defaults. You might
-	 * choose (for instance) to add default command line arguments, or set an active
-	 * Spring profile.
+	 * Configure the application. Normally all you would need to do is to add
+	 * sources (e.g. config classes) because other settings have sensible defaults.
+	 * You might choose (for instance) to add default command line arguments, or set
+	 * an active Spring profile.
 	 * 
 	 * @param builder a builder for the application context
 	 * @return the application builder
@@ -85,22 +84,23 @@ public class TombolaApplication extends SpringBootServletInitializer implements 
 		builder.bannerMode(Banner.Mode.OFF);
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * On startup
 	 * <p>
 	 * For {@link #onStartup} if logApiBeans == true
 	 * <p>
-	 * Comment is from overrides {@link org.springframework.web.WebApplicationInitializer#onStartup}
+	 * Comment is from overrides
+	 * {@link org.springframework.web.WebApplicationInitializer#onStartup}
 	 * <p>
-	 * Configure the given {@link ServletContext} with any servlets, filters, listeners
-	 * context-params and attributes necessary for initializing this web application. See
-	 * examples {@linkplain WebApplicationInitializer above}.
+	 * Configure the given {@link ServletContext} with any servlets, filters,
+	 * listeners context-params and attributes necessary for initializing this web
+	 * application. See examples {@linkplain WebApplicationInitializer above}.
 	 * 
 	 * @param servletContext the {@code ServletContext} to initialize
 	 * @throws ServletException if any call against the given {@code ServletContext}
-	 * throws a {@code ServletException}
+	 *                          throws a {@code ServletException}
 	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
@@ -145,22 +145,20 @@ public class TombolaApplication extends SpringBootServletInitializer implements 
 	 * For {@link #onStartup} if logApiBeans == true
 	 * 
 	 * @param method {@link Method}
-	 * @param cl {@link Class}&lt;? extends {@link Object}&gt;
+	 * @param cl     {@link Class}&lt;? extends {@link Object}&gt;
 	 */
 	protected void logAPIBeans(Method method, Class<? extends Object> cl) {
- 		if (StatusController.isBeanSuitable(cl)) {
+		if (StatusController.isBeanSuitable(cl)) {
 			String name = method.getName();
-	 		if (StatusController.isNiceBeanName(true, name)) {
- 				String g = (method == null) ? "" : method.getReturnType().getSimpleName();
- 	 			List<Type> p = (method == null) ?
- 	 					Arrays.asList() : Arrays.asList(method.getGenericParameterTypes());
- 	 			if (p.size() > 0) {
- 	 				LOG.debug("LogAPIBeans bean:'{}' name:'{}' return:'{}' types:'{}'",
- 	 						cl.getSimpleName(), name, g, p);
- 	 			} else {
- 	 				LOG.debug("LogAPIBeans bean:'{}' name:'{}' return:'{}'", cl.getSimpleName(), name, g);
- 	 			}
-	 		}
+			if (StatusController.isNiceBeanName(true, name)) {
+				String g = (method == null) ? "" : method.getReturnType().getSimpleName();
+				List<Type> p = (method == null) ? Arrays.asList() : Arrays.asList(method.getGenericParameterTypes());
+				if (p.size() > 0) {
+					LOG.debug("LogAPIBeans bean:'{}' name:'{}' return:'{}' types:'{}'", cl.getSimpleName(), name, g, p);
+				} else {
+					LOG.debug("LogAPIBeans bean:'{}' name:'{}' return:'{}'", cl.getSimpleName(), name, g);
+				}
+			}
 		}
 	}
 

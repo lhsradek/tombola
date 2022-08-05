@@ -30,17 +30,17 @@ import local.intranet.tombola.api.service.UserService;
 
 /**
  * 
- * {@link TombolaController} for {@link local.intranet.tombola.TombolaApplication} It's for
- * charge of rest pages
+ * {@link TombolaController} for
+ * {@link local.intranet.tombola.TombolaApplication} It's for charge of rest
+ * pages
  * 
  * @author Radek Kádner
  * 
  */
 @RestController
 @ConditionalOnExpression("${tombola.app.tombolaRest}")
-@RequestMapping(
-		value = "${spring.data.rest.basePath:/api}" + TombolaController.INFO_VERSION_PATH +
-		TombolaController.INFO_BASE_INFO)
+@RequestMapping(value = "${spring.data.rest.basePath:/api}" + TombolaController.INFO_VERSION_PATH
+		+ TombolaController.INFO_BASE_INFO)
 @Tag(name = TombolaController.TAG)
 public class TombolaController {
 
@@ -66,41 +66,41 @@ public class TombolaController {
 
 	@Value("${tombola.app.auditCnt:50}")
 	private int auditCnt;
-	
+
 	@Autowired
 	private TombolaService tombolaService;
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private StatusController statusController;
-	
+
 	/**
 	 *
 	 * Get prize
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#getPrize}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getPrize"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getPrize</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getPrize" target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getPrize</a>
 	 * 
 	 * @param prizeId {@link Long}
 	 * @return {@link List}&lt;{@link PrizeInfo}&gt;
 	 */
 	@GetMapping(value = "/prize/prizeId/{prizeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getPrize", summary = "Get Prize Audit - Swagger",
-		description = "Get Prize Audit\n\n" +
-			"This method is calling TombolaService.getPrize and used org.hibernate.envers.query.AuditQuery.\n" +
-			"ticket: [ticketId, revisionNumber, revisionType]\n\n" +
-	        "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-	        "getPrize(java.lang.Long)\" " +
-	        "target=\"_blank\">TombolaController.getPrize</a>",
-	    tags = { TombolaController.TAG })
+	@Operation(operationId = "getPrize", summary = "Get Prize Audit - Swagger", description = "Get Prize Audit\n\n"
+			+ "This method is calling TombolaService.getPrize and used org.hibernate.envers.query.AuditQuery.\n"
+			+ "ticket: [ticketId, revisionNumber, revisionType]\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getPrize(java.lang.Long)\" "
+			+ "target=\"_blank\">TombolaController.getPrize</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("permitAll()")
-	public List<PrizeInfo> getPrize(
-			@PathVariable @Parameter(description = "Prize's id") Long prizeId) {
+	public List<PrizeInfo> getPrize(@PathVariable @Parameter(description = "Prize's id") Long prizeId) {
 		List<PrizeInfo> ret = tombolaService.getPrize(prizeId);
-        // LOG.debug("GetPrize username:'{}' ip:{} sessionId:{} ret:{}", userService.getUsername(), statusController.getClientIP(), statusController.getSessionId(), ret);
+		// LOG.debug("GetPrize username:'{}' ip:{} sessionId:{} ret:{}",
+		// userService.getUsername(), statusController.getClientIP(),
+		// statusController.getSessionId(), ret);
 		return ret;
 	}
 
@@ -109,84 +109,83 @@ public class TombolaController {
 	 * Get prizes
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#getPrizes}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getPrizes"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getPrizes</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getPrizes" target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getPrizes</a>
 	 * 
 	 * @return {@link List}&lt;{@link PrizeInfo}&gt;
 	 */
 	@GetMapping(value = "/prize", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getPrizes", summary = "Get All Prizes - Index and Manager",
-		description = "Get All Prizes\n\n" +
-			"This method is calling TombolaService.getPrizes.\n\n" +
-            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-            "getPrizes()\" " +
-            "target=\"_blank\">TombolaController.getPrizes</a>",
-   	    tags = { TombolaController.TAG })
+	@Operation(operationId = "getPrizes", summary = "Get All Prizes - Index and Manager", description = "Get All Prizes\n\n"
+			+ "This method is calling TombolaService.getPrizes.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getPrizes()\" " + "target=\"_blank\">TombolaController.getPrizes</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("permitAll()")
 	public List<PrizeInfo> getPrizes() {
 		List<PrizeInfo> ret = tombolaService.getPrizes(false);
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get prizes to finale
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.TombolaService#getPrizesReadyToWin}
+	 * Used
+	 * {@link local.intranet.tombola.api.service.TombolaService#getPrizesReadyToWin}
+	 * 
 	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getPrizesReadyToWin"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getPrizesReadyToWin</a>
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getPrizesReadyToWin</a>
 	 * 
 	 * @return {@link List}&lt;{@link PrizeInfo}&gt;
 	 */
 	@GetMapping(value = "/prize/ready", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getPrizesReadyToWin", summary = "Get Prizes Ready to Win - Manager",
-			description = "Get Prizes Ready to Win\n\n" + 
-					"This method is calling TombolaService.getPrizesReadyToWin.\n\n" +
-					"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-					"getPrizesReadyToWin()\" " +
-					"target=\"_blank\">TombolaController.getPrizesReadyToWin</a>",
-		    tags = { TombolaController.TAG })
+	@Operation(operationId = "getPrizesReadyToWin", summary = "Get Prizes Ready to Win - Manager", description = "Get Prizes Ready to Win\n\n"
+			+ "This method is calling TombolaService.getPrizesReadyToWin.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getPrizesReadyToWin()\" "
+			+ "target=\"_blank\">TombolaController.getPrizesReadyToWin</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
 	public List<PrizeInfo> getPrizesReadyToWin() {
 		List<PrizeInfo> ret = tombolaService.getPrizesReadyToWin();
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Patch prize name
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#patchPrizeName}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/patchPrizeName"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/patchPrizeName</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/patchPrizeName" target
+	 *      ="_blank">tombola/swagger-ui/#/tombola-controller/patchPrizeName</a>
 	 * 
 	 * @param prizeId   {@link Long} Prize's id
 	 * @param prizeName {@link String} New prize name
 	 * @return {@link PrizeInfo}
 	 */
 	@PatchMapping(value = "/prize/prizeId/{prizeId}/prizeName/{prizeName}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "patchPrizeName", summary = "Patch (changes) Prize Name - Swagger",
-			description = "Patch (changes) Prize Name\n\n" + 
-					"This method is calling TombolaService.patchPrizeName.\n\n" +
-					"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-					"patchPrizeName(java.lang.Long,java.lang.String)\" " +
-					"target=\"_blank\">TombolaController.patchPrizeName</a>",
-		    tags = { TombolaController.TAG })
+	@Operation(operationId = "patchPrizeName", summary = "Patch (changes) Prize Name - Swagger", description = "Patch (changes) Prize Name\n\n"
+			+ "This method is calling TombolaService.patchPrizeName.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "patchPrizeName(java.lang.Long,java.lang.String)\" "
+			+ "target=\"_blank\">TombolaController.patchPrizeName</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
-	public PrizeInfo patchPrizeName(
-			@PathVariable @Parameter(description = "Prize's id") Long prizeId,
+	public PrizeInfo patchPrizeName(@PathVariable @Parameter(description = "Prize's id") Long prizeId,
 			@PathVariable @Parameter(description = "New prize name") String prizeName) {
 		PrizeInfo ret = tombolaService.patchPrizeName(prizeId, prizeName);
-		LOG.warn("PatchPrizeName username:'{}' {} prizeId:{} prizeName:'{}'",
-				userService.getUsername(), statusController.getSessionId(), prizeId, prizeName);
+		LOG.warn("PatchPrizeName username:'{}' {} prizeId:{} prizeName:'{}'", userService.getUsername(),
+				statusController.getSessionId(), prizeId, prizeName);
 		// LOG.debug("{}", ret);
 		return ret;
 	}
@@ -195,62 +194,61 @@ public class TombolaController {
 	 *
 	 * Patch prize ticket
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.TombolaService#patchPrizeTicket}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/patchPrizeTicket"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/patchPrizeTicket</a>
+	 * Used
+	 * {@link local.intranet.tombola.api.service.TombolaService#patchPrizeTicket}
 	 * 
-	 * @param prizeId   {@link Long} Prize's id
-	 * @param ticketId   {@link Long} Ticket's id
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/patchPrizeTicket"
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/patchPrizeTicket</a>
+	 * 
+	 * @param prizeId  {@link Long} Prize's id
+	 * @param ticketId {@link Long} Ticket's id
 	 * @return {@link PrizeInfo}
 	 */
 	@PatchMapping(value = "/prize/prizeId/{prizeId}/ticketId/{ticketId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "patchPrizeTicket", summary = "Patch (changes) prize for win ticket - Index and Swagger",
-			description = "Patch (changes) prize for win ticket\n\n" +
-					"This method is calling TombolaService.patchPrizeTicket.\n\n" +
-					"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-					"patchPrizeTicket(java.lang.Long,java.lang.Long)\" " +
-					"target=\"_blank\">TombolaController.patchPrizeTicket</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "patchPrizeTicket", summary = "Patch (changes) prize for win ticket - Index and Swagger", description = "Patch (changes) prize for win ticket\n\n"
+			+ "This method is calling TombolaService.patchPrizeTicket.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "patchPrizeTicket(java.lang.Long,java.lang.Long)\" "
+			+ "target=\"_blank\">TombolaController.patchPrizeTicket</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
-	public PrizeInfo patchPrizeTicket(
-			@PathVariable @Parameter(description = "Prize's id") Long prizeId,
+	public PrizeInfo patchPrizeTicket(@PathVariable @Parameter(description = "Prize's id") Long prizeId,
 			@PathVariable @Parameter(description = "Win ticket's id") Long ticketId) {
 		PrizeInfo ret = tombolaService.patchPrizeTicket(prizeId, ticketId);
-		LOG.warn("PatchPrizeTicket username:'{}' {} ticketId:{} prizeId:{}",
-				userService.getUsername(), statusController.getSessionId(), ticketId, prizeId);
+		LOG.warn("PatchPrizeTicket username:'{}' {} ticketId:{} prizeId:{}", userService.getUsername(),
+				statusController.getSessionId(), ticketId, prizeId);
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get ticket
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#getTicket}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicket"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getTicket</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicket" target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getTicket</a>
 	 * 
 	 * @param ticketId {@link Long}
 	 * @return {@link List}&lt;{@link TicketAudit}&gt;
 	 */
 	@GetMapping(value = "/ticket/ticketId/{ticketId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "getTicket", summary = "Get Ticket Audit - Swagger",
-			description = "Get Ticket Audit\n\n" + 
-					"This method is calling TombolaService.getTicket and used org.hibernate.envers.query.AuditQuery.\n\n" + 
-		            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-		            "getTicket(java.lang.Long)\" " +
-		            "target=\"_blank\">TombolaController.getTicket</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "getTicket", summary = "Get Ticket Audit - Swagger", description = "Get Ticket Audit\n\n"
+			+ "This method is calling TombolaService.getTicket and used org.hibernate.envers.query.AuditQuery.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getTicket(java.lang.Long)\" "
+			+ "target=\"_blank\">TombolaController.getTicket</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("permitAll()")
-	public List<TicketAudit> getTicket(
-			@PathVariable @Parameter(description = "Ticket's id") Long ticketId) {
+	public List<TicketAudit> getTicket(@PathVariable @Parameter(description = "Ticket's id") Long ticketId) {
 		List<TicketAudit> ret = tombolaService.getTicket(ticketId);
-        // LOG.debug("GetTicket username:'{}' ip:{} sessionId:{} ret:{}", userService.getUsername(), statusController.getClientIP(), statusController.getSessionId(), ret);
+		// LOG.debug("GetTicket username:'{}' ip:{} sessionId:{} ret:{}",
+		// userService.getUsername(), statusController.getClientIP(),
+		// statusController.getSessionId(), ret);
 		return ret;
 	}
 
@@ -258,91 +256,88 @@ public class TombolaController {
 	 *
 	 * Get tickets by page
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#getTicketsPage}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicketsPage"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getTicketsPage</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicketsPage" target
+	 *      ="_blank">tombola/swagger-ui/#/tombola-controller/getTicketsPage</a>
 	 * 
 	 * @param page {@link Integer}
 	 * @param size {@link Integer}
 	 * @return {@link Page}&lt;{@link TicketInfo}&gt;
 	 */
 	@GetMapping(value = "/ticket/page/{page}/size/{size}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "getTicketsPage", summary = "Get Tickets Pages - Manager",
-			description = "Get Ticket Audit\n\n" + 
-					"Get Tickets Pages - Manager\n\n" + 
-					"This method is calling TombolaService.getTicketsPage\n\n" +
-		            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-		            "getTicketsPage(java.lang.Integer,java.lang.Integer)\" " +
-		            "target=\"_blank\">TombolaController.getTicketsPage</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "getTicketsPage", summary = "Get Tickets Pages - Manager", description = "Get Ticket Audit\n\n"
+			+ "Get Tickets Pages - Manager\n\n" + "This method is calling TombolaService.getTicketsPage\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getTicketsPage(java.lang.Integer,java.lang.Integer)\" "
+			+ "target=\"_blank\">TombolaController.getTicketsPage</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
 	public Page<TicketInfo> getTicketsPage(
 			@PathVariable @Parameter(allowEmptyValue = true, example = "0", description = "Zero-based page index (0..N)") Integer page,
-			@PathVariable @Parameter(example = "20", description = "The size of the page to be returned") Integer size
-			) {
+			@PathVariable @Parameter(example = "20", description = "The size of the page to be returned") Integer size) {
 		Page<TicketInfo> ret = tombolaService.getTicketsPage(PageRequest.of(page, size));
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get win tickets by page
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.TombolaService#getTicketsWinPage}
+	 * Used
+	 * {@link local.intranet.tombola.api.service.TombolaService#getTicketsWinPage}
+	 * 
 	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicketsWinPage"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getTicketsWinPage</a>
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getTicketsWinPage</a>
 	 * 
 	 * @param page {@link Integer}
 	 * @param size {@link Integer}
 	 * @return {@link Page}&lt;{@link TicketInfo}&gt;
 	 */
 	@GetMapping(value = "/ticket/win/page/{page}/size/{size}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "getTicketsWinPage", summary = "Get win pages - Index",
-			description = "Get win pages - Index\n\n" +
-					"This method is calling TombolaService.getTicketsWinPage\n\n" +
-		            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-		            "getTicketsWinPage(java.lang.Integer,java.lang.Integer)\" " +
-		            "target=\"_blank\">TombolaController.getTicketsWinPage</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "getTicketsWinPage", summary = "Get win pages - Index", description = "Get win pages - Index\n\n"
+			+ "This method is calling TombolaService.getTicketsWinPage\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getTicketsWinPage(java.lang.Integer,java.lang.Integer)\" "
+			+ "target=\"_blank\">TombolaController.getTicketsWinPage</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("permitAll()")
 	public Page<TicketInfo> getTicketsWinPage(
 			@PathVariable @Parameter(allowEmptyValue = true, example = "0", description = "Zero-based page index (0..N)") Integer page,
-			@PathVariable @Parameter(example = "20", description = "The size of the page to be returned") Integer size
-			) {
+			@PathVariable @Parameter(example = "20", description = "The size of the page to be returned") Integer size) {
 		Page<TicketInfo> ret = tombolaService.getTicketsWinPage(PageRequest.of(page, size));
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get prizes to finale
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.TombolaService#getTicketsPrizes}
+	 * Used
+	 * {@link local.intranet.tombola.api.service.TombolaService#getTicketsPrizes}
+	 * 
 	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/getTicketsPrizes"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/getTicketsPrizes</a>
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/getTicketsPrizes</a>
 	 * 
 	 * @param size {@link Integer} Number of returned ticket
 	 * @return {@link List}&lt;{@link PrizeInfo}&gt;
 	 */
 	@GetMapping(value = "/ticket/size/{size}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "getTicketsPrizes", summary = "Get Tickets Prizes - Manager",
-			description = "Get Tickets Prizes - Manager\n\n" +
-					"This method is calling TombolaService.getTicketsPrizes\n\n" + 
-		            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-		            "getTicketsPrizes(java.lang.Integer)\" " +
-		            "target=\"_blank\">TombolaController.getTicketsPrizes</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "getTicketsPrizes", summary = "Get Tickets Prizes - Manager", description = "Get Tickets Prizes - Manager\n\n"
+			+ "This method is calling TombolaService.getTicketsPrizes\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "getTicketsPrizes(java.lang.Integer)\" "
+			+ "target=\"_blank\">TombolaController.getTicketsPrizes</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
 	public List<TicketInfo> getTicketsPrizes(
 			@PathVariable @Parameter(example = "5", description = "Number of returned tickets") Integer size) {
@@ -350,64 +345,61 @@ public class TombolaController {
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
-    /**
-     * 
-     * Put tickets
+
+	/**
+	 * 
+	 * Put tickets
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#putTickets}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/putTickets"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/putTickets</a>
 	 * 
-     * @param size int
-     */
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/putTickets" target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/putTickets</a>
+	 * 
+	 * @param size int
+	 */
 	@PutMapping(value = "/ticket/putTickets/{size}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "putTickets", summary = "Put Tickets - Swagger",
-			description = "Put Tickets\n\n" +
-					"This method is calling TombolaService.putTickets\n\n" + 
-		            "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-		            "putTickets(java.lang.Integer)\" " +
-		            "target=\"_blank\">TombolaController.putTickets</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "putTickets", summary = "Put Tickets - Swagger", description = "Put Tickets\n\n"
+			+ "This method is calling TombolaService.putTickets\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "putTickets(java.lang.Integer)\" "
+			+ "target=\"_blank\">TombolaController.putTickets</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
 	public void putTickets(
 			@PathVariable @Parameter(example = "50", description = "Number of puted tickets") Integer size) {
-		 LOG.warn("PutTickets username:'{}' {} cnt:{}",
-				 userService.getUsername(), statusController.getSessionId(), size);
-		 tombolaService.putTickets(size);
-    }
+		LOG.warn("PutTickets username:'{}' {} cnt:{}", userService.getUsername(), statusController.getSessionId(),
+				size);
+		tombolaService.putTickets(size);
+	}
 
 	/**
 	 *
 	 * Delete ticket by ticketId
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.TombolaService#deleteTicket}
-	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/deleteTicket"
-	 * target="_blank">tombola/swagger-ui/#/tombola-controller/deleteTicket</a>
+	 * 
+	 * @see <a href="/tombola/swagger-ui/#/tombola-controller/deleteTicket" target=
+	 *      "_blank">tombola/swagger-ui/#/tombola-controller/deleteTicket</a>
 	 * 
 	 * @param ticketId {@link Long} Ticket's id
 	 */
 	@DeleteMapping(value = "/ticket/ticketId/{ticketId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(
-			operationId = "deleteTicket", summary = "Delete Ticket - Swagger",
-			description = "Delete Ticket\n\n" +
-					"Delete ticket and returns the prize to the TombolaApplication.\n\n" +
-				    "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#" +
-					"deleteTicket(java.lang.Long)\" " +
-					"target=\"_blank\">TombolaController.deleteTicket</a>",
-			tags = { TombolaController.TAG })
+	@Operation(operationId = "deleteTicket", summary = "Delete Ticket - Swagger", description = "Delete Ticket\n\n"
+			+ "Delete ticket and returns the prize to the TombolaApplication.\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/TombolaController.html#"
+			+ "deleteTicket(java.lang.Long)\" "
+			+ "target=\"_blank\">TombolaController.deleteTicket</a>", tags = { TombolaController.TAG })
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
-	public void deleteTicket(
-			@PathVariable @Parameter(description = "Ticket's id") Long ticketId) {
-		LOG.warn("DeleteTicket username:'{}' {} ticketId:{}",
-				userService.getUsername(), statusController.getSessionId(), ticketId);
+	public void deleteTicket(@PathVariable @Parameter(description = "Ticket's id") Long ticketId) {
+		LOG.warn("DeleteTicket username:'{}' {} ticketId:{}", userService.getUsername(),
+				statusController.getSessionId(), ticketId);
 		tombolaService.deleteTicket(ticketId);
 	}
 

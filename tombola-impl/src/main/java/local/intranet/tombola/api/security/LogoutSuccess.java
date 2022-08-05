@@ -27,34 +27,38 @@ import org.springframework.util.StringUtils;
 public class LogoutSuccess extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LogoutSuccess.class);
-	
+
 	/**
 	 * 
-	 * Logout info of user. Clean session, call super.onLogoutSuccess(request, response, authentication) and write to LOG event Logout.
+	 * Logout info of user. Clean session, call super.onLogoutSuccess(request,
+	 * response, authentication) and write to LOG event Logout.
 	 * <p>
-	 * Login is in {@link local.intranet.tombola.api.controller.IndexController#signin}
+	 * Login is in
+	 * {@link local.intranet.tombola.api.controller.IndexController#signin}
 	 */
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) {
-        // auditService.track("Logout from: " + refererUrl);
-        try {
-        	String id = request.getSession().getId();
-	        String refererUrl = request.getHeader("Referer");
-	        if (request.getCookies() != null) {
-	        	for (Cookie cookie : request.getCookies()) {
-	        		if (cookie != null) {
-	        			String cookieName = cookie.getName();
-	        			Cookie cookieToDelete = new Cookie(cookieName, null);
-	        			cookieToDelete.setMaxAge(0);
-	        			response.addCookie(cookieToDelete);
-	        		}
-	        	}
-	        };
-	        String username = "";
+		// auditService.track("Logout from: " + refererUrl);
+		try {
+			String id = request.getSession().getId();
+			String refererUrl = request.getHeader("Referer");
+			if (request.getCookies() != null) {
+				for (Cookie cookie : request.getCookies()) {
+					if (cookie != null) {
+						String cookieName = cookie.getName();
+						Cookie cookieToDelete = new Cookie(cookieName, null);
+						cookieToDelete.setMaxAge(0);
+						response.addCookie(cookieToDelete);
+					}
+				}
+			}
+			;
+			String username = "";
 			if (authentication != null) {
 				if (authentication.getPrincipal() != null) {
-					// LOG.info("Logout authentication:'{}' principal:'{}' sessionId:{}", authentication, authentication.getPrincipal(), id);
+					// LOG.info("Logout authentication:'{}' principal:'{}' sessionId:{}",
+					// authentication, authentication.getPrincipal(), id);
 					username = authentication.getName();
 				}
 				LOG.info("Logout username:'{}' refererUrl:'{}' sessionId:{}", username, refererUrl, id);
@@ -65,10 +69,11 @@ public class LogoutSuccess extends SimpleUrlLogoutSuccessHandler implements Logo
 			LOG.error(e.getMessage(), e);
 		}
 	}
-	
+
 	/**
 	 * 
-	 * Builds the target URL according to the logic defined in the main class Javadoc.
+	 * Builds the target URL according to the logic defined in the main class
+	 * Javadoc.
 	 * 
 	 * @param request  {@link javax.servlet.http.HttpServletRequest}
 	 * @param response {@link javax.servlet.http.HttpServletResponse}
@@ -93,5 +98,5 @@ public class LogoutSuccess extends SimpleUrlLogoutSuccessHandler implements Logo
 		}
 		return targetUrl;
 	}
-	
+
 }

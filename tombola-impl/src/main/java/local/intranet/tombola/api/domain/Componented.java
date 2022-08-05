@@ -4,7 +4,6 @@ import java.util.List;
 
 import local.intranet.tombola.api.info.RestInfo;
 
-
 /**
  * 
  * {@link Componented} for {@link local.intranet.tombola.api.info.IndexInfo}
@@ -17,8 +16,9 @@ public interface Componented {
 	/**
 	 * 
 	 * Get service
+	 * 
 	 * @return {@link List}&lt;{@link local.intranet.tombola.api.info.RestInfo}&gt;
 	 */
 	List<RestInfo> getComponents();
-	
+
 }

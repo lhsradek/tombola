@@ -18,7 +18,8 @@ import local.intranet.tombola.api.service.UserService;
 
 /**
  * 
- * {@link IndexInfo} for {@link local.intranet.tombola.api.service.IndexService#getIndexInfo},
+ * {@link IndexInfo} for
+ * {@link local.intranet.tombola.api.service.IndexService#getIndexInfo},
  * {@link local.intranet.tombola.api.controller.InfoController#getIndexInfo} and
  * {@link local.intranet.tombola.api.info.RestInfo}
  * 
@@ -28,12 +29,12 @@ import local.intranet.tombola.api.service.UserService;
  */
 @JsonPropertyOrder({ "name", "components" })
 public class IndexInfo implements Componented, Nameable {
-	
+
 	// private static final Logger LOG = LoggerFactory.getLogger(IndexInfo.class);
-	
+
 	@Size(min = 1, max = DefaultFieldLengths.DEFAULT_NAME)
 	private final String basePath;
-	
+
 	/**
 	 * 
 	 * Constructor with parameters
@@ -48,15 +49,15 @@ public class IndexInfo implements Componented, Nameable {
 	@Override
 	public List<RestInfo> getComponents() {
 		List<RestInfo> ret = new ArrayList<>();
-		ret.add(new RestInfo(basePath + shortName(BeanService.class.getSimpleName()),
-				BeanService.class.getSimpleName(), RoleType.USER_ROLE.getRole()));
-		ret.add(new RestInfo(basePath + shortName(UserService.class.getSimpleName()),
-				UserService.class.getSimpleName(), RoleType.USER_ROLE.getRole()));
-		ret.add(new RestInfo(basePath + shortName(RoleService.class.getSimpleName()),
-				RoleService.class.getSimpleName(), RoleType.USER_ROLE.getRole()));
+		ret.add(new RestInfo(basePath + shortName(BeanService.class.getSimpleName()), BeanService.class.getSimpleName(),
+				RoleType.USER_ROLE.getRole()));
+		ret.add(new RestInfo(basePath + shortName(UserService.class.getSimpleName()), UserService.class.getSimpleName(),
+				RoleType.USER_ROLE.getRole()));
+		ret.add(new RestInfo(basePath + shortName(RoleService.class.getSimpleName()), RoleService.class.getSimpleName(),
+				RoleType.USER_ROLE.getRole()));
 		return ret;
 	}
-	
+
 	private String shortName(String simpleName) {
 		return simpleName.replace("Service", "").toLowerCase();
 	}

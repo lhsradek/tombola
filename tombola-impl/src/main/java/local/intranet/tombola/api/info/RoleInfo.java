@@ -14,13 +14,14 @@ import local.intranet.tombola.api.service.RoleService;
 
 /**
  * 
- * {@link RoleInfo} for {@link local.intranet.tombola.api.service.RoleService#getRoleInfo} and
+ * {@link RoleInfo} for
+ * {@link local.intranet.tombola.api.service.RoleService#getRoleInfo} and
  * {@link local.intranet.tombola.api.controller.InfoController#getRoleInfo}
  * 
  * @author Radek Kádner
  *
  */
-@JsonPropertyOrder({ "name",  "roles" })
+@JsonPropertyOrder({ "name", "roles" })
 public class RoleInfo implements Nameable {
 
 	private final List<RolePlain> role;
@@ -29,7 +30,7 @@ public class RoleInfo implements Nameable {
 	 * 
 	 * Constructor with parameters
 	 * 
-	 * @param role             {@link List}&lt;{@link RolePlain}&gt;
+	 * @param role {@link List}&lt;{@link RolePlain}&gt;
 	 */
 	public RoleInfo(List<RolePlain> role) {
 		this.role = role;
@@ -39,8 +40,8 @@ public class RoleInfo implements Nameable {
 	 *
 	 * Get RoleInfo
 	 * <p>
- 	 * &#64;JsonInclude(JsonInclude.Include.NON_NULL)
- 	 * 
+	 * &#64;JsonInclude(JsonInclude.Include.NON_NULL)
+	 * 
 	 * @return {@link List}&lt;{@link Role}&gt;
 	 */
 	@Size(min = 0)
@@ -56,5 +57,5 @@ public class RoleInfo implements Nameable {
 		String ret = RoleService.class.getSimpleName();
 		return ret;
 	}
-	
+
 }

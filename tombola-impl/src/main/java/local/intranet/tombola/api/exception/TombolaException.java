@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 
- * {@link TombolaException} for {@link local.intranet.tombola.TombolaApplication}
+ * {@link TombolaException} for
+ * {@link local.intranet.tombola.TombolaApplication}
  * 
  * @author Radek Kádner
  *
@@ -15,9 +16,9 @@ import org.slf4j.LoggerFactory;
 public class TombolaException extends ConnectException {
 
 	private static final long serialVersionUID = 5639743839480904356L;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(TombolaException.class);
-	
+
 	/**
 	 * 
 	 * Constructor with param

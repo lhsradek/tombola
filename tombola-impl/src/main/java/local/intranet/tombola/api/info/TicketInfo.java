@@ -6,13 +6,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * 
- * {@link TicketInfo} for {@link local.intranet.tombola.api.service.TombolaService}
+ * {@link TicketInfo} for
+ * {@link local.intranet.tombola.api.service.TombolaService}
  * 
  * @author radek.kadner
  *
  */
 @JsonPropertyOrder({ "id", "win", "date" })
-public class TicketInfo  {
+public class TicketInfo {
 
 	private final Long id;
 	private final Long win;
@@ -20,7 +21,7 @@ public class TicketInfo  {
 
 	/**
 	 * 
-     * Constructor without parameter
+	 * Constructor without parameter
 	 */
 	public TicketInfo() {
 		this.id = 0L;

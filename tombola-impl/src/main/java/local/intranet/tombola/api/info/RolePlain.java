@@ -23,14 +23,14 @@ public class RolePlain implements Nameable {
 
 	@Size(min = 0)
 	private final Long id;
-	
+
 	private final String roleName;
-	
+
 	private final Boolean enabled;
-	
+
 	@Size(min = 0)
 	private final List<String> users;
-	
+
 	/**
 	 * 
 	 * Constructor with parameter
@@ -69,7 +69,6 @@ public class RolePlain implements Nameable {
 	public String getName() {
 		return roleName;
 	}
-	
 
 	/**
 	 * 

@@ -19,9 +19,9 @@ public class TicketLink extends WebAuthenticationDetails {
 	private static final long serialVersionUID = -5064057139138823279L;
 
 	private final String salt;
-	
+
 	private final byte[] iv;
-	
+
 	/**
 	 * 
 	 * Constructor with parameters
@@ -95,5 +95,5 @@ public class TicketLink extends WebAuthenticationDetails {
 	public String toString() {
 		return "TicketLink [salt=" + salt + ", iv=" + Arrays.toString(iv) + "]";
 	}
-	
+
 }

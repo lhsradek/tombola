@@ -26,8 +26,7 @@ import local.intranet.tombola.api.service.UserService;
  * {@link InfoController} for {@link local.intranet.tombola.TombolaApplication}
  * It's for charge of working with buffers and for REST methods
  * <p>
- * info from services in
- * {@link local.intranet.tombola.api.service}
+ * info from services in {@link local.intranet.tombola.api.service}
  * 
  * @author Radek Kádner
  *
@@ -47,7 +46,7 @@ public class InfoController {
 
 	/**
 	 * 
-	 * INFO_VERSION_PATH  = "/v1"
+	 * INFO_VERSION_PATH = "/v1"
 	 */
 	public static final String INFO_VERSION_PATH = "/v1";
 
@@ -56,27 +55,27 @@ public class InfoController {
 	 * INFO_BASE_INFO = "/info"
 	 */
 	public static final String INFO_BASE_INFO = "/info";
-	
+
 	@Autowired
 	private IndexService indexService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private BeanService beanService;
-	
-	
+
 	// @Autowired private ErrorService errorService;
-	
+
 	/**
 	 * 
 	 * Root gives other REST links
 	 * <p>
 	 * Like this
+	 * 
 	 * <pre>
 	 * {
 	 *   "name": "IndexService",
@@ -102,45 +101,53 @@ public class InfoController {
 	 * }
 	 * </pre>
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.IndexService#getIndexInfo}.
 	 * 
-	 * @see <a href="/tombola/swagger-ui/#/info-controller/getIndexInfo" target="_blank">swagger-ui/#/info-controller/getIndexInfo</a>
+	 * @see <a href="/tombola/swagger-ui/#/info-controller/getIndexInfo" target=
+	 *      "_blank">swagger-ui/#/info-controller/getIndexInfo</a>
 	 * @return {@link IndexInfo}
 	 */
 	@GetMapping(value = InfoController.INFO_BASE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getIndexInfo", summary = "Get Index Info", description = "Get Index Info\n\n" +
-    		"This method is calling InfoService.getIndexInfo\n\n" +
-    		"See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#" +
-    		"getIndexInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getIndexInfo</a>",
-			tags = { InfoController.TAG })
+	@Operation(operationId = "getIndexInfo", summary = "Get Index Info", description = "Get Index Info\n\n"
+			+ "This method is calling InfoService.getIndexInfo\n\n"
+			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getIndexInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getIndexInfo</a>", tags = {
+					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public IndexInfo getIndexInfo() {
 		IndexInfo ret = indexService.getIndexInfo();
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Bean informations
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
 	 * <p>
 	 * Used {@link local.intranet.tombola.api.service.BeanService#getBeanInfo}.
 	 * <p>
+	 * 
 	 * @see {@link #getIndexInfo}
 	 * 
-	 * @see <a href="/tombola/swagger-ui/#/info-controller/getBeanInfo" target="_blank">swagger-ui/#/info-controller/getBeanInfo</a>
+	 * @see <a href="/tombola/swagger-ui/#/info-controller/getBeanInfo" target=
+	 *      "_blank">swagger-ui/#/info-controller/getBeanInfo</a>
 	 * @return {@link BeanInfo}
-	@GetMapping(value = InfoController.INFO_BASE_INFO + "/bean", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getBeanInfo", summary = "Get Bean Info", description = "Get Bean Info\n\n" +
-			"This method is calling BeanService.getBeanInfo\n\n" +
-            "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#" +
-           	"getBeanInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getBeanInfo</a>",
-			tags = { InfoController.TAG })
-	@PreAuthorize("hasRole('ROLE_userRole')")
+	 * @GetMapping(value = InfoController.INFO_BASE_INFO + "/bean", produces =
+	 *                   MediaType.APPLICATION_JSON_VALUE)
+	 * @Operation(operationId = "getBeanInfo", summary = "Get Bean Info",
+	 *                        description = "Get Bean Info\n\n" + "This method is
+	 *                        calling BeanService.getBeanInfo\n\n" + "See <a
+	 *                        href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+	 *                        + "getBeanInfo(javax.servlet.http.HttpSession)\"
+	 *                        target=\"_blank\">InfoController.getBeanInfo</a>",
+	 *                        tags = { InfoController.TAG
+	 *                        }) @PreAuthorize("hasRole('ROLE_userRole')")
 	 */
 	public BeanInfo getBeanInfo() {
 		BeanInfo ret;
@@ -160,21 +167,24 @@ public class InfoController {
 	 * 
 	 * User informations
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.UserService#getUserInfo}. 
+	 * Used {@link local.intranet.tombola.api.service.UserService#getUserInfo}.
 	 * <p>
+	 * 
 	 * @see {@link #getIndexInfo}
 	 * 
-	 * @see <a href="/tombola/swagger-ui/#/info-controller/getUserInfo" target="_blank">swagger-ui/#/info-controller/getUserInfo</a>
+	 * @see <a href="/tombola/swagger-ui/#/info-controller/getUserInfo" target=
+	 *      "_blank">swagger-ui/#/info-controller/getUserInfo</a>
 	 * @return {@link UserInfo}
 	 */
 	@GetMapping(value = InfoController.INFO_BASE_INFO + "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getUserInfo", summary = "Get User Info", description = "Get User Info\n\n" +
-			"This method is calling UserService.getUserInfo\n\n" +
-           	"See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#" +
-       		"getUserInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getUserInfo</a>",
-			tags = { InfoController.TAG })
+	@Operation(operationId = "getUserInfo", summary = "Get User Info", description = "Get User Info\n\n"
+			+ "This method is calling UserService.getUserInfo\n\n"
+			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getUserInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getUserInfo</a>", tags = {
+					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public UserInfo getUserInfo() {
 		UserInfo ret;
@@ -189,26 +199,29 @@ public class InfoController {
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Role informations
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
 	 * <p>
-	 * Used {@link local.intranet.tombola.api.service.RoleService#getRoleInfo}. 
+	 * Used {@link local.intranet.tombola.api.service.RoleService#getRoleInfo}.
 	 * <p>
+	 * 
 	 * @see {@link #getIndexInfo}
 	 * 
-	 * @see <a href="/tombola/swagger-ui/#/info-controller/getRoleInfo" target="_blank">swagger-ui/#/info-controller/getRoleInfo</a>
+	 * @see <a href="/tombola/swagger-ui/#/info-controller/getRoleInfo" target=
+	 *      "_blank">swagger-ui/#/info-controller/getRoleInfo</a>
 	 * @return {@link RoleInfo}
 	 */
 	@GetMapping(value = InfoController.INFO_BASE_INFO + "/role", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getRoleInfo", summary = "Get Role Info", description = "Get Role Info\n\n" +
-			"This method is calling RoleService.getRoleInfo\n\n" +
-			"See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#" +
-			"getRoleInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getRoleInfo</a>",
-			tags = { InfoController.TAG })
+	@Operation(operationId = "getRoleInfo", summary = "Get Role Info", description = "Get Role Info\n\n"
+			+ "This method is calling RoleService.getRoleInfo\n\n"
+			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getRoleInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getRoleInfo</a>", tags = {
+					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public RoleInfo getRoleInfo() {
 		RoleInfo ret;
@@ -223,5 +236,5 @@ public class InfoController {
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 }

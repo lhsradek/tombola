@@ -32,34 +32,25 @@ import local.intranet.tombola.api.domain.DefaultFieldLengths;
 
 /**
  * 
- * {@link Prize} is entity for JPA with {@link local.intranet.tombola.api.model.repository.PrizeRepository}
+ * {@link Prize} is entity for JPA with
+ * {@link local.intranet.tombola.api.model.repository.PrizeRepository}
  * 
  * @author Radek Kádner
  *
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "tombola_prize",
-	indexes = {
+@Table(name = "tombola_prize", indexes = {
 		// @Index(name = "tombola_prize_pkey", columnList = "id")
-		@Index(columnList = "id")
-	},
-	uniqueConstraints = {
-		// @UniqueConstraint(name = "tombola_prize_name_uk", columnNames = { "prize_name" })
-		@UniqueConstraint(columnNames = { "prize_name" })
-	}
-)
-@GenericGenerator(
-        name = "PrizeGenerator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-                @Parameter(name = "sequence_name", value = "PRIZE_SEQUENCE"),
-                @Parameter(name = "initial_value", value = "1"),
-                @Parameter(name = "increment_size", value = "1")
-        }
-)
+		@Index(columnList = "id") }, uniqueConstraints = {
+				// @UniqueConstraint(name = "tombola_prize_name_uk", columnNames = {
+				// "prize_name" })
+				@UniqueConstraint(columnNames = { "prize_name" }) })
+@GenericGenerator(name = "PrizeGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+		@Parameter(name = "sequence_name", value = "PRIZE_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),
+		@Parameter(name = "increment_size", value = "1") })
 public class Prize {
-	
+
 	/**
 	 * 
 	 * Constructor without parameter
@@ -99,56 +90,52 @@ public class Prize {
 		this.createdBy = "admin";
 		this.modifiedBy = "admin";
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Audited
-    @NotNull
+	@NotNull
 	@Column(name = "prize_name", nullable = false)
 	@Size(max = DefaultFieldLengths.DEFAULT_NAME)
 	private String prizeName;
-    
+
 	@Audited
 	private int cnt;
-	
+
 	@Audited
 	private int issued;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tombola_prize_ticket",
-		indexes = {
-				// @Index(name = "tombola_prize_ticket_id", columnList = "ticket_id")
-				@Index(columnList = "ticket_id")
-		},
-		uniqueConstraints = {
-				// @UniqueConstraint(name = "tombola_prize_ticket_uk", columnNames = {"ticket_id"})
-		 		@UniqueConstraint(columnNames = {"ticket_id"})
-		}
-	)
+	@JoinTable(name = "tombola_prize_ticket", indexes = {
+			// @Index(name = "tombola_prize_ticket_id", columnList = "ticket_id")
+			@Index(columnList = "ticket_id") }, uniqueConstraints = {
+					// @UniqueConstraint(name = "tombola_prize_ticket_uk", columnNames =
+					// {"ticket_id"})
+					@UniqueConstraint(columnNames = { "ticket_id" }) })
 	private Set<Ticket> ticket = new HashSet<>();
-	
+
 	@Audited
 	@Column(name = "created_date")
-    @CreatedDate
-    private Long createdDate;
+	@CreatedDate
+	private Long createdDate;
 
 	@Audited
-    @Column(name = "modified_date")
-    @LastModifiedDate
-    private Long modifiedDate;
-    
-	@Audited
-    @Column(name = "created_by")
-    @CreatedBy
-    private String createdBy;
+	@Column(name = "modified_date")
+	@LastModifiedDate
+	private Long modifiedDate;
 
 	@Audited
-    @Column(name = "modified_by")
-    @LastModifiedBy
-    private String modifiedBy;    
-	
+	@Column(name = "created_by")
+	@CreatedBy
+	private String createdBy;
+
+	@Audited
+	@Column(name = "modified_by")
+	@LastModifiedBy
+	private String modifiedBy;
+
 	/**
 	 * Get id
 	 * 
@@ -246,7 +233,7 @@ public class Prize {
 	public void setTicket(Set<Ticket> ticket) {
 		this.ticket = ticket;
 	}
-	
+
 	/**
 	 * 
 	 * Get createdDate
@@ -296,7 +283,7 @@ public class Prize {
 	public String getCreatedBy() {
 		return createdBy;
 	}
-	
+
 	/**
 	 * 
 	 * Set createdBy

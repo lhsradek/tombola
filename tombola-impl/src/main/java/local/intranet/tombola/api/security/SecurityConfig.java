@@ -32,18 +32,12 @@ import local.intranet.tombola.api.service.UserService;
  *
  * {@link SecurityConfig} for {@link local.intranet.tombola.TombolaApplication}.
  * <p>
- * https://www.baeldung.com/spring-security-csp
- * <br>
- * https://www.baeldung.com/spring-security-session
- * <br>
- * https://www.baeldung.com/spring-security-cors-preflight
- * <br>
- * https://www.baeldung.com/spring-security-basic-authentication
- * <br>
- * https://www.baeldung.com/spring-security-login
- * <br>
- * https://www.baeldung.com/spring-security-logout
- * <br>
+ * https://www.baeldung.com/spring-security-csp <br>
+ * https://www.baeldung.com/spring-security-session <br>
+ * https://www.baeldung.com/spring-security-cors-preflight <br>
+ * https://www.baeldung.com/spring-security-basic-authentication <br>
+ * https://www.baeldung.com/spring-security-login <br>
+ * https://www.baeldung.com/spring-security-logout <br>
  * https://stackoverflow.com/questions/24057040/content-security-policy-spring-security
  * 
  * @author Radek Kádner
@@ -57,18 +51,18 @@ import local.intranet.tombola.api.service.UserService;
 		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebSecurityConfigurer<WebSecurity> {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
 
 	@Value("#{'${tombola.app.authenticated}'.split('\\s{1,}')}")
 	private List<String> authenticated;
-	
+
 	@Value("#{'${tombola.app.permitAll}'.split('\\s{1,}')}")
 	private List<String> permitAll;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	/**
 	 * 
 	 * Set {@link CorsConfiguration}
@@ -95,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebS
 	 * For {@link local.intranet.tombola.api.controller.IndexController#signin}
 	 * 
 	 * @return {@link AuthenticationManager}
-	 * @throws {@link TombolaException} 
+	 * @throws {@link TombolaException}
 	 */
 	@Bean
 	@Override
@@ -105,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebS
 			return ret;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);
-			throw new TombolaException(e.getMessage()); 
+			throw new TombolaException(e.getMessage());
 		}
 	}
 
@@ -126,69 +120,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebS
 	 * Configure AuthenticationManagerBuilder
 	 * 
 	 * @param auth {@link AuthenticationManagerBuilder}
-	 * @throws {@link Exception} 
+	 * @throws {@link Exception}
 	 */
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
-	
+
 	/**
 	 * 
 	 * Configure {@link HttpSecurity}
 	 * <p>
- 	 * {@link local.intranet.tombola.api.security.LogoutSuccess} invalidates {@link javax.servlet.http.HttpSession}. 
+	 * {@link local.intranet.tombola.api.security.LogoutSuccess} invalidates
+	 * {@link javax.servlet.http.HttpSession}.
+	 * 
 	 * @param http {@link HttpSecurity}
-	 * @throws {@link IndexException} 
+	 * @throws {@link IndexException}
 	 */
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-        http
-			.cors().and()
-			.csrf().disable()
-			.authorizeRequests(authorizeRequests -> {
-				permitAll.forEach(key -> {
-					if (key.length() > 0) {
-						authorizeRequests.antMatchers(key).permitAll();
-					}
-				});
-				authenticated.forEach(key -> {
-					if (key.length() > 0) {
-						authorizeRequests.antMatchers(key).authenticated();
-					}
-				});
-			})
-			.headers()
-			.xssProtection()
-			.and()
-			.contentSecurityPolicy("script-src 'self'; object-src 'self'; form-action 'self'; style-src 'self'") 
-			.and()
-			.cacheControl()
-			.and()
-			.httpStrictTransportSecurity()
-			.and()
-			.frameOptions().disable()
-			.frameOptions().sameOrigin()
-			.and()
-			.httpBasic()
-			.and()
-			.formLogin().loginPage("/login").permitAll()
-			.failureUrl("/login?error=true")
-			.and()
-			.exceptionHandling()
-			.accessDeniedPage("/login?error=403")
-			.and()
-			.logout()
-			.logoutSuccessHandler(userService.logoutSuccess())
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true)
-			.deleteCookies("JSESSIONID")
-			.and()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-			.sessionFixation().migrateSession()
-			.maximumSessions(1);
-    }
+		http.cors().and().csrf().disable().authorizeRequests(authorizeRequests -> {
+			permitAll.forEach(key -> {
+				if (key.length() > 0) {
+					authorizeRequests.antMatchers(key).permitAll();
+				}
+			});
+			authenticated.forEach(key -> {
+				if (key.length() > 0) {
+					authorizeRequests.antMatchers(key).authenticated();
+				}
+			});
+		}).headers().xssProtection().and()
+				.contentSecurityPolicy("script-src 'self'; object-src 'self'; form-action 'self'; style-src 'self'")
+				.and().cacheControl().and().httpStrictTransportSecurity().and().frameOptions().disable().frameOptions()
+				.sameOrigin().and().httpBasic().and().formLogin().loginPage("/login").permitAll()
+				.failureUrl("/login?error=true").and().exceptionHandling().accessDeniedPage("/login?error=403").and()
+				.logout().logoutSuccessHandler(userService.logoutSuccess())
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+				.invalidateHttpSession(true).deleteCookies("JSESSIONID").and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS).sessionFixation().migrateSession()
+				.maximumSessions(1);
+	}
 
 }

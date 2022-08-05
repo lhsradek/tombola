@@ -24,31 +24,25 @@ import local.intranet.tombola.api.security.AESUtil;
 
 /**
  * 
- * {@link User} is entity for CRUD with {@link local.intranet.tombola.api.model.repository.UserRepository}
+ * {@link User} is entity for CRUD with
+ * {@link local.intranet.tombola.api.model.repository.UserRepository}
  * 
  * @author Radek Kádner
  *
  */
 @Entity
-@Table(name = "tombola_user" /*,
-	indexes = {
-		// @Index(name = "tombola_user_pkey", columnList = "id")},
-	    @Index(columnList = "id")
-	},
-	uniqueConstraints = {
-		// @UniqueConstraint(name = "tombola_user_name_uk", columnNames = "user_name")}
-	    @UniqueConstraint(columnNames = { "user_name" })
-	} */
+@Table(name = "tombola_user" /*
+								 * , indexes = { // @Index(name = "tombola_user_pkey", columnList = "id")},
+								 * 
+								 * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
+								 * = "tombola_user_name_uk", columnNames = "user_name")}
+								 * 
+								 * @UniqueConstraint(columnNames = { "user_name" }) }
+								 */
 )
-@GenericGenerator(
-        name = "UserGenerator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-                @Parameter(name = "sequence_name", value = "USER_SEQUENCE"),
-                @Parameter(name = "initial_value", value = "1"),
-                @Parameter(name = "increment_size", value = "1")
-        }
-)
+@GenericGenerator(name = "UserGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+		@Parameter(name = "sequence_name", value = "USER_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),
+		@Parameter(name = "increment_size", value = "1") })
 public class User {
 
 	/**
@@ -56,16 +50,16 @@ public class User {
 	 * Constructor without parameter
 	 * 
 	 */
-    public User() {
+	public User() {
 		this(null);
 	}
 
-    /**
-     * 
-     * Constructor with id 
-     * 
-     * @param id Long
-     */
+	/**
+	 * 
+	 * Constructor with id
+	 * 
+	 * @param id Long
+	 */
 	public User(Long id) {
 		this.setId(id);
 	}
@@ -87,7 +81,7 @@ public class User {
 		setEnabled(true);
 		setRole(role);
 	}
-	
+
 	/**
 	 * 
 	 * Constructor for {@link local.intranet.tombola.api.config.ApplicationConfig}
@@ -106,49 +100,52 @@ public class User {
 		setEnabled(enabled);
 		setRole(role);
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    @NotNull
+	@NotNull
 	@Column(name = "user_name", nullable = false)
-    @Size(max = DefaultFieldLengths.DEFAULT_NAME)
+	@Size(max = DefaultFieldLengths.DEFAULT_NAME)
 	private String userName;
 
-    @NotNull
+	@NotNull
 	@Column(name = "password", nullable = false)
-    @Size(max = DefaultFieldLengths.DEFAULT_NAME)
-    private String password;
-    
+	@Size(max = DefaultFieldLengths.DEFAULT_NAME)
+	private String password;
+
 	@Column(name = "account_non_expired")
-    private Boolean accountNonExpired;
-    
+	private Boolean accountNonExpired;
+
 	@Column(name = "account_non_locked")
-    private Boolean accountNonLocked;
-    
+	private Boolean accountNonLocked;
+
 	@Column(name = "credentials_non_expired")
-    private Boolean credentialsNonExpired;
-    
-    private Boolean enabled;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tombola_user_role" /*,
-		/* indexes = {
-				// @Index(name = "tombola_user_role_user_id", columnList = "user_id"),
-				@Index(columnList = "user_id"),
-				// @Index(name = "tombola_user_role_role_id", columnList = "role_id")
-				@Index(columnList = "role_id")
-		},
-		uniqueConstraints = {
-				// @UniqueConstraint(name = "tombola_user_role_uk", columnNames = {"user_id", "role_id"})},
-		 		@UniqueConstraint(columnNames = {"user_id", "role_id"})
-		},
-		joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"), 
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName="id")  */
+	private Boolean credentialsNonExpired;
+
+	private Boolean enabled;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tombola_user_role" /*
+											 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList
+											 * = "user_id"),
+											 * 
+											 * @Index(columnList = "user_id"), // @Index(name =
+											 * "tombola_user_role_role_id", columnList = "role_id")
+											 * 
+											 * @Index(columnList = "role_id") }, uniqueConstraints = {
+											 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames =
+											 * {"user_id", "role_id"})},
+											 * 
+											 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
+											 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
+											 * inverseJoinColumns = @JoinColumn(name = "role_id",
+											 * referencedColumnName="id")
+											 */
 	)
 	private Set<Role> role = new HashSet<>();
-    
+
 	/**
 	 * 
 	 * get id
@@ -315,9 +312,9 @@ public class User {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + StatusController.STATUS_PROTECTED + ", accountNonExpired="
-				+ accountNonExpired + ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired="
-				+ credentialsNonExpired + ", enabled=" + enabled + ", role=" + role + "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + StatusController.STATUS_PROTECTED
+				+ ", accountNonExpired=" + accountNonExpired + ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired + ", enabled=" + enabled + ", role=" + role + "]";
 	}
-	
+
 }

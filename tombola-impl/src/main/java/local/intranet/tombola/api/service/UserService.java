@@ -42,7 +42,8 @@ import local.intranet.tombola.api.security.LogoutSuccess;
 
 /**
  * 
- * {@link UserService} for {@link local.intranet.tombola.api.controller.IndexController#signin} and
+ * {@link UserService} for
+ * {@link local.intranet.tombola.api.controller.IndexController#signin} and
  * {@link local.intranet.tombola.api.security.SecurityConfig#configure(AuthenticationManagerBuilder)}
  * 
  * @author Radek Kádner
@@ -58,33 +59,35 @@ public class UserService implements UserDetailsService {
 	 * USER_ANONYMOUS = "ANONYMOUS"
 	 */
 	public static final String USER_ANONYMOUS = "ANONYMOUS";
-	
+
 	private static final int USER_LOGIN_SESSION_MAX_INACTIVE_INTERVAL = 3600;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private HttpSession httpSession;
-	
+
 	@Autowired
 	private LoginAttemptService loginAttemptService;
-	 
-    @Autowired
-    private StatusController statusController;
-	    
+
+	@Autowired
+	private StatusController statusController;
+
 	/**
 	 * 
-	 * Bean for logout {@link local.intranet.tombola.api.security.LogoutSuccess#onLogoutSuccess}.
+	 * Bean for logout
+	 * {@link local.intranet.tombola.api.security.LogoutSuccess#onLogoutSuccess}.
 	 * <p>
-	 * Login is in {@link local.intranet.tombola.api.controller.IndexController#signin}
+	 * Login is in
+	 * {@link local.intranet.tombola.api.controller.IndexController#signin}
 	 * 
 	 * @return {@link LogoutSuccess}
 	 */
 	@Bean
 	public LogoutSuccessHandler logoutSuccess() {
 		LogoutSuccessHandler ret = new LogoutSuccess();
-		return ret; 
+		return ret;
 	}
 
 	/**
@@ -98,16 +101,16 @@ public class UserService implements UserDetailsService {
 		UserInfo ret = loadUserByUsername(getUsername());
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Locates the user based on the username.
 	 *
 	 * @param username the username identifying the user whose data is required.
 	 * @return a fully populated user record (never <code>null</code>)
-	 * @throws LockedException if the user is locked.
-	 * @throws UsernameNotFoundException if the user could not be found or the user has no
-	 * GrantedAuthority
+	 * @throws LockedException           if the user is locked.
+	 * @throws UsernameNotFoundException if the user could not be found or the user
+	 *                                   has no GrantedAuthority
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -115,19 +118,19 @@ public class UserService implements UserDetailsService {
 		UserInfo ret;
 		String ip = statusController.getClientIP();
 		if (loginAttemptService.isBlocked(ip)) {
-			throw new LockedException(IndexController.INDEX_ERROR_USERNAME_IS_LOCKED); 
+			throw new LockedException(IndexController.INDEX_ERROR_USERNAME_IS_LOCKED);
 		}
 		try {
 			User user = userRepository.findByName(username);
 			if (user == null) {
 				loginAttemptService.loginFailed(ip);
-				// throw new UsernameNotFoundException(IndexController.INDEX_ERROR_USERNAME_NOT_FOUND);
+				// throw new
+				// UsernameNotFoundException(IndexController.INDEX_ERROR_USERNAME_NOT_FOUND);
 				throw new BadCredentialsException(IndexController.INDEX_ERROR_INVALID_USERNAME_AND_PASSWORD);
-			} else if (user.isAccountNonExpired() && user.isAccountNonLocked() &&
-					user.isCredentialsNonExpired() && user.isEnabled()) {
+			} else if (user.isAccountNonExpired() && user.isAccountNonLocked() && user.isCredentialsNonExpired()
+					&& user.isEnabled()) {
 				List<GrantedAuthority> authorities = user.getRole().stream()
-						.map(role -> new SimpleGrantedAuthority(
-								IndexController.INDEX_ROLE_PREFIX + role.getRoleName()))
+						.map(role -> new SimpleGrantedAuthority(IndexController.INDEX_ROLE_PREFIX + role.getRoleName()))
 						.collect(Collectors.toList());
 				ret = UserInfo.build(user, authorities);
 			} else {
@@ -160,7 +163,7 @@ public class UserService implements UserDetailsService {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Is authenticated
@@ -173,7 +176,7 @@ public class UserService implements UserDetailsService {
 		// ret = (getUsername().length() > 0) ? true : false;
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Get authorities roles
@@ -190,10 +193,10 @@ public class UserService implements UserDetailsService {
 			}
 			Collections.sort(ret);
 		}
-	    // LOG.debug("ret:{}", ret);
+		// LOG.debug("ret:{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * All user's roles
@@ -201,7 +204,8 @@ public class UserService implements UserDetailsService {
 	 * 
 	 * &#64;JsonIgnore
 	 * 
-	 * @return get all roles with boolean for Heavy Check &#x2714; or Heavy Ballot &#x2718; if user haves role in
+	 * @return get all roles with boolean for Heavy Check &#x2714; or Heavy Ballot
+	 *         &#x2718; if user haves role in
 	 *         {@link Map}&lt;{@link String},{@link Boolean}&gt; It's displayed in
 	 *         {@link local.intranet.tombola.api.controller.IndexController#getLogin}
 	 *         if user is logged.
@@ -212,10 +216,9 @@ public class UserService implements UserDetailsService {
 		List<String> list = getAuthoritiesRoles();
 		for (RoleType role : RoleType.values()) {
 			if (!role.equals(RoleType.ANONYMOUS_ROLE))
-              ret.put(role.getRole().replace(IndexController.INDEX_ROLE_PREFIX, ""),
-            		  list.contains(role.getRole()));
+				ret.put(role.getRole().replace(IndexController.INDEX_ROLE_PREFIX, ""), list.contains(role.getRole()));
 		}
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 

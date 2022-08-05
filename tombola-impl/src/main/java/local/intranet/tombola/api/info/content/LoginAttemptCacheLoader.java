@@ -4,7 +4,8 @@ import com.google.common.cache.CacheLoader;
 
 /**
  * 
- * {@link LoginAttemptCacheLoader} for {@link local.intranet.tombola.api.service.LoginAttemptService}
+ * {@link LoginAttemptCacheLoader} for
+ * {@link local.intranet.tombola.api.service.LoginAttemptService}
  * 
  * @author Radek Kádner
  */

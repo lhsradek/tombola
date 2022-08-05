@@ -27,10 +27,10 @@ import local.intranet.tombola.api.controller.StatusController;
 public class OpenApiConfig {
 
 	private static final String API = "Tombola API";
-	
+
 	@Autowired
 	private StatusController statusController;
-	
+
 	/**
 	 * 
 	 * Grouped OpenApi info
@@ -39,14 +39,11 @@ public class OpenApiConfig {
 	 */
 	@Bean
 	public GroupedOpenApi groupedOpenApi() {
-		GroupedOpenApi ret = GroupedOpenApi.builder()
-				.pathsToMatch("/api/v1/**")
-				.group("tombola")
-	            .displayName(API)
-	            .build();
+		GroupedOpenApi ret = GroupedOpenApi.builder().pathsToMatch("/api/v1/**").group("tombola").displayName(API)
+				.build();
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Tombola OpenApi
@@ -56,18 +53,13 @@ public class OpenApiConfig {
 	@Bean
 	public OpenAPI tombolaOpenApi() {
 		OpenAPI ret = new OpenAPI()
-				.info(new Info().title(API)
-	            .description("Tombola API")
-	            .version(statusController.getImplementationVersion())
-	            .termsOfService("/tombola")
-	            .contact(new Contact()
-	            		.name("Radek Kádner").url("https://www.linkedin.com/in/radekkadner/")
-	            		.email("radek.kadner@gmail.com"))
-	            .license(new License()
-	            		.name("The MIT License").url("https://opensource.org/licenses/MIT")))
+				.info(new Info().title(API).description("Tombola API")
+						.version(statusController.getImplementationVersion()).termsOfService("/tombola")
+						.contact(new Contact().name("Radek Kádner").url("https://www.linkedin.com/in/radekkadner/")
+								.email("radek.kadner@gmail.com"))
+						.license(new License().name("The MIT License").url("https://opensource.org/licenses/MIT")))
 				.externalDocs(new ExternalDocumentation().description("Java Documentation").url("/index-javadoc/"));
 		return ret;
-	 }
-	
+	}
 
 }

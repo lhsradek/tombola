@@ -18,7 +18,8 @@ import local.intranet.tombola.api.service.LoginAttemptService;
 
 /**
  * 
- * {@link AuthenticationSuccessEventListener} for {@link local.intranet.tombola.TombolaApplication}
+ * {@link AuthenticationSuccessEventListener} for
+ * {@link local.intranet.tombola.TombolaApplication}
  * <p>
  * https://www.baeldung.com/spring-security-block-brute-force-authentication-attempts
  * 
@@ -27,32 +28,32 @@ import local.intranet.tombola.api.service.LoginAttemptService;
  */
 @Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {
-    
+
 	private static final Logger LOG = LoggerFactory.getLogger(AuthenticationSuccessEventListener.class);
-	
+
 	private static final String LOGIN_USERNAME = "Login username:'{}' authorities:'{}' '{}' attempt:{}";
 
-    @Autowired
-    private LoginAttemptService loginAttemptService;
+	@Autowired
+	private LoginAttemptService loginAttemptService;
 
-    @Autowired
-    private StatusController statusController;
-    
-    /**
-     * 
-     * Application event listener
-     */
-    @Override
-    public void onApplicationEvent(AuthenticationSuccessEvent e) {
-        String ip = statusController.getClientIP();
-        loginAttemptService.loginSucceeded(ip);
-        List<String> arr = new ArrayList<>();
+	@Autowired
+	private StatusController statusController;
+
+	/**
+	 * 
+	 * Application event listener
+	 */
+	@Override
+	public void onApplicationEvent(AuthenticationSuccessEvent e) {
+		String ip = statusController.getClientIP();
+		loginAttemptService.loginSucceeded(ip);
+		List<String> arr = new ArrayList<>();
 		if (e.getAuthentication() != null) {
 			for (GrantedAuthority g : e.getAuthentication().getAuthorities()) {
 				arr.add(g.getAuthority().replace(IndexController.INDEX_ROLE_PREFIX, ""));
 			}
 			Collections.sort(arr);
 		}
-        LOG.info(LOGIN_USERNAME, e.getAuthentication().getName(), arr, ip, loginAttemptService.findById(ip));
-    }
+		LOG.info(LOGIN_USERNAME, e.getAuthentication().getName(), arr, ip, loginAttemptService.findById(ip));
+	}
 }

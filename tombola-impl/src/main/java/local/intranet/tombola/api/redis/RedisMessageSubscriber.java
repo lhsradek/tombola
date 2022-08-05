@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 /**
  * 
- * {@link RedisMessageSubscriber} for {@link local.intranet.tombola.TombolaApplication}.
+ * {@link RedisMessageSubscriber} for
+ * {@link local.intranet.tombola.TombolaApplication}.
  * <p>
- * https://www.baeldung.com/spring-data-redis-tutorial
- * <br>
+ * https://www.baeldung.com/spring-data-redis-tutorial <br>
  * https://www.baeldung.com/spring-data-redis-pub-sub
  * <p>
  * <img src="/tombola/res/redis.png"/>
@@ -32,7 +32,7 @@ public class RedisMessageSubscriber implements MessageListener {
 	 * @param pattern byte[]
 	 */
 	@Override
-    public void onMessage(final Message message, @Nullable byte[] pattern) {
+	public void onMessage(final Message message, @Nullable byte[] pattern) {
 		LOG.info("OnMessage '{}'", new String(message.getBody()));
-    }
+	}
 }

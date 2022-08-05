@@ -7,7 +7,8 @@ import local.intranet.tombola.api.model.entity.User;
 
 /**
  * 
- * {@link UserRepository} is repository for CRUD with {@link local.intranet.tombola.api.model.entity.User}
+ * {@link UserRepository} is repository for CRUD with
+ * {@link local.intranet.tombola.api.model.entity.User}
  * 
  * @author Radek Kádner
  *
@@ -23,5 +24,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	 */
 	@Query(value = "select u from User u where u.userName = ?1")
 	User findByName(String userName);
-	
+
 }

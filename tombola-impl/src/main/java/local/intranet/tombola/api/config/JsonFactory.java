@@ -16,10 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper; // version 2.11.1
 
 /**
  * 
- * {@link JsonFactory} for {@link local.intranet.tombola.api.config.ApplicationConfig}
+ * {@link JsonFactory} for
+ * {@link local.intranet.tombola.api.config.ApplicationConfig}
  * 
- * JsonFactory reads configuration is in classpath:/prize-${spring.profiles.active}.json
- * (for example in /usr/share/tomcat/webapps/tombola/WEB-INF/classes/prize-production.json)
+ * JsonFactory reads configuration is in
+ * classpath:/prize-${spring.profiles.active}.json (for example in
+ * /usr/share/tomcat/webapps/tombola/WEB-INF/classes/prize-production.json)
  * 
  * @author Radek Kádner
  *
@@ -31,9 +33,10 @@ public class JsonFactory implements PropertySourceFactory {
 	/**
 	 * 
 	 * Create a {@link PropertySource} that wraps the given resource.
-	 * @param name {@link String} the name of the property source
-	 * (can be {@code null} in which case the factory implementation
-	 * will have to generate a name based on the given resource)
+	 * 
+	 * @param name     {@link String} the name of the property source (can be
+	 *                 {@code null} in which case the factory implementation will
+	 *                 have to generate a name based on the given resource)
 	 * @param resource {@link EncodedResource}
 	 * 
 	 * @return the new {@link PropertySource} (never {@code null})
@@ -49,7 +52,7 @@ public class JsonFactory implements PropertySourceFactory {
 		Map<String, Object> readValue = ob.readValue(resource.getInputStream(), Map.class);
 		// LOG.debug("name:{} readValue:{}", name, readValue);
 		LOG.debug("name:{}", name);
-		MapPropertySource ret = new MapPropertySource(name, readValue); 
+		MapPropertySource ret = new MapPropertySource(name, readValue);
 		return ret;
 	}
 

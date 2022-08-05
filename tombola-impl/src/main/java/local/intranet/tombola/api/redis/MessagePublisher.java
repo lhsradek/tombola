@@ -2,7 +2,8 @@ package local.intranet.tombola.api.redis;
 
 /**
  * 
- * {@link MessagePublisher} for {@link local.intranet.tombola.TombolaApplication}.
+ * {@link MessagePublisher} for
+ * {@link local.intranet.tombola.TombolaApplication}.
  * <p>
  * https://www.baeldung.com/spring-data-redis-tutorial
  * <p>
@@ -18,6 +19,6 @@ public interface MessagePublisher {
 	 * 
 	 * @param message {@link String}
 	 */
-    void publish(final String message);
-    
+	void publish(final String message);
+
 }

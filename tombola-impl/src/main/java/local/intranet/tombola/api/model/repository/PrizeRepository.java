@@ -9,13 +9,14 @@ import local.intranet.tombola.api.model.entity.Prize;
 
 /**
  * 
- * {@link PrizeRepository} is repository for CRUD with {@link local.intranet.tombola.api.model.entity.Prize}
+ * {@link PrizeRepository} is repository for CRUD with
+ * {@link local.intranet.tombola.api.model.entity.Prize}
  * 
  * @author Radek Kádner
  *
  */
 public interface PrizeRepository extends JpaRepository<Prize, Long> {
-	
+
 	/**
 	 *
 	 * Find by name
@@ -25,7 +26,7 @@ public interface PrizeRepository extends JpaRepository<Prize, Long> {
 	 */
 	@Query(value = "select u from Prize u where u.prizeName = ?1")
 	Prize findByName(String prizeName);
-	
+
 	/**
 	 * 
 	 * Find by ready to win
@@ -34,5 +35,5 @@ public interface PrizeRepository extends JpaRepository<Prize, Long> {
 	 */
 	@Query(value = "select u from Prize u where u.cnt > u.issued order by u.cnt - u.issued desc, u.id desc")
 	List<Prize> findByReadyToWin();
-	
+
 }

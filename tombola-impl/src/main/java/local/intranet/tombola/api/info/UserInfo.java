@@ -15,8 +15,8 @@ import local.intranet.tombola.api.model.entity.User;
 
 /**
  * 
- * {@link UserInfo} for {@link local.intranet.tombola.api.service.UserService} and
- * {@link local.intranet.tombola.api.controller.IndexController#signin}
+ * {@link UserInfo} for {@link local.intranet.tombola.api.service.UserService}
+ * and {@link local.intranet.tombola.api.controller.IndexController#signin}
  * 
  * @author Radek Kádner
  *
@@ -26,22 +26,22 @@ public class UserInfo implements UserDetails {
 	private static final long serialVersionUID = -8869041140299694054L;
 
 	private final String username;
-	
+
 	private final String password;
-	
+
 	private final boolean enabled;
-	
+
 	@Size(min = 0)
 	private final List<GrantedAuthority> authorities;
-	
+
 	/**
 	 * 
 	 * Constructor with parameters
 	 * 
-	 * @param user         {@link User}
-	 * @param authorities  {@link List}&lt;{@link GrantedAuthority}&gt;
+	 * @param user        {@link User}
+	 * @param authorities {@link List}&lt;{@link GrantedAuthority}&gt;
 	 */
-    public UserInfo(User user, List<GrantedAuthority> authorities) {
+	public UserInfo(User user, List<GrantedAuthority> authorities) {
 		this.username = user.getUserName();
 		this.password = user.getPassword();
 		this.enabled = true;
@@ -51,21 +51,22 @@ public class UserInfo implements UserDetails {
 	/**
 	 * 
 	 * Build {@link UserInfo}
-     * <p>
-     * For {@link local.intranet.tombola.api.service.UserService#loadUserByUsername}
+	 * <p>
+	 * For {@link local.intranet.tombola.api.service.UserService#loadUserByUsername}
 	 * 
 	 * @param user        {@link User}
 	 * @param authorities {@link List}&lt;{@link GrantedAuthority}&gt;
 	 * @return {@link UserInfo}
 	 */
 	public static UserInfo build(User user, List<GrantedAuthority> authorities) {
-		UserInfo ret = new UserInfo(user, authorities); 
+		UserInfo ret = new UserInfo(user, authorities);
 		return ret;
 	}
-	
+
 	/**
 	 * 
-	 * Returns the username used to authenticate the user. Cannot return <code>null</code>.
+	 * Returns the username used to authenticate the user. Cannot return
+	 * <code>null</code>.
 	 *
 	 * @return the username (never <code>null</code>)
 	 */
@@ -103,11 +104,11 @@ public class UserInfo implements UserDetails {
 
 	/**
 	 * 
-	 * Indicates whether the user's account has expired. An expired account cannot be
-	 * authenticated.
+	 * Indicates whether the user's account has expired. An expired account cannot
+	 * be authenticated.
 	 *
 	 * @return <code>true</code> if the user's account is valid (ie non-expired),
-	 * <code>false</code> if no longer valid (ie expired)
+	 *         <code>false</code> if no longer valid (ie expired)
 	 */
 	@Override
 	public boolean isAccountNonExpired() {
@@ -119,7 +120,8 @@ public class UserInfo implements UserDetails {
 	 * Indicates whether the user is locked or unlocked. A locked user cannot be
 	 * authenticated.
 	 *
-	 * @return <code>true</code> if the user is not locked, <code>false</code> otherwise
+	 * @return <code>true</code> if the user is not locked, <code>false</code>
+	 *         otherwise
 	 */
 	@Override
 	public boolean isAccountNonLocked() {
@@ -131,8 +133,8 @@ public class UserInfo implements UserDetails {
 	 * Indicates whether the user's credentials (password) has expired. Expired
 	 * credentials prevent authentication.
 	 *
-	 * @return <code>true</code> if the user's credentials are valid (ie non-expired),
-	 * <code>false</code> if no longer valid (ie expired)
+	 * @return <code>true</code> if the user's credentials are valid (ie
+	 *         non-expired), <code>false</code> if no longer valid (ie expired)
 	 */
 	@Override
 	public boolean isCredentialsNonExpired() {
@@ -144,7 +146,8 @@ public class UserInfo implements UserDetails {
 	 * Indicates whether the user is enabled or disabled. A disabled user cannot be
 	 * authenticated.
 	 *
-	 * @return <code>true</code> if the user is enabled, <code>false</code> otherwise
+	 * @return <code>true</code> if the user is enabled, <code>false</code>
+	 *         otherwise
 	 */
 	@Override
 	public boolean isEnabled() {

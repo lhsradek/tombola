@@ -84,17 +84,17 @@ public class IndexController {
 	private static final Logger LOG = LoggerFactory.getLogger(IndexController.class);
 
 	/**
-     * 
-     * INDEX_ERROR_INVALID_USERNAME_AND_PASSWORD = "Invalid username and password!"
-     */
+	 * 
+	 * INDEX_ERROR_INVALID_USERNAME_AND_PASSWORD = "Invalid username and password!"
+	 */
 	public static final String INDEX_ERROR_INVALID_USERNAME_AND_PASSWORD = "Invalid username and password!";
-	
+
 	/**
 	 * 
 	 * INDEX_ERROR_INVALID_ROLE = "Invalid role for this page."
 	 */
 	public static final String INDEX_ERROR_INVALID_ROLE = "Invalid role for this page!";
-	
+
 	/**
 	 * 
 	 * INDEX_ERROR_USERNAME_IS_LOCKED = "Username or user roles are locked!"
@@ -175,49 +175,49 @@ public class IndexController {
 
 	@Value("${tombola.app.putTicket}")
 	private int putTicket;
-	
+
 	@Value("${tombola.app.headerSoftware:false}")
 	boolean headerSoftware;
-	
+
 	@Value("${tombola.app.stage}")
 	private String stage;
 
 	@Value("${tombola.app.ticketCnt:50}")
 	private int ticketCnt;
-	
+
 	@Value("${tombola.app.logCnt:25}")
 	private int logCnt;
-	
+
 	@Value("${tombola.sec.key}")
 	private String key;
-	
+
 	@Value("${tombola.app.javadocHref:true}")
 	boolean javadocHref;
-	
+
 	@Autowired
 	private StatusController statusController;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private TombolaService tombolaService;
-	
+
 	@Autowired
 	private LoggingEventService loggingEventService;
-	
-    @Autowired
-    private LoginAttemptService loginAttemptService;
+
+	@Autowired
+	private LoginAttemptService loginAttemptService;
 
 	@Autowired
 	private TicketRepository ticketRepository;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private Provider provider;
-	
+
 	/**
 	 * 
 	 * HTML License info
@@ -234,35 +234,35 @@ public class IndexController {
 		addModel(request, model);
 		String username = (String) model.asMap().get(INDEX_USERNAME);
 		if (username == null || username.length() == 0) {
-			LOG.debug("GetLicense ip:'{}' sessionId:'{}'", statusController.getClientIP(), request.getRequestedSessionId());
+			LOG.debug("GetLicense ip:'{}' sessionId:'{}'", statusController.getClientIP(),
+					request.getRequestedSessionId());
 		} else {
-			LOG.debug("GetLicense username:'{}' ip:'{}' sessionId:'{}'", username, statusController.getClientIP(), request.getRequestedSessionId());
+			LOG.debug("GetLicense username:'{}' ip:'{}' sessionId:'{}'", username, statusController.getClientIP(),
+					request.getRequestedSessionId());
 		}
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX_LICENSE;
 	}
-	
+
 	/**
 	 * 
 	 * HTML Index
 	 * <p>
 	 * The method getIndex for /
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
-
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}.
+	 * 
 	 * @param pg      {@link Integer} Number from 0. Zero is the first page
 	 * @param request {@link HttpServletRequest}
 	 * @param model   {@link Model}
 	 * @return "index" for thymeleaf index.html {@link String}
 	 */
-	@GetMapping(
-			value = { "/", "/page/{page}" },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/", "/page/{page}" }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasRole('ROLE_userRole')")
-	public String getIndex(
-			@PathVariable(value = "page", required = false)
-			Integer pg,
-			HttpServletRequest request, Model model) {
+	public String getIndex(@PathVariable(value = "page", required = false) Integer pg, HttpServletRequest request,
+			Model model) {
 		AtomicInteger sumaCnt = new AtomicInteger();
 		AtomicInteger sumaIssued = new AtomicInteger();
 		List<PrizeInfo> prize = tombolaService.getPrizes(false);
@@ -279,12 +279,10 @@ public class IndexController {
 		model.addAttribute(INDEX_API, statusController.getHrefFormat(TombolaApplication.class, javadocHref));
 		model.addAttribute(StatusController.STATUS_IMPLEMENTATION_VERSION, statusController.getImplementationVersion());
 		addAttribute(cnt, max, page, sumaCnt, sumaIssued, prize, model);
-		LOG.debug("GetIndex '{}' {} {} {}",
-				model.asMap().get(INDEX_USERNAME),
-				request.getRequestedSessionId(),
-				tombolaService.ticketInfoAsLong(ticket.getContent()),
-				tombolaService.prizeInfoAsMap());
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		LOG.debug("GetIndex '{}' {} {} {}", model.asMap().get(INDEX_USERNAME), request.getRequestedSessionId(),
+				tombolaService.ticketInfoAsLong(ticket.getContent()), tombolaService.prizeInfoAsMap());
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX;
 	}
 
@@ -294,20 +292,17 @@ public class IndexController {
 	 * <p>
 	 * The method getManager for /manager
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE}.
 	 * 
-	 * @param pg 		 {@link Integer} Number from 0. Zero is the first page
-	 * @param request    {@link HttpServletRequest}
-	 * @param model      {@link Model}
+	 * @param pg      {@link Integer} Number from 0. Zero is the first page
+	 * @param request {@link HttpServletRequest}
+	 * @param model   {@link Model}
 	 * @return "manager" for thymeleaf manager.html {@link String}
 	 */
-	@GetMapping(
-			value = { "/manager", "/manager/page/{page}" },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/manager", "/manager/page/{page}" }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasRole('ROLE_managerRole')")
-	public synchronized String getManager(
-			@PathVariable(value = "page", required = false)
-			Integer pg,
+	public synchronized String getManager(@PathVariable(value = "page", required = false) Integer pg,
 			HttpServletRequest request, Model model) throws GeneralSecurityException {
 		AtomicInteger sumaCnt = new AtomicInteger();
 		AtomicInteger sumaIssued = new AtomicInteger();
@@ -323,11 +318,8 @@ public class IndexController {
 			page.set(newPage);
 			ticket = tombolaService.getTicketsPage(pageable);
 		}
-		LOG.debug("GetManager '{}' {} {} {}",
-				model.asMap().get(INDEX_USERNAME),
-				request.getRequestedSessionId(),
-				tombolaService.ticketInfoAsLong(tombolaService.getTicketsWinPage(pageable)
-						.getContent()),
+		LOG.debug("GetManager '{}' {} {} {}", model.asMap().get(INDEX_USERNAME), request.getRequestedSessionId(),
+				tombolaService.ticketInfoAsLong(tombolaService.getTicketsWinPage(pageable).getContent()),
 				tombolaService.prizeInfoAsMap());
 		addAttribute(cnt, max, page, sumaCnt, sumaIssued, prize, model);
 		try {
@@ -349,36 +341,33 @@ public class IndexController {
 			request.getSession().setAttribute(INDEX_TOMBOLA_EXCEPTION, e);
 			throw e;
 		}
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX_MANAGER;
 	}
-	
+
 	/**
 	 * 
 	 * HTML Manager Set
 	 * <p>
 	 * The method setManager for /manager
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE}.
 	 * 
 	 * @param pg       {@link Integer} Number from 0. Zero is the first page
 	 * @param prizeId  {@link Long} Prize's id
 	 * @param ticketId {@link String} Ticket's id
 	 * @param request  {@link HttpServletRequest}
 	 * @param response {@link HttpServletResponse}
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	@PostMapping(
-			path = "/manager/page/{page}/prizeId/{prizeId}/ticketId/{ticketId}",
-			consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@PostMapping(path = "/manager/page/{page}/prizeId/{prizeId}/ticketId/{ticketId}", consumes = {
+			MediaType.APPLICATION_FORM_URLENCODED_VALUE }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasRole('ROLE_managerRole')")
-	public synchronized String setManager(
-			@PathVariable(value = "page", required = false)
-			Integer pg,
-			@PathVariable @NotNull Long prizeId,
-			@PathVariable @NotNull String ticketId,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public synchronized String setManager(@PathVariable(value = "page", required = false) Integer pg,
+			@PathVariable @NotNull Long prizeId, @PathVariable @NotNull String ticketId, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		// LOG.debug("prizeId:{} ticketId:{} pg:{}", prizeId, ticketId, pg);
 		AtomicInteger page = getPage(pg, Integer.MAX_VALUE, null, null, null);
 		try {
@@ -387,48 +376,42 @@ public class IndexController {
 			String salt = AESUtil.getHex(((TicketLink) detail).getSalt());
 			IvParameterSpec iv = new IvParameterSpec(((TicketLink) detail).getIv());
 			SecretKey secretKey = AESUtil.getKeyFromPassword(AESUtil.getHex(key), salt);
-			Long ti = Long.valueOf(
-					AESUtil.decrypt(AESUtil.getHex(ticketId), secretKey, iv));
+			Long ti = Long.valueOf(AESUtil.decrypt(AESUtil.getHex(ticketId), secretKey, iv));
 			tombolaService.patchPrizeTicket(Long.valueOf(prizeId), ti);
 			// Optional<Prize> prize = prizeRepository.findById(Long.valueOf(prizeId));
 			String username = userService.getUsername();
 			Pageable pageable = PageRequest.of(page.get(), ticketCnt);
 			Page<TicketInfo> ticket = tombolaService.getTicketsWinPage(pageable);
-			LOG.info("SetManager '{}' {} {} {}",
-					username,
-					request.getRequestedSessionId() + "|" + 
-					ti  + "|" +
-					prizeId,
-					tombolaService.ticketInfoAsLong(ticket.getContent()),
-					tombolaService.prizeInfoAsMap());
+			LOG.info("SetManager '{}' {} {} {}", username, request.getRequestedSessionId() + "|" + ti + "|" + prizeId,
+					tombolaService.ticketInfoAsLong(ticket.getContent()), tombolaService.prizeInfoAsMap());
 			// response.sendRedirect("/tombola/manager/page/" + page);
 		} catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-				| InvalidAlgorithmParameterException | BadPaddingException | NumberFormatException |
-				InvalidKeySpecException | IllegalBlockSizeException e) {
+				| InvalidAlgorithmParameterException | BadPaddingException | NumberFormatException
+				| InvalidKeySpecException | IllegalBlockSizeException e) {
 			LOG.warn("SetManager error:'{}' message:'{}'", e.getClass().getSimpleName(), e.getMessage());
 			// LOG.error(e.getMessage(), e);
 			request.getSession().setAttribute(INDEX_TOMBOLA_EXCEPTION, e);
 			throw e;
 		}
 		return "redirect: /tombola/manager/page/" + page;
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 	}
-	
+
 	/**
 	 * 
 	 * HTML Properties
 	 * <p>
 	 * The method getProperties for /properties
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}.
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}.
 	 * 
 	 * @param request {@link HttpServletRequest}
 	 * @param model   {@link Model}
 	 * @return "properties" for thymeleaf properties.html {@link String}
 	 */
-	@GetMapping(
-			value = { "/properties" },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/properties" }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasRole('ROLE_adminRole')")
 	public String getProperties(HttpServletRequest request, Model model) {
 		addModel(request, model);
@@ -440,39 +423,37 @@ public class IndexController {
 		model.addAttribute(INDEX_TOMBOLA_HTTP_SERVLET_REQUEST, statusController.getTombolaHttpServletRequest());
 		model.addAttribute(INDEX_TOMBOLA_SERVLET_CONTEXT, statusController.getTombolaServletContext());
 		model.addAttribute(INDEX_TOMBOLA_ENVIRONMENT, statusController.getTombolaEnvironment());
-		LOG.debug("GetProperties username:'{}' ip:'{}' sessionId:'{}'", model.asMap().get(INDEX_USERNAME), statusController.getClientIP(), request.getRequestedSessionId());
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
-		return INDEX_PROPERTIES; 
+		LOG.debug("GetProperties username:'{}' ip:'{}' sessionId:'{}'", model.asMap().get(INDEX_USERNAME),
+				statusController.getClientIP(), request.getRequestedSessionId());
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
+		return INDEX_PROPERTIES;
 	}
-	
+
 	/**
 	 * 
 	 * HTML Log
 	 * <p>
 	 * The method getTombolaLog for /tombolaLog
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * 
 	 * @param pg      {@link Integer} Number from 0. Zero is the first page
-	 * @param srt     {@link String} Sort by [idD, idU, mD, mU, a0D, a0U, a1D, a1U, a2D, a2U, a3D, a3U, cU, cD, lU, lD]
-	 * @param filter  {@link String} Empty or filter by [DEBUG, ERROR, INFO, WARN] or their combinations. Example: 'ERROR+WARN'
+	 * @param srt     {@link String} Sort by [idD, idU, mD, mU, a0D, a0U, a1D, a1U,
+	 *                a2D, a2U, a3D, a3U, cU, cD, lU, lD]
+	 * @param filter  {@link String} Empty or filter by [DEBUG, ERROR, INFO, WARN]
+	 *                or their combinations. Example: 'ERROR+WARN'
 	 * @param request {@link HttpServletRequest}
 	 * @param model   {@link Model}
 	 * @return "indexLog" for thymeleaf indexLog.html {@link String}
 	 */
-	@GetMapping(
-			value = {
-					"/tombolaLog",
-					"/tombolaLog/page/{page}",
-					"/tombolaLog/page/{page}/sort/{sort}",
-					"/tombolaLog/page/{page}/sort/{sort}/filter/{filter}" },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/tombolaLog", "/tombolaLog/page/{page}", "/tombolaLog/page/{page}/sort/{sort}",
+			"/tombolaLog/page/{page}/sort/{sort}/filter/{filter}" }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
-	public String getTombolaLog(
-			@PathVariable(value = "page", required = false) Integer pg,
-			@PathVariable(value = "sort", required = false) String srt,
-			@PathVariable(required = false) String filter,
+	public String getTombolaLog(@PathVariable(value = "page", required = false) Integer pg,
+			@PathVariable(value = "sort", required = false) String srt, @PathVariable(required = false) String filter,
 			HttpServletRequest request, Model model) {
 		List<LevelCount> ctle = loggingEventService.countTotalLoggingEvents();
 		List<String> levelString = new ArrayList<>();
@@ -497,10 +478,9 @@ public class IndexController {
 				}
 			}
 		}
-		// Up, Down 
-		if (srt == null || srt.length() == 0 || !Arrays.asList(
-				"idU", "idD", "mU", "mD", "a0U", "a0D", "a1U", "a1D", "a2U", "a2D", "a3U", "a3D",
-				"cU", "cD", "lU", "lD").contains(srt)) {
+		// Up, Down
+		if (srt == null || srt.length() == 0 || !Arrays.asList("idU", "idD", "mU", "mD", "a0U", "a0D", "a1U", "a1D",
+				"a2U", "a2D", "a3U", "a3D", "cU", "cD", "lU", "lD").contains(srt)) {
 			srt = "idD";
 		}
 		AtomicInteger page = getPage(pg, Integer.MAX_VALUE, null, null, null);
@@ -525,7 +505,8 @@ public class IndexController {
 		model.addAttribute(INDEX_LOGS_SORT, srt);
 		model.addAttribute(INDEX_LOGS_FILTER, filter);
 		setPage(page, max, model);
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX_LOG;
 	}
 
@@ -533,7 +514,8 @@ public class IndexController {
 	 * 
 	 * logSortByParam for {@link #getTombolaLog}
 	 * 
-	 * @param srt {@link String} Sort by [idD, idU, mD, mU, a0D, a0U, a1D, a1U, a2D, a2U, a3D, a3U, cU, cD, lU, lD]
+	 * @param srt {@link String} Sort by [idD, idU, mD, mU, a0D, a0U, a1D, a1U, a2D,
+	 *            a2U, a3D, a3U, cU, cD, lU, lD]
 	 * @return {@link List}&lt;{@link Order}&gt;
 	 */
 	protected List<Order> logSortByParam(String srt) {
@@ -607,61 +589,51 @@ public class IndexController {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * HTML Audit
 	 * <p>
 	 * The method getAudit for /audit
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#MANAGER_ROLE} and
 	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 * 
 	 * @param pg      {@link Integer} Number from 0. Zero is the first page
-	 * @param srt     {@link String} Sort by [idU, idD, a0U, a0D, a1U, a1D, a2U, a2D, a3U, a3D, mU, mD]
+	 * @param srt     {@link String} Sort by [idU, idD, a0U, a0D, a1U, a1D, a2U,
+	 *                a2D, a3U, a3D, mU, mD]
 	 * @param request {@link HttpServletRequest}
 	 * @param model   {@link Model}
 	 * @return "indexLog" for thymeleaf indexLog.html {@link String}
 	 */
-	@GetMapping(
-			value = {
-					"/audit",
-					"/audit/page/{page}",
-					"/audit/page/{page}/sort/{sort}" },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/audit", "/audit/page/{page}",
+			"/audit/page/{page}/sort/{sort}" }, produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_managerRole', 'ROLE_adminRole')")
-	public String getAudit(
-			@PathVariable(value = "page", required = false) Integer pg,
-			@PathVariable(value = "sort", required = false) String srt,
-			HttpServletRequest request, Model model) {
-		// Up, Down 
-		if (srt == null || srt.length() == 0 || !Arrays.asList(
-				"idU", "idD", "a0U", "a0D", "a1U", "a1D", "a2U", "a2D", "a3U", "a3D", "mU", "mD").contains(srt)) {
+	public String getAudit(@PathVariable(value = "page", required = false) Integer pg,
+			@PathVariable(value = "sort", required = false) String srt, HttpServletRequest request, Model model) {
+		// Up, Down
+		if (srt == null || srt.length() == 0
+				|| !Arrays.asList("idU", "idD", "a0U", "a0D", "a1U", "a1D", "a2U", "a2D", "a3U", "a3D", "mU", "mD")
+						.contains(srt)) {
 			srt = "idD";
 		}
 		List<Order> order = auditSortByParam(srt);
 		AtomicInteger page = getPage(pg, Integer.MAX_VALUE, null, null, null);
 		addModel(request, model);
-		LOG.info("GetAudit username:'{}' {} order:'{}' {}",
-				model.asMap().get(INDEX_USERNAME),
-				request.getRequestedSessionId(),
-				order.toString(),
-				tombolaService.prizeInfoAsMap());
-		List<String> arr = Arrays.asList(
-						"deleteTicket", "patchPrizeName", "patchPrizeTicket", "putPrizes", "putTickets");
-		Page<LoggingEventInfo> log = loggingEventService.findPageByCaller(
-				page.get(), ticketCnt, Sort.by(order),
-				Arrays.asList(TombolaService.class.getName()),
-				arr);
+		LOG.info("GetAudit username:'{}' {} order:'{}' {}", model.asMap().get(INDEX_USERNAME),
+				request.getRequestedSessionId(), order.toString(), tombolaService.prizeInfoAsMap());
+		List<String> arr = Arrays.asList("deleteTicket", "patchPrizeName", "patchPrizeTicket", "putPrizes",
+				"putTickets");
+		Page<LoggingEventInfo> log = loggingEventService.findPageByCaller(page.get(), ticketCnt, Sort.by(order),
+				Arrays.asList(TombolaService.class.getName()), arr);
 		long cnt = log.getTotalElements();
 		int max = (log.getTotalPages() > 0) ? log.getTotalPages() - 1 : 0;
 		int newPage = getPage(page.get(), max, null, null, null).get();
 		if (newPage != page.get()) {
 			page.set(newPage);
-			log = loggingEventService.findPageByCaller(
-					page.get(), ticketCnt, Sort.by(order),
-					Arrays.asList(TombolaService.class.getName()),
-					arr);
+			log = loggingEventService.findPageByCaller(page.get(), ticketCnt, Sort.by(order),
+					Arrays.asList(TombolaService.class.getName()), arr);
 		}
 		model.addAttribute(INDEX_ACTIVE_PROFILES, statusController.getActiveProfiles());
 		model.addAttribute(INDEX_TOMBOLA_LOGS, log.getContent());
@@ -670,7 +642,8 @@ public class IndexController {
 		model.addAttribute(INDEX_LOGS_PAGE, page);
 		model.addAttribute(INDEX_LOGS_SORT, srt);
 		setPage(page, max, model);
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX_AUDIT;
 	}
 
@@ -678,7 +651,8 @@ public class IndexController {
 	 * 
 	 * auditSortByParam for {@link #getAudit}
 	 * 
-	 * @param srt {@link String} Sort by [idU, idD, a0U, a0D, a1U, a1D, a2U, a2D, a3U, a3D, mU, mD]
+	 * @param srt {@link String} Sort by [idU, idD, a0U, a0D, a1U, a1D, a2U, a2D,
+	 *            a3U, a3D, mU, mD]
 	 * @return {@link List}&lt;{@link Order}&gt;
 	 */
 	protected List<Order> auditSortByParam(String srt) {
@@ -736,7 +710,7 @@ public class IndexController {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Log in
@@ -747,10 +721,10 @@ public class IndexController {
 	 * @param model   {@link Model}
 	 * @return "login" for thymeleaf login.html {@link String}
 	 */
-	@GetMapping(value = {"/login"}, produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = { "/login" }, produces = MediaType.TEXT_HTML_VALUE)
 	public String getLogin(HttpServletRequest request, HttpServletResponse response, Model model) {
 		String err = getErrorMessage(request, INDEX_TOMBOLA_EXCEPTION, model);
-		if (request.getSession() != null && err.equals(StatusController.STATUS_OK) ) {
+		if (request.getSession() != null && err.equals(StatusController.STATUS_OK)) {
 			request.getSession().removeAttribute(INDEX_TOMBOLA_EXCEPTION);
 		} else if (request.getSession() != null) {
 			request.getSession().setAttribute(INDEX_TOMBOLA_EXCEPTION, new TombolaException(err));
@@ -759,12 +733,13 @@ public class IndexController {
 		boolean isAuthenticated = (boolean) model.getAttribute(INDEX_USER_IS_AUTHENTICATED);
 		if (request.getQueryString() != null && request.getQueryString().startsWith(INDEX_ERROR)) {
 			if (!isAuthenticated) {
-    			LOG.warn(INDEX_LOGIN_QUERY_STRING, request.getQueryString(), "");
+				LOG.warn(INDEX_LOGIN_QUERY_STRING, request.getQueryString(), "");
 			}
 		}
 		model.addAttribute(INDEX_API, statusController.getHrefFormat(TombolaApplication.class, javadocHref));
 		model.addAttribute(INDEX_LOGIN_INVALID_ROLE, INDEX_ERROR_INVALID_ROLE);
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 		return INDEX_LOGIN;
 	}
 
@@ -774,38 +749,38 @@ public class IndexController {
 	 * <p>
 	 * The method signin for /login/signin
 	 * <p>
-	 * For {@link #getLogin} after submit &lt;Log in&gt; or press &lt;&crarr;Enter&gt;
+	 * For {@link #getLogin} after submit &lt;Log in&gt; or press
+	 * &lt;&crarr;Enter&gt;
 	 * 
 	 * @param username {@link String} Username
 	 * @param password {@link String} Password
 	 * @param request  {@link HttpServletRequest}
 	 * @return redirect url {@link String}
 	 */
-	@PostMapping(path = "/login/signin", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public synchronized String signin(
-			@RequestParam @NotNull String username,
-			@RequestParam @NotNull String password,
+	@PostMapping(path = "/login/signin", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+	public synchronized String signin(@RequestParam @NotNull String username, @RequestParam @NotNull String password,
 			HttpServletRequest request) {
 		String redirect = "/tombola/login";
 		if (username != null && request.getSession() != null) {
-			DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession().getAttribute(
-					INDEX_SPRING_SECURITY_SAVED_REQUEST);
+			DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
+					.getAttribute(INDEX_SPRING_SECURITY_SAVED_REQUEST);
 			if (savedRequest != null) {
 				redirect = savedRequest.getRedirectUrl();
 			}
 			try {
 				UserInfo user = userService.loadUserByUsername(username);
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-						user, password, user.getAuthorities());
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, password,
+						user.getAuthorities());
 				if (authenticationManager != null) {
 					SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(token));
 				}
-				LOG.info("Login username:'{}' redirect:'{}' sessionId:'{}'", username, redirect, request.getSession().getId());
+				LOG.info("Login username:'{}' redirect:'{}' sessionId:'{}'", username, redirect,
+						request.getSession().getId());
 			} catch (UsernameNotFoundException | BadCredentialsException | LockedException e) {
-				String ret = "/tombola/login" + provider.queryProvider(Arrays.asList(
-						Map.entry(INDEX_ERROR, Boolean.TRUE.toString()),
-						Map.entry("exception", e.getClass().getSimpleName())));
-				int attempt = loginAttemptService.findById(statusController.getClientIP()); 
+				String ret = "/tombola/login"
+						+ provider.queryProvider(Arrays.asList(Map.entry(INDEX_ERROR, Boolean.TRUE.toString()),
+								Map.entry("exception", e.getClass().getSimpleName())));
+				int attempt = loginAttemptService.findById(statusController.getClientIP());
 				LOG.warn("Signin username:'{}' redirect:'{}' attempt:{}", username, ret, attempt);
 				LOG.error(e.getClass().getSimpleName(), e);
 				request.getSession().setAttribute(INDEX_TOMBOLA_EXCEPTION, e);
@@ -819,8 +794,7 @@ public class IndexController {
 	 * 
 	 * Get Error with statusCode
 	 * <p>
-	 * and text
-	 * HttpStatus.valueOf(statusCode).getReasonPhrase()
+	 * and text HttpStatus.valueOf(statusCode).getReasonPhrase()
 	 * <p>
 	 * The method getError for /error
 	 * 
@@ -828,9 +802,8 @@ public class IndexController {
 	 * @param model   {@link Model}
 	 * @return "error" for thymeleaf error.html {@link String}
 	 */
-	@RequestMapping(value = "/error",
-			method = { RequestMethod.GET, RequestMethod.POST },
-			produces = MediaType.TEXT_HTML_VALUE)
+	@RequestMapping(value = "/error", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = MediaType.TEXT_HTML_VALUE)
 	public synchronized String getError(HttpServletRequest request, Model model) {
 		try {
 			int statusCode = Integer.valueOf(200);
@@ -845,16 +818,16 @@ public class IndexController {
 			if (statusCode == 200) {
 				request.getSession().removeAttribute(INDEX_TOMBOLA_EXCEPTION);
 			} else {
-				String path = (String) request
-						.getAttribute(INDEX_JAVAX_SERVLET_FORWARD_REQUEST_URI);
+				String path = (String) request.getAttribute(INDEX_JAVAX_SERVLET_FORWARD_REQUEST_URI);
 				if (!Arrays.asList(INDEX_TOMBOLA_H2_CONSOLE).contains(path)) {
-					LOG.error("GetError error:'{}' exception:'{}' code:{} path:'{}'", statusText, request
-							.getAttribute(RequestDispatcher.ERROR_EXCEPTION), statusCode, path);
+					LOG.error("GetError error:'{}' exception:'{}' code:{} path:'{}'", statusText,
+							request.getAttribute(RequestDispatcher.ERROR_EXCEPTION), statusCode, path);
 					model.addAttribute(statusText);
 				}
 			}
 			addModel(request, model);
-			// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+			// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+			// value.toString()); });
 		} catch (UsernameNotFoundException | BadCredentialsException | LockedException | InternalServerError e) {
 			if (e instanceof InternalServerError) {
 				LOG.error(e.getMessage() + " " + e.getStackTrace(), e);
@@ -877,8 +850,8 @@ public class IndexController {
 	 * @param prize      {@link List}&lt;{@link PrizeInfo}&gt;
 	 * @param model      {@link Model}
 	 */
-	protected void addAttribute(long cnt, int max, AtomicInteger page, AtomicInteger sumaCnt,
-			AtomicInteger sumaIssued, List<PrizeInfo> prize, Model model) {
+	protected void addAttribute(long cnt, int max, AtomicInteger page, AtomicInteger sumaCnt, AtomicInteger sumaIssued,
+			List<PrizeInfo> prize, Model model) {
 		model.addAttribute(INDEX_TICKET_COUNT, cnt);
 		model.addAttribute(INDEX_TICKET_MAX, max);
 		model.addAttribute(INDEX_TICKET_PAGE, page);
@@ -899,8 +872,8 @@ public class IndexController {
 	 * @param prize      {@link List}&lt;{@link PrizeInfo}&gt;
 	 * @return {@link AtomicInteger}
 	 */
-	protected AtomicInteger getPage(@Nullable Integer pg, Integer max, AtomicInteger sumaCnt,
-			AtomicInteger sumaIssued, @Nullable List<PrizeInfo> prize) {
+	protected AtomicInteger getPage(@Nullable Integer pg, Integer max, AtomicInteger sumaCnt, AtomicInteger sumaIssued,
+			@Nullable List<PrizeInfo> prize) {
 		AtomicInteger page = new AtomicInteger();
 		if (pg == null) {
 			page.set(0);
@@ -918,7 +891,7 @@ public class IndexController {
 		}
 		return page;
 	}
-	
+
 	/**
 	 * 
 	 * Set page
@@ -942,19 +915,18 @@ public class IndexController {
 
 	/**
 	 * 
-	 * Get error message from session 
+	 * Get error message from session
 	 * <p>
-	 * Used {@link BadCredentialsException} and
-	 * {@link LockedException}    
+	 * Used {@link BadCredentialsException} and {@link LockedException}
 	 * 
 	 * @param request {@link HttpServletRequest}
 	 * @param key     {@link String}
 	 * @param model   {@link Model}
 	 * @return error message {@link String}
- 	 */
+	 */
 	protected String getErrorMessage(HttpServletRequest request, String key, Model model) {
 		String ret;
-		Object object = (Exception) request.getSession().getAttribute(key);
+		Object object = request.getSession().getAttribute(key);
 		if (object != null && object instanceof Exception) {
 			Exception exception = (Exception) object;
 			if (exception instanceof UsernameNotFoundException) {
@@ -985,7 +957,7 @@ public class IndexController {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Add model for every index links
@@ -1010,13 +982,14 @@ public class IndexController {
 		if (methodName.equals(INDEX_GET_ERROR)) {
 			String err = getErrorMessage(request, INDEX_TOMBOLA_EXCEPTION, model);
 			if (!err.equals(StatusController.STATUS_OK)) {
-				LOG.warn("AddModel error:'{}' message:'{}' code:{} path:'{}'",  model.getAttribute(INDEX_ERROR), err,
+				LOG.warn("AddModel error:'{}' message:'{}' code:{} path:'{}'", model.getAttribute(INDEX_ERROR), err,
 						model.getAttribute(INDEX_STATUS),
-						(String) request.getAttribute(INDEX_JAVAX_SERVLET_FORWARD_REQUEST_URI));
+						request.getAttribute(INDEX_JAVAX_SERVLET_FORWARD_REQUEST_URI));
 			}
 		}
 		// LOG.debug("username:'{}' authenticated:{}", username, isAuthenticated);
-		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key, value.toString()); });
+		// model.asMap().forEach((key, value) -> { LOG.debug("key:{} value:{}", key,
+		// value.toString()); });
 	}
-	
+
 }

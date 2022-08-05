@@ -15,16 +15,13 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
  *
  * {@link RedisConfig} for {@link local.intranet.tombola.TombolaApplication}.
  * <p>
- * https://www.baeldung.com/spring-data-redis-tutorial
- * <br/>
- * https://www.baeldung.com/spring-data-redis-properties
- * <br/>
- * https://www.baeldung.com/spring-session
- * <br/>
+ * https://www.baeldung.com/spring-data-redis-tutorial <br/>
+ * https://www.baeldung.com/spring-data-redis-properties <br/>
+ * https://www.baeldung.com/spring-session <br/>
  * https://www.baeldung.com/jedis-java-redis-client-library
  * <p>
  * <img src="/tombola/res/redis.png"/>
- *  
+ * 
  */
 @Configuration
 @EnableAutoConfiguration
@@ -33,25 +30,26 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 public class RedisConfig {
 
 	private static final String TOMBOLA_MESSAGE_QUEUE = "tombola:messageQueue";
-	
+
 	@Value("${spring.redis.password}")
 	private String password;
-	
+
 	@Value("${spring.redis.database}")
 	private Integer database;
-	
+
 	@Value("${spring.redis.host}")
 	private String host;
-	
+
 	@Value("${spring.redis.port}")
 	private Integer port;
-	
+
 	@Value("${spring.redis.timeout}")
 	private Long timeout;
-	
+
 	/**
 	 * 
 	 * Get JedisConnectionFactory
+	 * 
 	 * @return {@link JedisConnectionFactory}
 	 */
 	@Bean
@@ -64,7 +62,7 @@ public class RedisConfig {
 		ret.getClientConfiguration().getPoolConfig().get().setMaxWaitMillis(timeout);
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Get redisTemplate
@@ -73,12 +71,12 @@ public class RedisConfig {
 	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
-	    RedisTemplate<String, Object> ret = new RedisTemplate<>();
-	    ret.setConnectionFactory(jedisConnectionFactory());
-	    ret.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
-	    return ret;
+		RedisTemplate<String, Object> ret = new RedisTemplate<>();
+		ret.setConnectionFactory(jedisConnectionFactory());
+		ret.setValueSerializer(new GenericToStringSerializer<Object>(Object.class));
+		return ret;
 	}
-	
+
 	/**
 	 * Get messageListener
 	 * 
@@ -86,9 +84,9 @@ public class RedisConfig {
 	 */
 	@Bean
 	public MessageListenerAdapter messageListener() {
-		MessageListenerAdapter ret = new MessageListenerAdapter(new RedisMessageSubscriber()); 
-        return ret;
-    }
+		MessageListenerAdapter ret = new MessageListenerAdapter(new RedisMessageSubscriber());
+		return ret;
+	}
 
 	/**
 	 * 
@@ -96,34 +94,34 @@ public class RedisConfig {
 	 * 
 	 * @return {@link RedisMessageListenerContainer}
 	 */
-    @Bean
-    public RedisMessageListenerContainer redisContainer() {
-        final RedisMessageListenerContainer ret = new RedisMessageListenerContainer();
-        ret.setConnectionFactory(jedisConnectionFactory());
-        ret.addMessageListener(messageListener(), topic());
-        return ret;
-    }
+	@Bean
+	public RedisMessageListenerContainer redisContainer() {
+		final RedisMessageListenerContainer ret = new RedisMessageListenerContainer();
+		ret.setConnectionFactory(jedisConnectionFactory());
+		ret.addMessageListener(messageListener(), topic());
+		return ret;
+	}
 
-    /**
-     * 
-     * Get redisPublisher
-     * 
-     * @return {@link MessagePublisher}
-     */
-    @Bean
-    public MessagePublisher redisPublisher() {
-        return new RedisMessagePublisher(redisTemplate(), topic());
-    }
+	/**
+	 * 
+	 * Get redisPublisher
+	 * 
+	 * @return {@link MessagePublisher}
+	 */
+	@Bean
+	public MessagePublisher redisPublisher() {
+		return new RedisMessagePublisher(redisTemplate(), topic());
+	}
 
-    /**
-     * 
-     * Get topic
-     * 
-     * @return {@link ChannelTopic}
-     */
-    @Bean
-    public ChannelTopic topic() {
-        return new ChannelTopic(TOMBOLA_MESSAGE_QUEUE);
-    }
+	/**
+	 * 
+	 * Get topic
+	 * 
+	 * @return {@link ChannelTopic}
+	 */
+	@Bean
+	public ChannelTopic topic() {
+		return new ChannelTopic(TOMBOLA_MESSAGE_QUEUE);
+	}
 
 }

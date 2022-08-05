@@ -18,8 +18,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * 
- * {@link Provider} for {@link local.intranet.tombola.api.controller.IndexController} and
- * {@link Provider} for {@link local.intranet.tombola.api.service.TombolaService}
+ * {@link Provider} for
+ * {@link local.intranet.tombola.api.controller.IndexController} and
+ * {@link Provider} for
+ * {@link local.intranet.tombola.api.service.TombolaService}
  * 
  * @author Radek Kádner
  *
@@ -31,38 +33,40 @@ public class Provider {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-    /**
-     * 
-     * Get queryProvider for {@link local.intranet.tombola.api.controller.IndexController#signin}
-     * 
-     * @param params {@link List}&lt;{@link Map.Entry}&lt;{@link String}, {@link String}&gt;&gt;
-     * @return {@link String}
-     */
-    public String queryProvider(List<Map.Entry<String, String>> params) {
-        StringBuilder query = new StringBuilder();
-        AtomicBoolean first = new AtomicBoolean(true);
-        params.forEach(pair -> {
-            if (first.get()) {
-                query.append("?");
-                query.append(pair.toString());
-                first.set(false);
-            } else {
-                query.append("&");
-                query.append(pair.toString());
-            }
-        });
-        return query.toString();
-    }
+
+	/**
+	 * 
+	 * Get queryProvider for
+	 * {@link local.intranet.tombola.api.controller.IndexController#signin}
+	 * 
+	 * @param params {@link List}&lt;{@link Map.Entry}&lt;{@link String},
+	 *               {@link String}&gt;&gt;
+	 * @return {@link String}
+	 */
+	public String queryProvider(List<Map.Entry<String, String>> params) {
+		StringBuilder query = new StringBuilder();
+		AtomicBoolean first = new AtomicBoolean(true);
+		params.forEach(pair -> {
+			if (first.get()) {
+				query.append("?");
+				query.append(pair.toString());
+				first.set(false);
+			} else {
+				query.append("&");
+				query.append(pair.toString());
+			}
+		});
+		return query.toString();
+	}
 
 	/**
 	 * 
 	 * Get AuditReader for
-     * {@link local.intranet.tombola.api.service.TombolaService#getPrize} and
-     * {@link local.intranet.tombola.api.service.TombolaService#getTicket}
+	 * {@link local.intranet.tombola.api.service.TombolaService#getPrize} and
+	 * {@link local.intranet.tombola.api.service.TombolaService#getTicket}
 	 * 
 	 * @return {@link AuditReader}
 	 */
@@ -74,6 +78,5 @@ public class Provider {
 		}
 		return ret;
 	}
-
 
 }

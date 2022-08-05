@@ -80,19 +80,20 @@ import local.intranet.tombola.api.service.UserService;
 
 /**
  * 
- * {@link StatusController} for {@link local.intranet.tombola.TombolaApplication}
- * It's for charge of system information
+ * {@link StatusController} for
+ * {@link local.intranet.tombola.TombolaApplication} It's for charge of system
+ * information
  * 
  * @author Radek Kádner
  * 
  */
 @RestController
-@RequestMapping(
-		value = "${spring.data.rest.basePath:/api}" + StatusController.INFO_VERSION_PATH + StatusController.INFO_BASE_INFO)
+@RequestMapping(value = "${spring.data.rest.basePath:/api}" + StatusController.INFO_VERSION_PATH
+		+ StatusController.INFO_BASE_INFO)
 @Tag(name = StatusController.TAG)
 public class StatusController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(StatusController.class); 
+	private static final Logger LOG = LoggerFactory.getLogger(StatusController.class);
 
 	/**
 	 *
@@ -105,19 +106,19 @@ public class StatusController {
 	 * TAG = "status-controller"
 	 */
 	protected static final String TAG = "status-controller";
-	
+
 	/**
 	 * 
 	 * INFO_VERSION_PATH = "/v1"
 	 */
 	protected static final String INFO_VERSION_PATH = "/v1";
-	
+
 	/**
 	 * 
 	 * INFO_BASE_INFO = "/info"
 	 */
 	protected static final String INFO_BASE_INFO = "/info";
-	
+
 	/**
 	 *
 	 * STATUS_OK = "OK"
@@ -129,13 +130,13 @@ public class StatusController {
 	 * STATUS_PROTECTED = "[PROTECTED]"
 	 */
 	public static final String STATUS_PROTECTED = "[PROTECTED]";
-	
+
 	/**
 	 *
 	 * STATUS_SERVER_PORT = "serverPort"
 	 */
 	public static final String STATUS_SERVER_PORT = "serverPort";
-	
+
 	/**
 	 *
 	 * STATUS_HOST_NAME = "hostName"
@@ -149,26 +150,16 @@ public class StatusController {
 	private static final String STATUS_BRACKET = "_";
 	private static final String STATUS_BRACKETS = "__";
 	private static final String STATUS_ORG_APACHE_CATALINA_JSP_CLASSPATH = "org.apache.catalina.jsp_classpath";
-	private static final String STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_CIPHERS =
-			"org.apache.tomcat.util.net.secure_requested_ciphers";
-	private static final String STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_PROTOCOL_VERSIONS =
-			"org.apache.tomcat.util.net.secure_requested_protocol_versions";
-    private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_FRAMEWORK_SERVLET_CONTEXT_DISPATCHER_SERVLET =
-			"org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet";
-    private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_DISPATCHERSERVLET_OUTPUT_FLASH_MAP =
-    		"org.springframework.web.servlet.DispatcherServlet.OUTPUT_FLASH_MAP";
-    private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_BESTMATCHINGHANDLER =
-    		"org.springframework.web.servlet.HandlerMapping.bestMatchingHandler";
-    private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_PATHWITHINHANDLERMAPPING =
-    		"org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping";
-    private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_URITEMPLATEVARIABLES =
-    		"org.springframework.web.servlet.HandlerMapping.uriTemplateVariables";
-    private static final String STATUS_JAVAX_SERVLET_REQUEST_SSL_SESSION_ID =
-    		"javax.servlet.request.ssl_session_id";
-	private static final String STATUS_APPLICATION_CONFIG_PROPERTIES =
-			"applicationConfig: [classpath:/application.properties]";
-	private static final String STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES =
-			"applicationConfig: [classpath:/application-%s.properties]";
+	private static final String STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_CIPHERS = "org.apache.tomcat.util.net.secure_requested_ciphers";
+	private static final String STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_PROTOCOL_VERSIONS = "org.apache.tomcat.util.net.secure_requested_protocol_versions";
+	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_FRAMEWORK_SERVLET_CONTEXT_DISPATCHER_SERVLET = "org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet";
+	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_DISPATCHERSERVLET_OUTPUT_FLASH_MAP = "org.springframework.web.servlet.DispatcherServlet.OUTPUT_FLASH_MAP";
+	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_BESTMATCHINGHANDLER = "org.springframework.web.servlet.HandlerMapping.bestMatchingHandler";
+	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_PATHWITHINHANDLERMAPPING = "org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping";
+	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_URITEMPLATEVARIABLES = "org.springframework.web.servlet.HandlerMapping.uriTemplateVariables";
+	private static final String STATUS_JAVAX_SERVLET_REQUEST_SSL_SESSION_ID = "javax.servlet.request.ssl_session_id";
+	private static final String STATUS_APPLICATION_CONFIG_PROPERTIES = "applicationConfig: [classpath:/application.properties]";
+	private static final String STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES = "applicationConfig: [classpath:/application-%s.properties]";
 	private static final String STATUS_SERVLET_CONTEXT = "@\\w+";
 	private static final String STATUS_USER_NAME = "username";
 	private static final String STATUS_SECURITY_USER_NAME = "security.user.name";
@@ -179,62 +170,62 @@ public class StatusController {
 	private static final String STATUS_FORMAT_INDEX_API = "/tombola-javadoc/%s.html";
 	private static final String STATUS_FORMAT_INDEX_API_NAME = "/tombola-javadoc/%s.html#%s";
 	private static final String STATUS_BEAN = "%s:%s";
-	private static final String STATUS_FORMAT_BEAN ="%s:<strong class=\"data\">%s</strong>";
+	private static final String STATUS_FORMAT_BEAN = "%s:<strong class=\"data\">%s</strong>";
 	private static final String STATUS_NAME = "name";
 	private static final String STATUS_HREF = "<a href=\"%s\" target=\"_blank\">[%s]</a>";
 	private static final String STATUS_HREF_BEAN = "<a href=\"%s\" target=\"_blank\">%s</a>";
 	private static final String STATUS_X_FORWARDED_FOR = "X-Forwarded-For";
-	
+
 	@Value("${tombola.app.stage}")
 	private String stage;
 
 	@Value("${tombola.app.javadocHref:true}")
 	private boolean javadocHref;
-	
+
 	@Value("${tombola.app.showSessionId:false}")
 	private boolean showSessionId;
-	
+
 	@Value("${tombola.app.emptyParams:false}")
 	private boolean emptyParams;
-	 
+
 	@Value("${tombola.app.attempts.printBlocked}")
 	private boolean printBlocked;
-	
+
 	@Autowired
 	private HttpServletRequest httpServletRequest;
-	
+
 	@Autowired
 	private ServletContext servletContext;
-	
+
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+
 	@Autowired
 	private PrizeRepository prizeRepository;
-	
+
 	@Autowired
 	private TicketRepository ticketRepository;
-	
+
 	@Autowired
 	private Environment environment;
-	
+
 	/**
 	 *
 	 * text/plain: "OK"
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#USER_ROLE}
 	 * 
-	 * @see <a href="/tombola/swagger-ui/#/status-controller/getPlainStatus" target="_blank">tombola/swagger-ui/#/status-controller/getPlainStatus</a>
+	 * @see <a href="/tombola/swagger-ui/#/status-controller/getPlainStatus" target=
+	 *      "_blank">tombola/swagger-ui/#/status-controller/getPlainStatus</a>
 	 * 
 	 * @return "OK" if Tombola API is running
 	 */
 	@GetMapping(value = "/status", produces = MediaType.TEXT_PLAIN_VALUE)
-	@Operation(operationId = "getPlainStatus", summary = "Get Plain Status",
-			description = "Get OK if Tombola API is running\n\n" + 
-				"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#" +
-				"getPlainStatus()\" " +
-				"target=\"_blank\">StatusController.getPlainStatus</a>",
-			tags = { StatusController.TAG })
+	@Operation(operationId = "getPlainStatus", summary = "Get Plain Status", description = "Get OK if Tombola API is running\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#"
+			+ "getPlainStatus()\" "
+			+ "target=\"_blank\">StatusController.getPlainStatus</a>", tags = { StatusController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public String getPlainStatus() {
 		return STATUS_OK;
@@ -244,29 +235,31 @@ public class StatusController {
 	 *
 	 * Info of Tomcat Environment.
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 *
-	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaEnvironment" target="_blank">tombola/swagger-ui/#/status-controller/getTombolaEnvironment</a>
+	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaEnvironment"
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/status-controller/getTombolaEnvironment</a>
 	 * 
 	 * @return {@link List}&lt;{@link Map.Entry}&lt;{@link String},{@link String}&gt;&gt;
-	 *         (({@link org.springframework.core.env.ConfigurableEnvironment}) environment).getSystemEnvironment()
-	 *         sorted {@link System#getenv()} with
-	 *         {@link Map.Entry}&lt;String, String&gt; for ${k.key} and ${k.value}
-	 *         in properties.html. Sort by ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
+	 *         (({@link org.springframework.core.env.ConfigurableEnvironment})
+	 *         environment).getSystemEnvironment() sorted {@link System#getenv()}
+	 *         with {@link Map.Entry}&lt;String, String&gt; for ${k.key} and
+	 *         ${k.value} in properties.html. Sort by ${k.key}
+	 *         {@link String#CASE_INSENSITIVE_ORDER}
 	 */
 	@GetMapping(value = "/getEnvironment", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getTombolaEnvironment", summary = "Get Environment",
-		description = "Get Environment\n\n" +
-			"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#" +
-			"getTombolaEnvironment()\" " +
-			"target=\"_blank\">StatusController.getTombolaEnvironment</a>",
-		tags = { StatusController.TAG })
+	@Operation(operationId = "getTombolaEnvironment", summary = "Get Environment", description = "Get Environment\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#"
+			+ "getTombolaEnvironment()\" "
+			+ "target=\"_blank\">StatusController.getTombolaEnvironment</a>", tags = { StatusController.TAG })
 	@PreAuthorize("hasRole('ROLE_adminRole')")
 	public List<Map.Entry<String, String>> getTombolaEnvironment() {
 		List<Map.Entry<String, String>> ret = Collections.synchronizedList(new ArrayList<>());
-		Map<String, String> map =  System.getenv().entrySet().stream().sorted(Map.Entry.comparingByKey())
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-						(oldValue, newValue) -> oldValue, LinkedHashMap::new));
+		Map<String, String> map = System.getenv().entrySet().stream().sorted(Map.Entry.comparingByKey())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue,
+						LinkedHashMap::new));
 		for (Map.Entry<String, String> e : map.entrySet()) {
 			if (!e.getKey().equals(STATUS_BRACKET)) { // nelíbí
 				if (emptyParams) {
@@ -286,39 +279,38 @@ public class StatusController {
 	 *
 	 * Info of config params in .properties
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 *
-	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaProperties" target="_blank">tombola/swagger-ui/#/status-controller/getTombolaProperties</a>
+	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaProperties"
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/status-controller/getTombolaProperties</a>
 	 * 
 	 * @return {@link List}&lt;{@link Map.Entry}&lt;{@link String},{@link String}&gt;&gt;
-	 *         (({@link org.springframework.core.env.ConfigurableEnvironment}) environment).getPropertySources()
-	 *         with
-	 *         {@link Map.Entry}&lt;String, String&gt; for ${k.key} and ${k.value}
-	 *         in properties.html. Sort by ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
+	 *         (({@link org.springframework.core.env.ConfigurableEnvironment})
+	 *         environment).getPropertySources() with {@link Map.Entry}&lt;String,
+	 *         String&gt; for ${k.key} and ${k.value} in properties.html. Sort by
+	 *         ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
 	 */
 	@GetMapping(value = "/getProperties", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getTombolaProperties", summary = "Get Properties",
-			description = "Get Properties\n\n" +
-					"See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#" +
-	        		"getTombolaProperties()\" " +
-	        		"target=\"_blank\">StatusController.getTombolaProperties</a>",
-	        tags = { StatusController.TAG })
+	@Operation(operationId = "getTombolaProperties", summary = "Get Properties", description = "Get Properties\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#"
+			+ "getTombolaProperties()\" "
+			+ "target=\"_blank\">StatusController.getTombolaProperties</a>", tags = { StatusController.TAG })
 	@PreAuthorize("hasRole('ROLE_adminRole')")
 	public List<Map.Entry<String, String>> getTombolaProperties() {
 		List<Map.Entry<String, String>> ret = new ArrayList<>();
 		Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		String profile = String.join(" ", environment.getActiveProfiles());
 		MutablePropertySources mps = ((ConfigurableEnvironment) environment).getPropertySources();
-		
+
 		PropertySource<?> ps = mps.get(STATUS_APPLICATION_CONFIG_PROPERTIES);
 		@SuppressWarnings("unchecked")
 		Map<String, Object> smap = ((Map<String, Object>) ps.getSource());
 		for (Map.Entry<String, Object> e : smap.entrySet()) {
-			if (e.getKey().contains(STATUS_PASSWORD)
-					|| e.getKey().contains(STATUS_SECRET)
-					|| e.getKey().contains(STATUS_USER_NAME)
-					|| e.getKey().contains(STATUS_SECURITY_USER_NAME)
-					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) {  // nelíbí
+			if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
+					|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
+					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
 				map.put(e.getKey(), STATUS_PROTECTED);
 			} else {
 				map.put(e.getKey(), e.getValue().toString());
@@ -329,17 +321,15 @@ public class StatusController {
 		@SuppressWarnings("unchecked")
 		Map<String, Object> smap2 = (Map<String, Object>) ps.getSource();
 		for (Map.Entry<String, Object> e : smap2.entrySet()) {
-			if (e.getKey().contains(STATUS_PASSWORD)
-					|| e.getKey().contains(STATUS_SECRET)
-					|| e.getKey().contains(STATUS_USER_NAME)
-					|| e.getKey().contains(STATUS_SECURITY_USER_NAME)
-					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) {  // nelíbí
+			if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
+					|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
+					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
 				map.put(e.getKey(), STATUS_PROTECTED);
 			} else {
 				map.put(e.getKey(), e.getValue().toString());
 			}
 		}
-		
+
 		for (Map.Entry<String, String> e : map.entrySet()) {
 			if (emptyParams) {
 				ret.add(Map.entry(e.getKey(), e.getValue()));
@@ -349,31 +339,34 @@ public class StatusController {
 				}
 			}
 		}
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Info of Http servlet request
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 *
-	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaHttpServletRequest" target="_blank">tombola/swagger-ui/#/status-controller/getTombolaHttpServletRequest</a>
+	 * @see <a href=
+	 *      "/tombola/swagger-ui/#/status-controller/getTombolaHttpServletRequest"
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/status-controller/getTombolaHttpServletRequest</a>
 	 *
 	 * @return {@link List}&lt;{@link Map.Entry}&lt;{@link String},{@link String}&gt;&gt;
 	 *         HttpServletRequest.getAttributeNames() and
 	 *         HttpServletRequest.getAttribute(key) with
 	 *         {@link Map.Entry}&lt;String, String&gt; for ${k.key} and ${k.value}
-	 *         in properties.html. Sort by ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
+	 *         in properties.html. Sort by ${k.key}
+	 *         {@link String#CASE_INSENSITIVE_ORDER}
 	 */
 	@GetMapping(value = "/getServletRequest", produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getTombolaHttpServletRequest", summary = "Get HttpServletRequest",
-	description = "Get HttpServletRequest\n\n" +
- 		   "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#" +
- 		   "getTombolaHttpServletRequest()\" " +
- 		   "target=\"_blank\">StatusController.getTombolaHttpServletRequest</a>",
-	tags = { StatusController.TAG })
+	@Operation(operationId = "getTombolaHttpServletRequest", summary = "Get HttpServletRequest", description = "Get HttpServletRequest\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#"
+			+ "getTombolaHttpServletRequest()\" "
+			+ "target=\"_blank\">StatusController.getTombolaHttpServletRequest</a>", tags = { StatusController.TAG })
 	@PreAuthorize("hasRole('ROLE_adminRole')")
 	public synchronized List<Map.Entry<String, String>> getTombolaHttpServletRequest() {
 		List<Map.Entry<String, String>> ret = Collections.synchronizedList(new ArrayList<>());
@@ -381,39 +374,44 @@ public class StatusController {
 		for (Enumeration<String> en = httpServletRequest.getAttributeNames(); en.hasMoreElements();) {
 			String key = en.nextElement();
 			String value = httpServletRequest.getAttribute(key).toString();
-			if (!(key.contains("@") ||
-					value.contains("@") ||
+			if (!(key.contains("@") || value.contains("@") ||
+			/*
+			 * __spring_security_filterSecurityInterceptor_filterApplied:true
+			 * __spring_security_scpf_applied:true
+			 * __spring_security_session_mgmt_filter_applied:true
+			 */
+					key.startsWith(STATUS_BRACKETS)
+					|| key.equals(STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_CIPHERS) ||
 					/*
-__spring_security_filterSecurityInterceptor_filterApplied:true
-__spring_security_scpf_applied:true
-__spring_security_session_mgmt_filter_applied:true
-					 */
-					key.startsWith(STATUS_BRACKETS) ||
-					key.equals(STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_CIPHERS) ||
-					/*
-org.springframework.web.servlet.DispatcherServlet.OUTPUT_FLASH_MAP:
-FlashMap [attributes={}, targetRequestPath=null, targetRequestParams={}]
+					 * org.springframework.web.servlet.DispatcherServlet.OUTPUT_FLASH_MAP: FlashMap
+					 * [attributes={}, targetRequestPath=null, targetRequestParams={}]
 					 */
 					key.equals(STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_DISPATCHERSERVLET_OUTPUT_FLASH_MAP) ||
 					/*
-org.springframework.web.servlet.HandlerMapping.bestMatchingHandler:
+					 * org.springframework.web.servlet.HandlerMapping.bestMatchingHandler:
 					 */
 					key.equals(STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_BESTMATCHINGHANDLER) ||
-					/* duplicity /status in org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping
-org.springframework.web.servlet.HandlerMapping.bestMatchingPattern:/status
-org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping:/status:/status
+					/*
+					 * duplicity /status in
+					 * org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping
+					 * org.springframework.web.servlet.HandlerMapping.bestMatchingPattern:/status
+					 * org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping:/
+					 * status:/status
 					 */
 					key.equals(STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_PATHWITHINHANDLERMAPPING) ||
-					/* empty {}
-org.springframework.web.servlet.HandlerMapping.uriTemplateVariables:{}
+					/*
+					 * empty {}
+					 * org.springframework.web.servlet.HandlerMapping.uriTemplateVariables:{}
 					 */
 					key.equals(STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_URITEMPLATEVARIABLES) ||
-					/* duplicity /status in org.apache.tomcat.util.net.secure_protocol_version:TLSv1.3
-org.apache.tomcat.util.net.secure_requested_protocol_versions:Unknown(0x9a9a),TLSv1.3,TLSv1.2
+					/*
+					 * duplicity /status in
+					 * org.apache.tomcat.util.net.secure_protocol_version:TLSv1.3
+					 * org.apache.tomcat.util.net.secure_requested_protocol_versions:Unknown(0x9a9a)
+					 * ,TLSv1.3,TLSv1.2
 					 */
-					key.equals(STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_PROTOCOL_VERSIONS) ||
-					key.equals(STATUS_JAVAX_SERVLET_REQUEST_SSL_SESSION_ID)
-					)) { // nelíbí
+					key.equals(STATUS_ORG_APACHE_TOMCAT_UTIL_NET_SECURE_REQUESTED_PROTOCOL_VERSIONS)
+					|| key.equals(STATUS_JAVAX_SERVLET_REQUEST_SSL_SESSION_ID))) { // nelíbí
 				map.put(key, value);
 			}
 		}
@@ -426,33 +424,33 @@ org.apache.tomcat.util.net.secure_requested_protocol_versions:Unknown(0x9a9a),TL
 				}
 			}
 		}
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Info of Servlet context
 	 * <p>
-	 * Accessible to the {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
+	 * Accessible to the
+	 * {@link local.intranet.tombola.api.domain.type.RoleType#ADMIN_ROLE}
 	 *
-	 * @see <a href="/tombola/swagger-ui/#/status-controller/getTombolaServletContext" target="_blank">tombola/swagger-ui/#/status-controller/getTombolaServletContext</a>
+	 * @see <a href=
+	 *      "/tombola/swagger-ui/#/status-controller/getTombolaServletContext"
+	 *      target=
+	 *      "_blank">tombola/swagger-ui/#/status-controller/getTombolaServletContext</a>
 	 *
 	 * @return {@link List}&lt;{@link Map.Entry}&lt;{@link String},{@link String}&gt;&gt;
 	 *         ServletContext.getAttributeNames() and
-	 *         ServletContext.getAttribute(key) with
-	 *         {@link Map.Entry}&lt;String, String&gt; for ${k.key} and ${k.value}
-	 *         in properties.html. Sort by ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
-	*/
-	@GetMapping(
-   		value = "/getServletContext",
-   		produces = MediaType.APPLICATION_JSON_VALUE)
-	@Operation(operationId = "getTombolaServletContext", summary = "Get ServletContext",
-		description = "Get ServletContext\n\n" +
- 		   "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#" +
- 		   "getTombolaServletContext()\" " +
- 		   "target=\"_blank\">StatusController.getTombolaServletContext</a>",
- 		   tags = { StatusController.TAG })
+	 *         ServletContext.getAttribute(key) with {@link Map.Entry}&lt;String,
+	 *         String&gt; for ${k.key} and ${k.value} in properties.html. Sort by
+	 *         ${k.key} {@link String#CASE_INSENSITIVE_ORDER}
+	 */
+	@GetMapping(value = "/getServletContext", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Operation(operationId = "getTombolaServletContext", summary = "Get ServletContext", description = "Get ServletContext\n\n"
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/StatusController.html#"
+			+ "getTombolaServletContext()\" "
+			+ "target=\"_blank\">StatusController.getTombolaServletContext</a>", tags = { StatusController.TAG })
 	@PreAuthorize("hasRole('ROLE_adminRole')")
 	public List<Map.Entry<String, String>> getTombolaServletContext() {
 		List<Map.Entry<String, String>> ret = new ArrayList<>();
@@ -461,16 +459,22 @@ org.apache.tomcat.util.net.secure_requested_protocol_versions:Unknown(0x9a9a),TL
 			String key = en.nextElement();
 			String value = servletContext.getAttribute(key).toString();
 			if (!(key.equals(STATUS_ORG_APACHE_CATALINA_JSP_CLASSPATH) ||
-					/* duplicity org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext
-					 * in org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet
-org.springframework.web.context.WebApplicationContext.ROOT:
-org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext, started on Tue Jan 18 11:45:22 CET 2022
-org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet:
-org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext, started on Tue Jan 18 11:45:22 CET 2022
-					 */
+			/*
+			 * duplicity org.springframework.boot.web.servlet.context.
+			 * AnnotationConfigServletWebServerApplicationContext in
+			 * org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet
+			 * org.springframework.web.context.WebApplicationContext.ROOT:
+			 * org.springframework.boot.web.servlet.context.
+			 * AnnotationConfigServletWebServerApplicationContext, started on Tue Jan 18
+			 * 11:45:22 CET 2022
+			 * org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet:
+			 * org.springframework.boot.web.servlet.context.
+			 * AnnotationConfigServletWebServerApplicationContext, started on Tue Jan 18
+			 * 11:45:22 CET 2022
+			 */
 					key.equals(STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_FRAMEWORK_SERVLET_CONTEXT_DISPATCHER_SERVLET)
-					// || value.length() > 0
-					)) { // nelíbí
+			// || value.length() > 0
+			)) { // nelíbí
 				map.put(key, value.replaceFirst(STATUS_SERVLET_CONTEXT, ""));
 			}
 		}
@@ -483,7 +487,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 				}
 			}
 		}
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -667,83 +671,83 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	public synchronized String getHrefFormat(Class<?> bc, boolean format) {
 		String ret = getHrefFormat(bc, bc.getSimpleName(), format);
-        return ret;
+		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Get href format
 	 * 
-	 * @param bc      {@link Class}&lt;?&gt;
-	 * @param text    {@link String}
-	 * @param format  boolean
+	 * @param bc     {@link Class}&lt;?&gt;
+	 * @param text   {@link String}
+	 * @param format boolean
 	 * @return {@link String}
 	 */
 	public synchronized String getHrefFormat(Class<?> bc, String text, boolean format) {
 		String ret;
 		if (format && javadocHref) {
-			ret = String.format(STATUS_HREF_BEAN, String.format(STATUS_FORMAT_INDEX_API,
-					bc.getName().replaceAll("\\.", "/")), text);
+			ret = String.format(STATUS_HREF_BEAN,
+					String.format(STATUS_FORMAT_INDEX_API, bc.getName().replaceAll("\\.", "/")), text);
 		} else {
 			ret = text;
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Get href format
 	 * 
-	 * @param bc      {@link Class}&lt;?&gt;
-	 * @param text    {@link String}
-	 * @param sub     {@link String}
-	 * @param format  boolean
+	 * @param bc     {@link Class}&lt;?&gt;
+	 * @param text   {@link String}
+	 * @param sub    {@link String}
+	 * @param format boolean
 	 * @return {@link String}
 	 */
 	public synchronized String getHrefFormat(Class<?> bc, String text, String sub, boolean format) {
 		String ret;
 		if (format && javadocHref) {
-			ret = String.format(STATUS_HREF_BEAN, String.format(STATUS_FORMAT_INDEX_API_NAME,
-					bc.getName().replaceAll("\\.", "/"), sub), text);
+			ret = String.format(STATUS_HREF_BEAN,
+					String.format(STATUS_FORMAT_INDEX_API_NAME, bc.getName().replaceAll("\\.", "/"), sub), text);
 		} else {
 			ret = text;
 		}
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Active profiles
 	 *
 	 * @return environment.getActiveProfiles()
 	 */
-    public String getActiveProfiles() {
+	public String getActiveProfiles() {
 		String ret = String.join(" ", environment.getActiveProfiles());
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get server port
 	 *
-	 * @return secured serverPort from {@link ManagementFactory#getPlatformMBeanServer()}
+	 * @return secured serverPort from
+	 *         {@link ManagementFactory#getPlatformMBeanServer()}
 	 */
 	public int getServerPort() {
 		int ret = 0;
 		MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
- 		try {
- 			Set<ObjectName> objectNames = beanServer.queryNames(
- 					new ObjectName(STATUS_TYPE_PROTOCOL_HANDLER),
- 					Query.match(Query.attr(STATUS_NAME), Query.value(STATUS_PROTOCOL_HTTPS)));
- 	   		ret = Integer.parseInt(objectNames.iterator().next().getKeyProperty(SOCKET_PORT));
- 		} catch (MalformedObjectNameException e) {
- 			LOG.error(STATUS_SECURED_PORT_NOT_DEFINED, e);
- 		}
-	    // LOG.debug("{}", ret);
-	    return ret;
+		try {
+			Set<ObjectName> objectNames = beanServer.queryNames(new ObjectName(STATUS_TYPE_PROTOCOL_HANDLER),
+					Query.match(Query.attr(STATUS_NAME), Query.value(STATUS_PROTOCOL_HTTPS)));
+			ret = Integer.parseInt(objectNames.iterator().next().getKeyProperty(SOCKET_PORT));
+		} catch (MalformedObjectNameException e) {
+			LOG.error(STATUS_SECURED_PORT_NOT_DEFINED, e);
+		}
+		// LOG.debug("{}", ret);
+		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get Operating System
@@ -762,11 +766,11 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
-    /**
-     * 
-     * Get session id
-     */
+
+	/**
+	 * 
+	 * Get session id
+	 */
 	public synchronized String getSessionId() {
 		String ret = "";
 		if (httpServletRequest != null) {
@@ -779,7 +783,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		}
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get stage
@@ -788,10 +792,10 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	public String getStage() {
 		String ret = stage;
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get host name
@@ -800,7 +804,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	public String getHostName() {
 		String ret = getServerName().split("\\.")[0];
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -812,7 +816,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	public String getServerName() {
 		String ret = getVirtualServerName().split("/")[1];
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -820,11 +824,12 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 *
 	 * Get server software
 	 *
-	 * @return serverSoftware's name (The first word) without version from {@link #getServerInfo()}
+	 * @return serverSoftware's name (The first word) without version from
+	 *         {@link #getServerInfo()}
 	 */
 	public synchronized String getServerSoftware() {
 		String ret = getServerInfo().split("/")[0];
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -834,15 +839,15 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 *
 	 * @return version from RequestContextUtils - HttpServletRequest -
 	 *         {@link Package#getImplementationVersion()}
-	 *         
+	 * 
 	 */
 	public String getImplementationVersion() {
 		String ret = applicationContext.getBeansWithAnnotation(SpringBootApplication.class).entrySet().stream()
 				.findFirst().flatMap(es -> {
-			String implementationVersion = es.getValue().getClass().getPackage().getImplementationVersion();
-			return Optional.ofNullable(implementationVersion);
-		}).orElse(STATUS_UNKNOWN);
-	    // LOG.debug("{}", ret);
+					String implementationVersion = es.getValue().getClass().getPackage().getImplementationVersion();
+					return Optional.ofNullable(implementationVersion);
+				}).orElse(STATUS_UNKNOWN);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -850,17 +855,18 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 *
 	 * Get startup date
 	 *
-	 * @return {@link Date} from RequestContextUtils ApplicationContext.getStartupDate()
+	 * @return {@link Date} from RequestContextUtils
+	 *         ApplicationContext.getStartupDate()
 	 */
 	public Date getStartupDate() {
 		if (applicationContext == null || applicationContext.getStartupDate() == 0) {
 			getImplementationVersion();
 		}
-		Date ret = new Date(applicationContext.getStartupDate()); 
-	    // LOG.debug("{}", ret);
+		Date ret = new Date(applicationContext.getStartupDate());
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 *
 	 * Get time zone
@@ -869,16 +875,16 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	public String getTimeZone() {
 		String ret = TimeZone.getDefault().getID();
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Get true if nice
 	 * 
 	 * @param showSessionId {@Boolean}
-	 * @param name {@String}
+	 * @param name          {@String}
 	 * @return boolean if nice
 	 */
 	public static boolean isNiceBeanName(Boolean showSessionId, String name) {
@@ -892,9 +898,9 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		case "localeResolver":
 		case "localeChangeInterceptor":
 		case "auditorProvider":
-		// case "listener":
-		// {@link UserService}
-		// case "loadUserByUsername":
+			// case "listener":
+			// {@link UserService}
+			// case "loadUserByUsername":
 		case "getUserRoles":
 		case "toString":
 		case "toProxyConfigString":
@@ -925,10 +931,10 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		case "setPreFiltered":
 		case "setTargetSource":
 		case "getPassword":
-		// case "destroy":
-		// case "doFilter":
+			// case "destroy":
+			// case "doFilter":
 		case "getRole": // deprecated
-		// {@link StatusController}
+			// {@link StatusController}
 		case "getTombolaAPIBean":
 		case "getHrefFormat":
 			ret = false;
@@ -946,7 +952,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * 
 	 * Is Bean suitable?
@@ -1142,7 +1148,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 		}
 	}
 	// @formatter:on
-	
+
 	/**
 	 * 
 	 * Log APIBeans
@@ -1168,7 +1174,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 
 	}
 	// @formatter:on
-	
+
 	/**
 	 *
 	 * Get virtualServerName from ServletContext.getVirtualServerName()
@@ -1177,7 +1183,7 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	protected String getVirtualServerName() {
 		String ret = servletContext.getVirtualServerName();
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
@@ -1189,24 +1195,25 @@ org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApp
 	 */
 	protected String getServerInfo() {
 		String ret = servletContext.getServerInfo();
-	    // LOG.debug("{}", ret);
+		// LOG.debug("{}", ret);
 		return ret;
 	}
 
 	/**
 	 * 
 	 * Get client IP
+	 * 
 	 * @return {@link String} as ip
 	 */
 	public synchronized String getClientIP() {
 		final String ret;
 		String xfHeader = httpServletRequest.getHeader(STATUS_X_FORWARDED_FOR);
 		if (xfHeader == null) {
-		   	ret = httpServletRequest.getRemoteAddr();
-	    } else {
-	    	ret = xfHeader.split(",")[0];
-	    }
-	    return ret;
+			ret = httpServletRequest.getRemoteAddr();
+		} else {
+			ret = xfHeader.split(",")[0];
+		}
+		return ret;
 	}
-	
+
 }

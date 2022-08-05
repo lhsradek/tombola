@@ -4,7 +4,8 @@ import java.util.Date;
 
 /**
  * 
- * {@link LoggingEventInfo} for {@link local.intranet.tombola.api.service.TombolaService}
+ * {@link LoggingEventInfo} for
+ * {@link local.intranet.tombola.api.service.TombolaService}
  * 
  * @author Radek Kádner
  *
@@ -21,7 +22,7 @@ public class LoggingEventInfo {
 	private final String arg2;
 	private final String arg3;
 	private final Date date;
-	
+
 	/**
 	 * 
 	 * Constructor with parameters
@@ -37,8 +38,8 @@ public class LoggingEventInfo {
 	 * @param arg3             {@link String}
 	 * @param date             {@link Date}
 	 */
-	public LoggingEventInfo(Long id, String formattedMessage, String levelString, String callerClass, String callerMethod, String arg0, String arg1,
-			String arg2, String arg3, Date date) {
+	public LoggingEventInfo(Long id, String formattedMessage, String levelString, String callerClass,
+			String callerMethod, String arg0, String arg1, String arg2, String arg3, Date date) {
 		super();
 		this.id = id;
 		this.formattedMessage = formattedMessage;

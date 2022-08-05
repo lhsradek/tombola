@@ -15,7 +15,8 @@ import local.intranet.tombola.api.model.repository.RoleRepository;
 
 /**
  * 
- * {@link RoleService} for {@link local.intranet.tombola.api.controller.InfoController#getRoleInfo}
+ * {@link RoleService} for
+ * {@link local.intranet.tombola.api.controller.InfoController#getRoleInfo}
  * 
  * @author Radek Kádner
  *
@@ -25,7 +26,7 @@ public class RoleService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Transactional(readOnly = true)
 	public RoleInfo getRoleInfo() {
 		return new RoleInfo(getUsersRoles());
@@ -34,17 +35,18 @@ public class RoleService {
 	/**
 	 * 
 	 * Get userRole
+	 * 
 	 * @return {@link List}&lt;{@link Role}&gt;
 	 */
 	@Transactional(readOnly = true)
 	protected List<RolePlain> getUsersRoles() {
 		List<RolePlain> ret = new ArrayList<>();
 		roleRepository.findAll().forEach(r -> {
-			ret.add(new RolePlain(r.getId(), r.getRoleName(), r.isEnabled(), r.getUser().stream().map(
-                    u -> u.getUserName()).collect(Collectors.toList())));
+			ret.add(new RolePlain(r.getId(), r.getRoleName(), r.isEnabled(),
+					r.getUser().stream().map(u -> u.getUserName()).collect(Collectors.toList())));
 		});
 		// LOG.debug("GetUserRoles ret:{}", list);
 		return ret;
 	}
-	
+
 }

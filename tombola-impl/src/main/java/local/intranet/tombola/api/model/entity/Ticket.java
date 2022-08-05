@@ -22,7 +22,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * 
- * {@link Ticket} is entity for CRUD with {@link local.intranet.tombola.api.model.repository.TicketRepository}
+ * {@link Ticket} is entity for CRUD with
+ * {@link local.intranet.tombola.api.model.repository.TicketRepository}
  * <p>
  * https://www.baeldung.com/database-auditing-jpa
  * 
@@ -32,23 +33,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Audited
-@Table(name = "tombola_ticket",
-	indexes = {
-        // @Index(name = "tombola_los_pkey", columnList = "id")
-		@Index(columnList = "id")
-	}
-)
-@GenericGenerator(
-        name = "TicketGenerator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-                @Parameter(name = "sequence_name", value = "TICKET_SEQUENCE"),
-                @Parameter(name = "initial_value", value = "1"),
-                @Parameter(name = "increment_size", value = "1")
-        }
-)
+@Table(name = "tombola_ticket", indexes = {
+		// @Index(name = "tombola_los_pkey", columnList = "id")
+		@Index(columnList = "id") })
+@GenericGenerator(name = "TicketGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+		@Parameter(name = "sequence_name", value = "TICKET_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),
+		@Parameter(name = "increment_size", value = "1") })
 public class Ticket {
-	
+
 	/**
 	 * 
 	 * Constructor without parameter
@@ -70,29 +62,29 @@ public class Ticket {
 		this.createdDate = new Date().getTime();
 		this.modifiedDate = 0L;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private Long win;
-	
+
 	@Column(name = "created_date")
-    @CreatedDate
-    private Long createdDate;
+	@CreatedDate
+	private Long createdDate;
 
-    @Column(name = "modified_date")
-    @LastModifiedDate
-    private Long modifiedDate;
-    
-    @Column(name = "created_by")
-    @CreatedBy
-    private String createdBy;
+	@Column(name = "modified_date")
+	@LastModifiedDate
+	private Long modifiedDate;
 
-    @Column(name = "modified_by")
-    @LastModifiedBy
-    private String modifiedBy;    
-	
+	@Column(name = "created_by")
+	@CreatedBy
+	private String createdBy;
+
+	@Column(name = "modified_by")
+	@LastModifiedBy
+	private String modifiedBy;
+
 	/**
 	 * 
 	 * Get id
@@ -142,7 +134,7 @@ public class Ticket {
 	public Long getCreatedDate() {
 		return createdDate;
 	}
-	
+
 	/**
 	 * 
 	 * Set createdDate
@@ -182,7 +174,7 @@ public class Ticket {
 	public String getCreatedBy() {
 		return createdBy;
 	}
-	
+
 	/**
 	 * 
 	 * Set createdBy
@@ -222,5 +214,5 @@ public class Ticket {
 		return "Ticket [id=" + id + ", win=" + win + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate
 				+ ", createdBy=" + createdBy + ", modifiedBy=" + modifiedBy + "]";
 	}
-	
+
 }

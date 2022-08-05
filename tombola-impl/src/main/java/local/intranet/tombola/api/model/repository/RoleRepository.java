@@ -7,7 +7,8 @@ import local.intranet.tombola.api.model.entity.Role;
 
 /**
  * 
- * {@link RoleRepository} is repository for CRUD with {@link local.intranet.tombola.api.model.entity.Role}
+ * {@link RoleRepository} is repository for CRUD with
+ * {@link local.intranet.tombola.api.model.entity.Role}
  * 
  * @author Radek Kádner
  *

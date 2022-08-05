@@ -16,7 +16,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 /**
  * 
- * {@link EndpointsListener} for {@link local.intranet.tombola.TombolaApplication}
+ * {@link EndpointsListener} for
+ * {@link local.intranet.tombola.TombolaApplication}
  * 
  * Get all end points
  * 
@@ -26,44 +27,45 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Component
 public class EndpointsListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EndpointsListener.class);
-    
+	private static final Logger LOG = LoggerFactory.getLogger(EndpointsListener.class);
+
 	@Value("${tombola.app.endPointListenerLog:false}")
 	private boolean endPointListenerLog;
-	
-	private ApplicationContext applicationContext;
-	
-    private static final Set<String> LINKS = new ConcurrentSkipListSet<>();
 
-    /**
-     * 
-     * Handle context refresh
-     * 
-     * @param event ContextRefreshedEvent
-     */
+	private ApplicationContext applicationContext;
+
+	private static final Set<String> LINKS = new ConcurrentSkipListSet<>();
+
+	/**
+	 * 
+	 * Handle context refresh
+	 * 
+	 * @param event ContextRefreshedEvent
+	 */
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-        applicationContext = event.getApplicationContext();
-        applicationContext.getBean(RequestMappingHandlerMapping.class)
-            .getHandlerMethods().forEach((key, value) -> addLink(key, value));
-        if (endPointListenerLog) {
-        	for (String s : LINKS) {
-        		LOG.debug(s);
-        	}
-        }
+		applicationContext = event.getApplicationContext();
+		applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods()
+				.forEach((key, value) -> addLink(key, value));
+		if (endPointListenerLog) {
+			for (String s : LINKS) {
+				LOG.debug(s);
+			}
+		}
 	}
 
-    /**
-     * 
-     * Add link to LINKS
-     * @param key   RequestMappingInfo
-     * @param value HandlerMethod
-     */
-    protected void addLink(RequestMappingInfo key, HandlerMethod value) {
+	/**
+	 * 
+	 * Add link to LINKS
+	 * 
+	 * @param key   RequestMappingInfo
+	 * @param value HandlerMethod
+	 */
+	protected void addLink(RequestMappingInfo key, HandlerMethod value) {
 		String k = String.join(" ", key.getPatternsCondition().getPatterns());
 		if (!LINKS.contains(k)) {
 			LINKS.add(k);
 		}
-    }
+	}
 
 }

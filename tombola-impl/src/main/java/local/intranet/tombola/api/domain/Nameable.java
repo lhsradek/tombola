@@ -24,5 +24,5 @@ public interface Nameable {
 	 */
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	String getName();
-	
+
 }

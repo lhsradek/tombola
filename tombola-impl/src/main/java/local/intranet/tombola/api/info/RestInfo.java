@@ -9,7 +9,8 @@ import local.intranet.tombola.api.domain.Nameable;
 
 /**
  * 
- * {@link RestInfo} for {@link local.intranet.tombola.api.service.IndexService#getIndexInfo} and
+ * {@link RestInfo} for
+ * {@link local.intranet.tombola.api.service.IndexService#getIndexInfo} and
  * {@link local.intranet.tombola.api.info.IndexInfo}
  * 
  * @author Radek Kádner
@@ -21,19 +22,19 @@ public class RestInfo implements Nameable {
 	@Size(min = 1, max = DefaultFieldLengths.DEFAULT_NAME)
 	private final String link;
 
-    @Size(min = 1, max = DefaultFieldLengths.DEFAULT_NAME)
+	@Size(min = 1, max = DefaultFieldLengths.DEFAULT_NAME)
 	private final String name;
-    
-    @Size(min = 1, max = DefaultFieldLengths.DEFAULT_STATUS)
+
+	@Size(min = 1, max = DefaultFieldLengths.DEFAULT_STATUS)
 	private final String role;
-	
+
 	/**
 	 * 
 	 * Constructor with parameters
 	 * 
-	 * @param link    {@link String}
-	 * @param name    {@link String}
-	 * @param role    {@link String}
+	 * @param link {@link String}
+	 * @param name {@link String}
+	 * @param role {@link String}
 	 */
 	public RestInfo(String link, String name, String role) {
 		this.link = link;
@@ -44,6 +45,7 @@ public class RestInfo implements Nameable {
 	/**
 	 * 
 	 * Get link
+	 * 
 	 * @return the link
 	 */
 	public String getLink() {
@@ -55,9 +57,10 @@ public class RestInfo implements Nameable {
 		return name;
 	}
 
-    /**
+	/**
 	 * 
 	 * Get role
+	 * 
 	 * @return the role
 	 */
 	public String getRole() {

@@ -13,7 +13,8 @@ import local.intranet.tombola.api.service.BeanService;
 
 /**
  * 
- * {@link BeanInfo} for {@link local.intranet.tombola.api.service.BeanService#getBeanInfo} and
+ * {@link BeanInfo} for
+ * {@link local.intranet.tombola.api.service.BeanService#getBeanInfo} and
  * {@link local.intranet.tombola.api.controller.InfoController#getBeanInfo}
  * 
  * @author Radek Kádner
@@ -40,10 +41,11 @@ public class BeanInfo implements Nameable {
 	 * Get Beans
 	 * 
 	 * <p>
- 	 * &#64;JsonInclude(JsonInclude.Include.NON_NULL)
+	 * &#64;JsonInclude(JsonInclude.Include.NON_NULL)
 	 * <p>
+	 * 
 	 * @return {@link Map}&lt;{@link String},{@link Object}&gt; for
-	 * {@link local.intranet.tombola.api.info.BeanInfo#getBeans}
+	 *         {@link local.intranet.tombola.api.info.BeanInfo#getBeans}
 	 */
 	@Size(min = 0)
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -51,7 +53,7 @@ public class BeanInfo implements Nameable {
 		Map<String, Object> ret = beans;
 		return ret;
 	}
-	
+
 	@Size(min = 1, max = DefaultFieldLengths.DEFAULT_NAME)
 	@Override
 	public String getName() {
