@@ -21,9 +21,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import local.intranet.tombola.api.exception.TombolaException;
 import local.intranet.tombola.api.service.UserService;
@@ -68,19 +65,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebS
 	 * Set {@link CorsConfiguration}
 	 * 
 	 * @return {@link CorsFilter}
+	 * @Bean public CorsFilter corsFilter() { UrlBasedCorsConfigurationSource source
+	 *       = new UrlBasedCorsConfigurationSource(); CorsConfiguration config = new
+	 *       CorsConfiguration(); config.setAllowCredentials(true);
+	 *       config.addAllowedOrigin("*"); config.addAllowedHeader("*");
+	 *       config.addAllowedMethod("*"); source.registerCorsConfiguration("/**",
+	 *       config); CorsFilter ret = new CorsFilter(source); return ret; }
 	 */
-	@Bean
-	public CorsFilter corsFilter() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("*");
-		source.registerCorsConfiguration("/**", config);
-		CorsFilter ret = new CorsFilter(source);
-		return ret;
-	}
 
 	/**
 	 * 

@@ -299,6 +299,24 @@
         </profile>
 
         <profile>
+            <id>docker</id>
+            <properties>
+                <spring.profiles.active>docker</spring.profiles.active>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+
+        <profile>
             <id>production-mariadb</id>
             <properties>
                 <spring.profiles.active>production-mariadb</spring.profiles.active>

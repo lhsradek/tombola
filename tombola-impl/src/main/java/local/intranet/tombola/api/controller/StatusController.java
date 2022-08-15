@@ -25,10 +25,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
 
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.Query;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -732,21 +728,18 @@ public class StatusController {
 	 * Get server port
 	 *
 	 * @return secured serverPort from
-	 *         {@link ManagementFactory#getPlatformMBeanServer()}
+	 *         {@link ManagementFactory#getPlatformMBeanServer()} public int
+	 *         getServerPort() { int ret = 0; MBeanServer beanServer =
+	 *         ManagementFactory.getPlatformMBeanServer(); try { Set<ObjectName>
+	 *         objectNames = beanServer.queryNames(new
+	 *         ObjectName(STATUS_TYPE_PROTOCOL_HANDLER),
+	 *         Query.match(Query.attr(STATUS_NAME),
+	 *         Query.value(STATUS_PROTOCOL_HTTPS))); ret =
+	 *         Integer.parseInt(objectNames.iterator().next().getKeyProperty(SOCKET_PORT));
+	 *         } catch (MalformedObjectNameException e) {
+	 *         LOG.error(STATUS_SECURED_PORT_NOT_DEFINED, e); } // LOG.debug("{}",
+	 *         ret); return ret; }
 	 */
-	public int getServerPort() {
-		int ret = 0;
-		MBeanServer beanServer = ManagementFactory.getPlatformMBeanServer();
-		try {
-			Set<ObjectName> objectNames = beanServer.queryNames(new ObjectName(STATUS_TYPE_PROTOCOL_HANDLER),
-					Query.match(Query.attr(STATUS_NAME), Query.value(STATUS_PROTOCOL_HTTPS)));
-			ret = Integer.parseInt(objectNames.iterator().next().getKeyProperty(SOCKET_PORT));
-		} catch (MalformedObjectNameException e) {
-			LOG.error(STATUS_SECURED_PORT_NOT_DEFINED, e);
-		}
-		// LOG.debug("{}", ret);
-		return ret;
-	}
 
 	/**
 	 *
@@ -1015,7 +1008,7 @@ public class StatusController {
 			String strFormat = (format) ? STATUS_FORMAT_BEAN : STATUS_BEAN;
 			switch (name) {
 				// {@link StatusController}
-				case "getServerPort":
+				// case "getServerPort":
 				case "getTimeZone":
 				case "getActiveProfiles":
 				case "getImplementationVersion":

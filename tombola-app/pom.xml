@@ -150,6 +150,67 @@
         </profile>
 
         <profile>
+            <id>docker</id>
+            <properties>
+                <spring.profiles.active>docker</spring.profiles.active>
+            </properties>
+            <build>
+                <finalName>tombola</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>3.3.2</version>
+                        <configuration>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+                            <archive>
+                                <manifest>
+                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                </manifest>
+                                <manifestEntries>
+                                    <Implementation-Build>${buildNumber}</Implementation-Build>
+                                    <Specification-Title>${project.description}</Specification-Title>
+                                </manifestEntries>
+                            </archive>
+                            <webResources>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                </resource>
+                                <resource>
+                                    <directory>../tombola-impl/target</directory>
+                                    <targetPath>WEB-INF/jar</targetPath>
+                                    <includes>
+                                        <include>**/*-sources.jar</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>../tombola-impl/target</directory>
+                                    <targetPath>WEB-INF/jar</targetPath>
+                                    <includes>
+                                        <include>**/*-javadoc.jar</include>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+                </plugins>
+                <resources>
+                    <resource>
+                        <filtering>false</filtering>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>application.properties</include>
+                            <include>application-${spring.profiles.active}.properties</include>
+                            <include>prize-${spring.profiles.active}.json</include>
+                            <include>templates/</include>
+                            <include>logback-spring.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
+        <profile>
             <id>test-postgres</id>
             <properties>
                 <spring.profiles.active>test-postgres</spring.profiles.active>

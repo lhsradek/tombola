@@ -417,7 +417,9 @@ public class IndexController {
 		addModel(request, model);
 		model.addAttribute(INDEX_TOMBOLA_BEANS, statusController.getTombolaAPIBean());
 		model.addAttribute(StatusController.STATUS_HOST_NAME, statusController.getHostName());
-		model.addAttribute(StatusController.STATUS_SERVER_PORT, statusController.getServerPort());
+		// model.addAttribute(StatusController.STATUS_SERVER_PORT,
+		// statusController.getServerPort());
+		model.addAttribute(StatusController.STATUS_SERVER_PORT, 8080);
 		model.addAttribute(INDEX_REST, INDEX_REST_PNG);
 		model.addAttribute(INDEX_TOMBOLA_PROPERTIES, statusController.getTombolaProperties());
 		model.addAttribute(INDEX_TOMBOLA_HTTP_SERVLET_REQUEST, statusController.getTombolaHttpServletRequest());

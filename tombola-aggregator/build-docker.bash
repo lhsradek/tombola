@@ -2,7 +2,7 @@
 
 clear
 
-STAGE="default"
+STAGE="docker"
 
 # mvn -P"$STAGE" -B -X -e -Dmaven.test.skip=true -DskipTests clean install -Dstyle.color=always
 mvn -P"$STAGE" -B -Dmaven.test.skip=true -DskipTests clean install -Dstyle.color=always
