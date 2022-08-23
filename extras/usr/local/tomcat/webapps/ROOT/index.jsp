@@ -249,7 +249,11 @@ String serverName = pageContext.getRequest().getServerName();
 </head>
 
 <body>
-   <h1><strong><%=serverName%></strong> <a href="https://github.com/lhsradek/tombola" target="_blank"><img src="tomcat/github.png"/></a> <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="tomcat/facebook.png"/></a> <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="tomcat/in.png"/></a> <a href="mailto:radek.kadner@gmail.com"><img src="tomcat/mail.png"/></a></h1>
+  <h1><span><strong><%=serverName%></strong>
+	   <a href="https://github.com/lhsradek/tombola" target="_blank"><img src="tomcat/github.png" width="30" height="30"/></a>
+	   <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="tomcat/facebook.png" width="17" height="30"/></a>
+	   <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="tomcat/in.png" width="30" height="30"/></a>
+	   <a href="mailto:radek.kadner@gmail.com"><img src="tomcat/mail.png" width="30" height="30"/></a></span></h1>
   <div class="content">
 
     <div class="content-columns">
@@ -268,7 +272,7 @@ String serverName = pageContext.getRequest().getServerName();
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
-        <p><img src="tomcat/tomcat.png"/></p>
+        <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
       </div>
 
       <div class="content-column-right">
@@ -290,7 +294,7 @@ String serverName = pageContext.getRequest().getServerName();
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
 	  </ul>
         </p>
-        <p><img src="tomcat/docker-logo.png"/></p>
+        <p><img src="tomcat/docker-logo.png" width="53" height="40"/></p>
       </div>
 
     </div>
