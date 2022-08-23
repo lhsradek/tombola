@@ -113,8 +113,8 @@ public class InfoController {
 	@GetMapping(value = InfoController.INFO_BASE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(operationId = "getIndexInfo", summary = "Get Index Info", description = "Get Index Info\n\n"
 			+ "This method is calling InfoService.getIndexInfo\n\n"
-			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
-			+ "getIndexInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getIndexInfo</a>", tags = {
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getIndexInfo()\" target=\"_blank\">InfoController.getIndexInfo</a>", tags = {
 					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public IndexInfo getIndexInfo() {
@@ -143,8 +143,8 @@ public class InfoController {
 	 * @Operation(operationId = "getBeanInfo", summary = "Get Bean Info",
 	 *                        description = "Get Bean Info\n\n" + "This method is
 	 *                        calling BeanService.getBeanInfo\n\n" + "See <a
-	 *                        href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
-	 *                        + "getBeanInfo(javax.servlet.http.HttpSession)\"
+	 *                        href=\"/tombola-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+	 *                        + "getBeanInfo()\"
 	 *                        target=\"_blank\">InfoController.getBeanInfo</a>",
 	 *                        tags = { InfoController.TAG
 	 *                        }) @PreAuthorize("hasRole('ROLE_userRole')")
@@ -182,8 +182,8 @@ public class InfoController {
 	@GetMapping(value = InfoController.INFO_BASE_INFO + "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(operationId = "getUserInfo", summary = "Get User Info", description = "Get User Info\n\n"
 			+ "This method is calling UserService.getUserInfo\n\n"
-			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
-			+ "getUserInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getUserInfo</a>", tags = {
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getUserInfo()\" target=\"_blank\">InfoController.getUserInfo</a>", tags = {
 					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public UserInfo getUserInfo() {
@@ -219,8 +219,8 @@ public class InfoController {
 	@GetMapping(value = InfoController.INFO_BASE_INFO + "/role", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(operationId = "getRoleInfo", summary = "Get Role Info", description = "Get Role Info\n\n"
 			+ "This method is calling RoleService.getRoleInfo\n\n"
-			+ "See <a href=\"/tombola/index-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
-			+ "getRoleInfo(javax.servlet.http.HttpSession)\" target=\"_blank\">InfoController.getRoleInfo</a>", tags = {
+			+ "See <a href=\"/tombola-javadoc/local/intranet/tombola/api/controller/InfoController.html#"
+			+ "getRoleInfo()\" target=\"_blank\">InfoController.getRoleInfo</a>", tags = {
 					InfoController.TAG })
 	@PreAuthorize("hasRole('ROLE_userRole')")
 	public RoleInfo getRoleInfo() {
