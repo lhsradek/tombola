@@ -266,7 +266,7 @@ String serverName = pageContext.getRequest().getServerName();
               <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li>
               <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li>
               <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li>
-              <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - info</a></li>
+              <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li>
               <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li>
               <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li>
 	      <!-- <li><a href="https://adminer.<%=serverName%>" target="_blank"><%=serverName%> - adminer</a></li> -->
