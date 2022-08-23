@@ -290,7 +290,7 @@ String serverName = pageContext.getRequest().getServerName();
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Official build of Tomcat</a></li>
               <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Official build of Ubuntu</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Official build of Wordpress</a></li>
-              <li><a href="https://docs.docker.com" target="_blank">docs.docker.com</a></li>
+              <li><a href="https://docs.docker.com/compose/" target="_blank">docs.docker.com</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
 	  </ul>
