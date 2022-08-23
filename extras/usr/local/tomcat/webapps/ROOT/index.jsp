@@ -257,10 +257,10 @@ StringBuffer env = new StringBuffer();
 
 <body>
   <h1><span><strong><%=serverName%></strong>
-	   <a href="https://github.com/lhsradek/tombola" target="_blank"><img src="tomcat/github.png" width="30" height="30"/></a>
-	   <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="tomcat/facebook.png" width="17" height="30"/></a>
-	   <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="tomcat/in.png" width="30" height="30"/></a>
-	   <a href="mailto:radek.kadner@gmail.com"><img src="tomcat/mail.png" width="30" height="30"/></a></span></h1>
+<a href="https://github.com/lhsradek/tombola" target="_blank"><img src="tomcat/github.png" width="30" height="30"/></a>
+<a href="https://www.facebook.com/radek.kadner/" target="_blank"><img src="tomcat/facebook.png" width="17" height="30"/></a>
+<a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="tomcat/in.png" width="30" height="30"/></a>
+<a href="mailto:radek.kadner@gmail.com"><img src="tomcat/mail.png" width="30" height="30"/></a></span></h1>
   <div class="content">
     <div class="content-middle">
 <!--
@@ -276,34 +276,38 @@ StringBuffer env = new StringBuffer();
     <div class="content-columns">
       <div class="content-column-left">
 
-	<div class="content-top">
-          <h2>Apache Tomcat</h2>
-          <h5>Webs servlet/JSP container</h5>
-          <p>
-            <ul>
-              <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li><% if (isTombola) { %>
-              <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li><% }; if (isTombolaJavadoc) { %>
-              <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li><% }; if (isManager) { %>
-	      <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isDoc) { %>
-	      <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
-	      <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
-	      <li><a href="https://adminer.<%=serverName%>/" target="_blank"><%=serverName%> - adminer</a></li><% } %>
-              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
-            </ul>
-          </p>
-          <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
-        </div>
+        <h2>Links</h2>
+        <p>
+          <ul>
+            <li><a href="https://docker.traefik.local" target="_blank">docker.traefik.local</a></li>
+          </ul>
+        </p>
 
-        <% if(isNginx) { %> <div class="content-bottom">
-          <h2>Nginx</h2>
-          <h5>HTTP and reverse proxy server</h5>
-          <p>
-            <ul>
-              <li><a href="https://<%=shortName%>.nginx.local"><%=shortName%>.nginx.local</a></li>
-	      <li><a href="https://<%=shortName%>.nginx.local/downloads/">Downloads</a></li>
-            </ul>
-          </p>
-        </div> <% } %>
+        <h2>Apache Tomcat</h2>
+        <h5>Webs servlet/JSP container</h5>
+        <p>
+          <ul>
+            <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li><% if (isTombola) { %>
+            <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li><% }; if (isTombolaJavadoc) { %>
+            <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li><% }; if (isManager) { %>
+            <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isDoc) { %>
+	    <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
+	    <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
+	    <li><a href="https://adminer.<%=serverName%>/" target="_blank"><%=serverName%> - adminer</a></li><% } %>
+            <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+          </ul>
+        </p>
+        <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
+
+        <% if(isNginx) { %>
+        <h2>Nginx</h2>
+        <h5>HTTP and reverse proxy server</h5>
+        <p>
+          <ul>
+            <li><a href="https://<%=shortName%>.nginx.local"><%=shortName%>.nginx.local</a></li>
+            <li><a href="https://<%=shortName%>.nginx.local/downloads/">Downloads</a></li>
+          </ul>
+        </p><% } %>
       </div>
 
       <div class="content-column-right">
