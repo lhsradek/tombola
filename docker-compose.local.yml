@@ -6,7 +6,7 @@ volumes:
     name: "${APP_ID}-db"
   redis:
     external: false
-    name: "${APP_ID}-data-redis"
+    name: "${APP_ID}-redis"
 
 networks:
   default:
