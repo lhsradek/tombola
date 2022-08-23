@@ -1,0 +1,15 @@
+local.intranet.tombola
+local.intranet.tombola.api.config
+local.intranet.tombola.api.controller
+local.intranet.tombola.api.domain
+local.intranet.tombola.api.domain.type
+local.intranet.tombola.api.exception
+local.intranet.tombola.api.info
+local.intranet.tombola.api.info.content
+local.intranet.tombola.api.listener
+local.intranet.tombola.api.model
+local.intranet.tombola.api.model.entity
+local.intranet.tombola.api.model.repository
+local.intranet.tombola.api.redis
+local.intranet.tombola.api.security
+local.intranet.tombola.api.service

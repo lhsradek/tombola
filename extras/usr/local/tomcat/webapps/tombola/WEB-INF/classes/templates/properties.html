@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="head">
+</head>
+<body>
+  <h1><span>
+    <th:block th:if="${headerSoftware}" th:text="${serverSoftware}"/>
+    <strong th:text="${T(org.apache.commons.lang3.StringUtils).capitalize(serverName)}"/>
+    <a href="https://github.com/lhsradek/tombola" target="_blank"><img th:src="@{/res/github.png}"/></a>
+    <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img th:src="@{/res/facebook.png}"/></a>
+    <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img th:src="@{/res/in.png}"/></a>
+    <a href="mailto:radek.kadner@gmail.com"><img th:src="@{/res/mail.png}"/></a></span>
+  </h1>
+  <div th:class="'content'" th:with="dateFormat=${T(local.intranet.tombola.api.domain.Contented).CONTENT_DATE_FORMAT}">
+    <button th:type="'button'" th:class="'topBtn'" th:id="'topBtn'">Top</button><script th:src="@{/res/button.js}"></script>
+    <div th:class="'content-middle'">
+      <div th:class="'top'">
+        <h2><span>
+          <th:block th:utext="'Tombola\'s Properties'"/>
+          <small th:utext="'\'' + ${stage} + '\' on '"/>
+          <small th:utext="${serverSoftware} + ' - \'' + ${activeProfiles} + '\''"/>
+        </span></h2>
+        <h5><span>
+          <a th:href="@{/logout}" th:text="'Log out'"/> <small><th:block th:text="' - You are logged as '"/>
+          <a th:href="@{/login?logout}" th:utext="'\'' + ${username} + '\''"/>
+          <th:block th:utext="' with \'' + ${role} + '\''"/></small>
+          <small><a th:href="@{/page/0}" th:text="'Tombola'"/></small>
+          <small><a th:href="@{/manager/page/0}" th:text="'Manager'"/></small>
+          <small><a th:href="@{/audit}" th:text="'Audit'"/></small>
+          <small><a th:href="@{/tombolaLog}" th:text="'Log'"/></small>
+          <small th:if="${userRoles.get('managerRole') or userRoles.get('adminRole')}"><a th:href="@{/swagger-ui/}" th:target="'_blank'" th:text="'Swagger'"/></small>
+          <small><a th:href="'/tombola-javadoc/'" th:target="'_blank'" th:text="'Tombola API Javadoc'"/></small>
+        </span></h5>
+        <h5 th:text="'Selected Beans'"/>
+        <code><span th:each="k : ${tombolaBeans}">
+<big><strong th:utext="${k.key}"/></big><th:block th:utext="${k.value} + ' '"/>
+        </span><br/>
+<a th:href="@{/swagger-ui/#/status-controller/getAPIBean}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try beans info from a Swagger'"/></a></code>
+        <h5 th:text="'Properties'"/>
+        <code><span th:class="'wrapon'" th:each="k : ${tombolaProperties}">
+<th:block th:utext="${k.key} + ':'"/><strong th:class="'data'" th:utext="${k.value} + ' '"/>
+        </span><br/>
+<a th:href="@{/swagger-ui/#/status-controller/getTombolaProperties}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try properties info from a Swagger'"/></a></code>
+        <h5 th:text="'HttpServletRequest'"/>
+          <code><span th:class="'wrapon'" th:each="k : ${tombolaHttpServletRequest}">
+<th:block th:utext="${k.key} + ':'"/><strong th:class="'data'" th:utext="${k.value} + ' '"/>
+          </span><br/>
+<a th:href="@{/swagger-ui/#/status-controller/getTombolaHttpServletRequest}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try request info from a Swagger'"/></a></code>
+        <h5 th:text="'ServletContext'"/>
+        <code><span th:class="'wrapon'" th:each="k : ${tombolaServletContext}">
+<th:block th:utext="${k.key} + ':'"/><strong th:class="'data'" th:utext="${k.value} + ' '"/>
+          </span><br/>
+<a th:href="@{/swagger-ui/#/status-controller/getTombolaServletContext}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try context info from a Swagger'"/></a></code>
+        <h5 th:text="'Environment'"/>
+        <code><span th:class="'wrapon'" th:each="k : ${tombolaEnvironment}">
+<th:block th:utext="${k.key} + ':'"/><strong th:class="'data'" th:utext="${k.value} + ' '"/>
+        </span><br/>
+<a th:href="@{/swagger-ui/#/status-controller/getTombolaEnvironment}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try environment info from a Swagger'"/></a></code>
+        <h5 th:text="'Testing'"/>
+        <code>
+<strong th:text="'[root@' + ${hostName} + ' ~]#'"/>
+<th:block th:utext="'curl -u user:password -k -H &quot;Accept: text/plain&quot; -X GET https://' + ${#strings.toLowerCase(serverName)}"/><th:block th:if="${serverPort} > 0" th:text="':' + ${serverPort}"/><th:block th:text="'/tombola/api/v1/info/status'"/><strong th:text="'&lt;&crarr;Enter&gt;'"/><br/>
+<strong class="data" th:text="'OK'"/><strong th:text="'[root@' + ${hostName} + ' ~]#'"/>
+        <br/>
+<a th:href="@{/swagger-ui/#/status-controller/getPlainStatus}" th:target="'_blank'">
+<img th:src="@{/res/swagger.png}" th:width="'16px'" th:height="'16px'" th:class="'borderoff'"
+	th:alt="'Try it from a Swagger'"/></a></code>
+        </code>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

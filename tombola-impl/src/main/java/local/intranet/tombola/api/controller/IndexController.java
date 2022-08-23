@@ -260,7 +260,7 @@ public class IndexController {
 	 * @return "index" for thymeleaf index.html {@link String}
 	 */
 	@GetMapping(value = { "/", "/page/{page}" }, produces = MediaType.TEXT_HTML_VALUE)
-	@PreAuthorize("hasRole('ROLE_userRole')")
+	// @PreAuthorize("hasRole('ROLE_userRole')")
 	public String getIndex(@PathVariable(value = "page", required = false) Integer pg, HttpServletRequest request,
 			Model model) {
 		AtomicInteger sumaCnt = new AtomicInteger();

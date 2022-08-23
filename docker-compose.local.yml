@@ -1,0 +1,108 @@
+version: '3'
+# version: '3.9'
+
+volumes:
+  postgres:
+    external: false
+    name: "${APP_ID}-db"
+  redis:
+    external: false
+    name: "${APP_ID}-data-redis"
+
+networks:
+  default:
+    external: true
+    name: ${DOCKER_NETWORK}
+  # local network:
+  intnet:
+    external: false
+    name: ${INT_NETWORK}
+
+services:
+  webtombola:
+    # Ubuntu 22.04.1 LTS
+    # bash
+    image: tomcat:9.0
+    container_name: ${APP_ID}
+    hostname: "${APP_HOST}"
+    restart: ${DOCKER_RESTART_POLICY}
+    # ports:
+    #  - 8080:8080
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    volumes:
+      # - /root/bin/ubuntu:/root/bin/ubuntu:ro
+      - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps
+      - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
+      - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
+      - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
+      - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
+      - "traefik.http.routers.${APP_ID}-public.tls=true"
+
+  postgres:
+    image: postgres:13.7-alpine
+    container_name: "${APP_ID}-db"
+    hostname: "db"
+    # hostname: "db.${INT_NETWORK}"
+    restart: ${DOCKER_RESTART_POLICY}
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # ports:
+    #  - 5432:5432
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      - postgres:/var/lib/postgresql/data:rw
+      - ./extras/docker-entrypoint-initdb.d/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
+      # after init db
+      # - ./logs/tombola-postgres:/var/lib/postgresql/data/log:rw
+      # only copy file after init db is better
+      # - ./extras/var/lib/postgresql/data/postgresql.conf:/var/lib/postgresql/data/postgresql.conf:ro
+      ## - ./extras/var/lib/postgresql/data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.new.conf:ro
+
+  redis:
+    image: redis:7.0.4-alpine
+    # Alpine Linux
+    container_name: "${APP_ID}-redis"
+    hostname: "redis"
+    # hostname: "redis.${INT_NETWORK}"
+    restart: ${DOCKER_RESTART_POLICY}
+    networks:
+      # local network:
+      - intnet
+    environment:
+      -  REDIS_ARGS=${REDIS_ARGS}
+    # ports:
+    # - 6379:6379
+    volumes:
+      # - /root/bin/alpine:/root/bin/alpine:ro
+      - redis:/data
+      # - ./extras/etc/sysctl.d/sysctl.conf:/etc/sysctl.d/sysctl.conf:ro
+
+#   webtombola-adminer:
+#    # Alpine
+#    image: adminer
+#    container_name: "${APP_ID}-adminer"
+#    hostname: "adminer.${APP_HOST}"
+#    restart: ${DOCKER_RESTART_POLICY}
+#    networks:
+#      # for traefik:
+#      - default
+#      # local network:
+#      - intnet
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.docker.network=${DOCKER_NETWORK}"
+#      - "traefik.http.routers.${APP_ID}-adminer-public.rule=Host(`adminer.${APP_HOST}`)"
+#      - "traefik.http.routers.${APP_ID}-adminer-public.entrypoints=https"
+#      - "traefik.http.routers.${APP_ID}-adminer-public.tls=true"
+

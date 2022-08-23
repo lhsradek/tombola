@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="head">
+</head>
+<body>
+  <h1><span>
+    <th:block th:if="${headerSoftware}" th:text="${serverSoftware}"/>
+    <strong th:text="${T(org.apache.commons.lang3.StringUtils).capitalize(serverName)}"/>
+    <a href="https://github.com/lhsradek/tombola" target="_blank"><img th:src="@{/res/github.png}"/></a>
+    <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img th:src="@{/res/facebook.png}"/></a>
+    <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img th:src="@{/res/in.png}"/></a>
+    <a href="mailto:radek.kadner@gmail.com"><img th:src="@{/res/mail.png}"/></a></span>
+  </h1>
+  <div th:class="'content'" th:with="dateFormat=${T(local.intranet.tombola.api.domain.Contented).CONTENT_DATE_FORMAT}">
+    <button th:type="'button'" th:class="'topBtn'" th:id="'topBtn'">Top</button><script th:src="@{/res/button.js}"></script>
+    <div th:class="'content-middle'">
+      <div th:class="'top'">
+        <h2><span>
+          <th:block th:utext="'Audit\'s Log'"/>
+          <small th:utext="'\'' + ${stage} + '\' on '"/>
+          <small th:utext="${serverSoftware} + ' - \'' + ${activeProfiles} + '\''"/>
+        </span></h2>
+        <h5><span>
+          <a th:href="@{/logout}" th:text="'Log out'"/> <small><th:block th:text="' - You are logged as '"/>
+          <a th:href="@{/login?logout}" th:utext="'\'' + ${username} + '\''"/>
+          <th:block th:utext="' with \'' + ${role} + '\''"/></small>
+          <small><a th:href="@{/page/0}" th:text="'Tombola'"/></small>
+          <small><a th:href="@{/manager/page/0}" th:text="'Manager'"/></small>
+          <small><a th:href="@{/tombolaLog}" th:text="'Log'"/></small>
+          <small th:if="${userRoles.get('adminRole')}"><a th:href="@{/properties}" th:text="'Properties'"/></small>
+          <small th:if="${userRoles.get('managerRole') or userRoles.get('adminRole')}"><a th:href="@{/swagger-ui/}" th:target="'_blank'" th:text="'Swagger'"/></small>
+          <small><a th:href="'/tombola-javadoc/'" th:target="'_blank'" th:text="'Tombola API Javadoc'"/></small>
+        </span></h5>
+        <h5 th:if="${tombolaLogs.size() > 0}"><span>
+          <span th:if="${logsPage <= 1}" th:class="'disabled'" th:utext="' &#8681; '"/><a th:if="${logsPage > 1}" th:utext="' &#8681; '" th:href="@{|/audit/page/0/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <span th:if="${logsPage == 0}" th:class="'disabled'" th:utext="' &#8678; '"/><a th:if="${logsPage > 0}" th:utext="' &#8678; '" th:href="@{|/audit/page/${prev}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <th:block th:text="'Audit Count:' + ${logsCnt} + ' [' + ${logsPage + 1} + '/' + ${logsMax + 1} + ']'"/>
+          <span th:if="${logsPage >= logsMax}" th:class="'disabled'" th:utext="' &#8680; '"/><a th:if="${logsPage < logsMax}" th:utext="' &#8680; '" th:href="@{|/audit/page/${next}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <span th:if="${(logsPage + 1) >= logsMax}" th:class="'disabled'" th:utext="' &#8679; '"/><a th:if="${(logsPage + 1) < logsMax}" th:utext="' &#8679; '" th:href="@{|/audit/page/${logsMax}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          </span></h5>
+        <code th:if="${tombolaLogs.size() > 0}"><span>
+        <table th:class="'data-table'" th:width="'40%'">
+<thead><tr><th th:width="'7%'" th:class="'left'"><img th:src="@{/res/hibernate.png}" th:width="'12px'" th:height="'13px'" th:class="'borderoff'"/></th>
+<th th:width="'26%'"><big><a th:if="${(!logsSort.startsWith('id'))}" th:href="@{|/audit/page/${logsPage}/sort/idD|}" th:class="'decorationoff'"><strong th:text="'Date'"/></a><a th:if="${(logsSort == 'idD')}" th:href="@{|/audit/page/${logsPage}/sort/idU|}" th:class="'decorationoff'"><strong th:utext="'Date&nbsp;&#8681;'"/></a><a th:if="${logsSort == 'idU'}" th:href="@{|/audit/page/${logsPage}/sort/idD|}" th:class="'decorationoff'"><strong th:utext="'Date&nbsp;&#8679;'"/></a></big></th>
+<th th:width="'14%'"><big><a th:if="${(!logsSort.startsWith('a0'))}" th:href="@{|/audit/page/${logsPage}/sort/a0U|}" th:class="'decorationoff'"><strong th:text="'User'"/></a><a th:if="${(logsSort == 'a0D')}" th:href="@{|/audit/page/${logsPage}/sort/a0U|}" th:class="'decorationoff'"><strong th:utext="'User&nbsp;&#8681;'"/></a><a th:if="${(logsSort == 'a0U')}" th:href="@{|/audit/page/${logsPage}/sort/a0D|}" th:class="'decorationoff'"><strong th:utext="'User&nbsp;&#8679;'"/></a></big></th>
+<th th:width="'9%'"><big><a th:if="${(!logsSort.startsWith('a1'))}" th:href="@{|/audit/page/${logsPage}/sort/a1U|}" th:class="'decorationoff'"><strong th:text="'T'"/></a><a th:if="${(logsSort == 'a1D')}" th:href="@{|/audit/page/${logsPage}/sort/a1U|}" th:class="'decorationoff'"><strong th:utext="'T&nbsp;&#8681;'"/></a><a th:if="${logsSort == 'a1U'}" th:href="@{|/audit/page/${logsPage}/sort/a1D|}" th:class="'decorationoff'"><strong th:utext="'T&nbsp;&#8679;'"/></a></big></th>
+<th th:width="'9%'"><big><a th:if="${(!logsSort.startsWith('a2'))}" th:href="@{|/audit/page/${logsPage}/sort/a2U|}" th:class="'decorationoff'"><strong th:text="'P'"/></a><a th:if="${(logsSort == 'a2D')}" th:href="@{|/audit/page/${logsPage}/sort/a2U|}" th:class="'decorationoff'"><strong th:utext="'P&nbsp;&#8681;'"/></a><a th:if="${(logsSort == 'a2U')}" th:href="@{|/audit/page/${logsPage}/sort/a2D|}" th:class="'decorationoff'"><strong th:utext="'P&nbsp;&#8679;'"/></a></big></th>
+<th th:width="'28%'"><big><a th:if="${(!logsSort.startsWith('a3'))}" th:href="@{|/audit/page/${logsPage}/sort/a3U|}" th:class="'decorationoff'"><strong th:text="'Name'"/></a><a th:if="${(logsSort == 'a3D')}" th:href="@{|/audit/page/${logsPage}/sort/a3U|}" th:class="'decorationoff'"><strong th:utext="'Name&nbsp;&#8681;'"/></a><a th:if="${(logsSort == 'a3U')}" th:href="@{|/audit/page/${logsPage}/sort/a3D|}" th:class="'decorationoff'"><strong th:utext="'Name&nbsp;&#8679;'"/></a></big></th>
+<th th:width="'7%'"><big><a th:if="${(!logsSort.startsWith('m'))}" th:href="@{|/audit/page/${logsPage}/sort/mU|}" th:class="'decorationoff'"><strong th:text="'A'"/></a><a th:if="${(logsSort == 'mD')}" th:href="@{|/audit/page/${logsPage}/sort/mU|}" th:class="'decorationoff'"><strong th:utext="'A&nbsp;&#8681;'"/></a><a th:if="${(logsSort == 'mU')}" th:href="@{|/audit/page/${logsPage}/sort/mD|}" th:class="'decorationoff'"><strong th:utext="'A&nbsp;&#8679;'"/></a></big></th>
+</tr></thead>
+<tr th:each="k : ${tombolaLogs}">
+<td th:class="'right'"><small><strong th:text="${k.id}"/></small></td>
+<td th:class="'center'"><small th:text="${#dates.format(k.date, dateFormat)}"/></td>
+<td th:class="'left'"><small><strong th:text="${k.arg0}"/></small></td>
+<td th:class="'right'"><small><strong th:text="${k.arg1}"/></small></td>
+<td th:class="'right'"><small><strong th:text="${k.arg2}"/></small></td>
+<td th:class="'left'"><small><strong th:text="${k.arg3}"/></small></td>
+<td th:class="'center'"><small><strong th:if="${k.callerMethod == 'patchPrizeName'}" th:utext="' &#8680;'"/><strong th:if="${k.callerMethod == 'patchPrizeTicket'}" th:utext="' &#x2714;'"/><strong th:if="${k.callerMethod == 'deleteTicket'}" th:utext="' &#x2718;'"/><strong th:if="${k.callerMethod == 'putPrizes'}" th:utext="' &#10033;'"/><strong th:if="${k.callerMethod == 'putTickets'}" th:utext="' &#10033;'"/></small></td>
+</tr></table></span></code>
+        <h5 th:if="${tombolaLogs.size() > 50}"><span>
+          <span th:if="${logsPage <= 1}" th:class="'disabled'" th:utext="' &#8681; '"/><a th:if="${logsPage > 1}" th:utext="' &#8681; '" th:href="@{|/audit/page/0/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <span th:if="${logsPage == 0}" th:class="'disabled'" th:utext="' &#8678; '"/><a th:if="${logsPage > 0}" th:utext="' &#8678; '" th:href="@{|/audit/page/${prev}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <th:block th:text="'Audit Count:' + ${logsCnt} + ' [' + ${logsPage + 1} + '/' + ${logsMax + 1} + ']'"/>
+          <span th:if="${logsPage >= logsMax}" th:class="'disabled'" th:utext="' &#8680; '"/><a th:if="${logsPage < logsMax}" th:utext="' &#8680; '" th:href="@{|/audit/page/${next}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          <span th:if="${(logsPage + 1) >= logsMax}" th:class="'disabled'" th:utext="' &#8679; '"/><a th:if="${(logsPage + 1) < logsMax}" th:utext="' &#8679; '" th:href="@{|/audit/page/${logsMax}/sort/${logsSort}|}" th:class="'decorationoff'"/>
+          </span></h5>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

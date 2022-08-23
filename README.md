@@ -1,2 +1,0 @@
-# Tombola
-Tombola for tomcat

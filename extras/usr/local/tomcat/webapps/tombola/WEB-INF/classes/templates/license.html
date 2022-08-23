@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="head">
+</head>
+<body>
+  <h1><span>
+    <th:block th:if="${headerSoftware}" th:text="${serverSoftware}"/>
+    <strong th:text="${T(org.apache.commons.lang3.StringUtils).capitalize(serverName)}"/>
+    <a href="https://github.com/lhsradek/tombola" target="_blank"><img th:src="@{/res/github.png}"/></a>
+    <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img th:src="@{/res/facebook.png}"/></a>
+    <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img th:src="@{/res/in.png}"/></a>
+    <a href="mailto:radek.kadner@gmail.com"><img th:src="@{/res/mail.png}"/></a></span>
+  </h1>
+  <div th:class="'content'">
+    <div th:class="'content-middle'">
+      <div th:class="'top'">
+        <h2><span>
+          <th:block th:utext="'Tombola\'s License'"/>
+          <small th:utext="'\'' + ${stage} + '\' on '"/>
+          <small th:utext="${serverSoftware} + ' - \'' + ${activeProfiles} + '\''"/>
+        </span></h2>
+        <h5><span>
+ 	  <small><a th:if="${isAuthenticated}" th:href="@{/logout}" th:text="'Log out'"/><a th:if="!${isAuthenticated}" th:href="@{/login}" th:text="'Log in'"/></small>
+          <small><a th:href="@{/}" th:text="'Tombola'"/></small>
+          <small th:if="${userRoles.get('managerRole') or userRoles.get('adminRole')}"><a th:href="@{/audit}" th:text="'Audit'"/></small>
+          <small th:if="${userRoles.get('managerRole') or userRoles.get('adminRole')}"><a th:href="@{/tombolaLog}" th:text="'Log'"/></small>
+        </span></h5>
+        <h5><span><th:block th:text="'The MIT License'"/>
+          <small><a th:href="'https://opensource.org/licenses/MIT'" th:target="_blank" th:text="'(MIT)'"/></small>
+        </span></h5>
+        <p><small th:utext="'Copyright &copy; 2022 Radek Kádner'"/></p>
+        <p><small>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+        </small></p>
+        <p><small>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+        </small></p>
+        <p><small>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+        </small></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
