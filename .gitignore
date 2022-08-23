@@ -1,5 +1,6 @@
 .env
-/tombola-aggregator/tombola.war
-/tombola-app/target
-/tombola-impl/target
-/logs/
+extras/usr/local/tomcat/conf/server.xml
+tombola-aggregator/tombola.war
+tombola-app/target
+tombola-impl/target
+logs/

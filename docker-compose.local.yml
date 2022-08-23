@@ -87,21 +87,21 @@ services:
       - redis:/data
       # - ./extras/etc/sysctl.d/sysctl.conf:/etc/sysctl.d/sysctl.conf:ro
 
-#   webtombola-adminer:
-#    # Alpine
-#    image: adminer
-#    container_name: "${APP_ID}-adminer"
-#    hostname: "adminer.${APP_HOST}"
-#    restart: ${DOCKER_RESTART_POLICY}
-#    networks:
-#      # for traefik:
-#      - default
-#      # local network:
-#      - intnet
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.docker.network=${DOCKER_NETWORK}"
-#      - "traefik.http.routers.${APP_ID}-adminer-public.rule=Host(`adminer.${APP_HOST}`)"
-#      - "traefik.http.routers.${APP_ID}-adminer-public.entrypoints=https"
-#      - "traefik.http.routers.${APP_ID}-adminer-public.tls=true"
+  webtombola-adminer:
+   # Alpine
+   image: adminer
+   container_name: "${APP_ID}-adminer"
+   hostname: "adminer.${APP_HOST}"
+   restart: "no"
+   networks:
+     # for traefik:
+     - default
+     # local network:
+     - intnet
+   labels:
+     - "traefik.enable=true"
+     - "traefik.docker.network=${DOCKER_NETWORK}"
+     - "traefik.http.routers.${APP_ID}-adminer-public.rule=Host(`adminer.${APP_HOST}`)"
+     - "traefik.http.routers.${APP_ID}-adminer-public.entrypoints=https"
+     - "traefik.http.routers.${APP_ID}-adminer-public.tls=true"
 

@@ -231,14 +231,21 @@ public class IndexController {
 IndexController index = new IndexController();
 // index.setMess(true);
 String serverName = pageContext.getRequest().getServerName();
+String shortName = serverName.split("\\.", 2)[0];
 // String serverSoftware = index.ucFirst(pageContext.getServletContext().getServerInfo().split("/")[0]);
 // boolean isPostgres = index.isSocket("db", 5432);
-// boolean isManager = index.isUrl("https://localhost:8080/manager/");
-// boolean isDoc = index.isUrl("https://localhost:8080/docs/");
-// StringBuffer env = new StringBuffer();
+boolean isTombola = index.isUrl("http://localhost:8080/tombola/");
+boolean isTombolaJavadoc = index.isUrl("http://localhost:8080/tombola-javadoc/");
+boolean isManager = index.isUrl("http://localhost:8080/manager/");
+boolean isDoc = index.isUrl("http://localhost:8080/docs/");
+boolean isAdminer = index.isUrl("http://adminer." + serverName + ":8080/");
+boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
+boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local");
+StringBuffer env = new StringBuffer();
 // index.getEnv().forEach((key, val) -> {
-//         env.append(String.format("<strong>%s</strong>:'%s'" + System.lineSeparator(), key, val));
+// 	env.append(String.format("<strong>%s</strong>:'%s'" + System.lineSeparator(), key, val));
 // });
+// index.appendMess(env.toString());
 %>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs_CZ.UTF-8" lang="cs_CZ.UTF-8">
 <head>
@@ -255,31 +262,55 @@ String serverName = pageContext.getRequest().getServerName();
 	   <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img src="tomcat/in.png" width="30" height="30"/></a>
 	   <a href="mailto:radek.kadner@gmail.com"><img src="tomcat/mail.png" width="30" height="30"/></a></span></h1>
   <div class="content">
+    <div class="content-middle">
+<!--
+      <h2>Environment</h2>
+      <p><code>
+<%=env%></p></code>
+--><% if(index.isMess()) { %>
+      <h2>Message</h2>
+      <p><code>
+<%=index.getMess()%>      </code></p><% } %>
+    </div>
 
     <div class="content-columns">
       <div class="content-column-left">
 
-        <h2>Apache Tomcat</h2>
-        <h5>Webs servlet/JSP container</h5>
-        <p>
-          <ul>
-              <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li>
-              <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li>
-              <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li>
-              <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li>
-              <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li>
-              <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li>
-	      <!-- <li><a href="https://adminer.<%=serverName%>" target="_blank"><%=serverName%> - adminer</a></li> -->
+	<div class="content-top">
+          <h2>Apache Tomcat</h2>
+          <h5>Webs servlet/JSP container</h5>
+          <p>
+            <ul>
+              <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li><% if (isTombola) { %>
+              <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li><% }; if (isTombolaJavadoc) { %>
+              <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li><% }; if (isManager) { %>
+	      <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isDoc) { %>
+	      <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
+	      <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
+	      <li><a href="https://adminer.<%=serverName%>/" target="_blank"><%=serverName%> - adminer</a></li><% } %>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
-          </ul>
-        </p>
-        <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
+            </ul>
+          </p>
+          <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
+        </div>
+
+        <% if(isNginx) { %> <div class="content-bottom">
+          <h2>Nginx</h2>
+          <h5>HTTP and reverse proxy server</h5>
+          <p>
+            <ul>
+              <li><a href="https://<%=shortName%>.nginx.local"><%=shortName%>.nginx.local</a></li>
+	      <li><a href="https://<%=shortName%>.nginx.local/downloads/">Downloads</a></li>
+            </ul>
+          </p>
+        </div> <% } %>
       </div>
 
       <div class="content-column-right">
-        <h2>Documentation</h2>
-        <p>
-          <ul>
+	<div class="content-top">
+          <h2>Documentation</h2>
+          <p>
+            <ul>
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Official build of Alpine Linux</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - Official build of MariaDB</a></li>
               <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Official build of Nginx</a></li>
@@ -293,9 +324,10 @@ String serverName = pageContext.getRequest().getServerName();
               <li><a href="https://docs.docker.com/compose/" target="_blank">docs.docker.com</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
-	  </ul>
-        </p>
-        <p><img src="tomcat/docker-logo.png" width="53" height="40"/></p>
+            </ul>
+          </p>
+          <p><img src="tomcat/docker-logo.png" width="53" height="40"/></p>
+        </div>
       </div>
 
     </div>
