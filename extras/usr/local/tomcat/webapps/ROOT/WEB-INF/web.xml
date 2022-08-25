@@ -27,4 +27,11 @@
      Welcome to Tomcat
   </description>
 
+  <session-config>
+    <session-timeout>1</session-timeout>
+    <cookie-config>
+        <max-age>0</max-age>
+    </cookie-config>
+  </session-config>
+
 </web-app>

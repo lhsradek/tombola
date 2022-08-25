@@ -21,11 +21,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><%@ page
-  language="java" contentType="text/html; utf-8" pageEncoding="utf-8" session="false"
-%><%@ page import="
+  language="java" contentType="text/html; utf-8" pageEncoding="utf-8" import="
   java.io.IOException,
   java.net.ConnectException,
   java.net.HttpURLConnection,
