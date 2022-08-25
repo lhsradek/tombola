@@ -37,6 +37,7 @@ services:
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
+      - ./extras/usr/local/tomcat/conf/web.xml:/usr/local/tomcat/conf/web.xml:ro
       - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
       - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
     labels:

@@ -240,7 +240,7 @@ boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isDoc = index.isUrl("http://localhost:8080/docs/");
 boolean isAdminer = index.isUrl("http://adminer." + serverName + ":8080/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
-boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local");
+boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local/") || index.isUrl("https://" + shortName + ".nginx.local:443");
 StringBuffer env = new StringBuffer();
 // index.getEnv().forEach((key, val) -> {
 // 	env.append(String.format("<strong>%s</strong>:'%s'" + System.lineSeparator(), key, val));
@@ -279,7 +279,7 @@ StringBuffer env = new StringBuffer();
         <h2>Links</h2>
         <p>
           <ul>
-            <li><a href="https://docker.traefik.local" target="_blank">docker.traefik.local</a></li>
+            <li><a href="https://<%=shortName%>.traefik.local"><%=shortName%>.traefik.local</a></li>
           </ul>
         </p>
 
