@@ -105,3 +105,4 @@ services:
 #     - "traefik.http.routers.${APP_ID}-adminer-public.rule=Host(`adminer.${APP_HOST}`)"
 #     - "traefik.http.routers.${APP_ID}-adminer-public.entrypoints=https"
 #     - "traefik.http.routers.${APP_ID}-adminer-public.tls=true"
+

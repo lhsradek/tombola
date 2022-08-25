@@ -35,7 +35,10 @@ SOFTWARE.
   java.security.NoSuchAlgorithmException,
   java.security.SecureRandom,
   java.security.cert.X509Certificate,
+  java.security.cert.X509Certificate,
   java.util.LinkedHashMap,
+  java.util.Arrays,
+  java.util.Collections,
   java.util.Map,
   java.util.stream.Collectors,
   javax.net.ssl.HostnameVerifier,
@@ -59,7 +62,7 @@ public class IndexController {
         private static final String ENV_JAVA_OPTS = "JAVA_OPTS";
         private static final String PROFILES_ACTIVE = "-Dspring.profiles.active";
         private static final String FORMAT_SOCKET = "isSocket(%s) <strong>%s:%d</strong> %s";
-        private static final String FORMAT_URL = "isUrl(%s) <strong>%s</strong> %s";
+	private static final String FORMAT_URL = "isUrl(%s) <strong>%s</strong> %s";
         private static final String FORMAT_STATUS_CODE = "testUrl%s(Status code:<strong>%d</strong>)";
         private static final int STATUS_CODE_LIMIT = 400;
 
@@ -84,17 +87,18 @@ public class IndexController {
         }
 
         public boolean isUrl(String address) {
-                return isUrl(address, getTimeout());
-        }
+		boolean ret = isUrl(address, STATUS_CODE_LIMIT);
+		return ret;
+	}
 
-        public boolean isUrl(String address, int timeout) {
+        public boolean isUrl(String address, int limit) {
                 boolean ret = true;
                 try {
                         URL url = new URL(address);
                         if ("http".equals(url.getProtocol())) {
-                                testUrlHttp(url, timeout);
+                                testUrlHttp(url, getTimeout(), limit);
                         } else if ("https".equals(url.getProtocol())) {
-                                testUrlHttps(url, timeout);
+                                testUrlHttps(url, getTimeout(), limit);
                         } else {
                                 ret = false;
                         }
@@ -114,19 +118,19 @@ public class IndexController {
                 return ret;
         }
 
-        private void testUrlHttp(URL url, int timeout) throws IOException {
+        private void testUrlHttp(URL url, int timeout, int limit) throws IOException {
                 HttpURLConnection.setFollowRedirects(false);
                 // http
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setConnectTimeout(timeout);
                 int statusCode = http.getResponseCode();
                 http.disconnect();
-                if (statusCode >= STATUS_CODE_LIMIT) {
+                if (statusCode >= Collections.min(Arrays.asList(limit, STATUS_CODE_LIMIT))) {
                         throw new ConnectException(String.format(FORMAT_STATUS_CODE, ucFirst(url.getProtocol()), statusCode));
                 }
         }
 
-       private void testUrlHttps(URL url, int timeout) throws NoSuchAlgorithmException, KeyManagementException, IOException {
+       private void testUrlHttps(URL url, int timeout, int limit) throws NoSuchAlgorithmException, KeyManagementException, IOException {
                 HttpsURLConnection.setFollowRedirects(false);
                 // TrustManager[] and SSLContext
                 TrustManager[] tm = new TrustManager[] { new X509TrustManager() {
@@ -157,7 +161,7 @@ public class IndexController {
                 http.setSSLSocketFactory(sc.getSocketFactory());
                 int statusCode = http.getResponseCode();
                 http.disconnect();
-                if (statusCode >= STATUS_CODE_LIMIT) {
+                if (statusCode >= Collections.min(Arrays.asList(limit, STATUS_CODE_LIMIT))) {
                         throw new ConnectException(String.format(FORMAT_STATUS_CODE, ucFirst(url.getProtocol()), statusCode));
                 }
         }
@@ -234,11 +238,12 @@ String shortName = serverName.split("\\.", 2)[0];
 // boolean isPostgres = index.isSocket("db", 5432);
 boolean isTombola = index.isUrl("http://localhost:8080/tombola/");
 boolean isTombolaJavadoc = index.isUrl("http://localhost:8080/tombola-javadoc/");
-boolean isManager = index.isUrl("http://localhost:8080/manager/");
+// boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isDoc = index.isUrl("http://localhost:8080/docs/");
-boolean isAdminer = index.isUrl("http://adminer." + serverName + ":8080/");
+boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
-boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local/") || index.isUrl("https://" + shortName + ".nginx.local:443");
+boolean isAdminer = index.isUrl("http://adminer." + shortName + ".tomcat.local:8080", 300);
+boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local") || index.isUrl("https://" + shortName + ".nginx.local:443");
 StringBuffer env = new StringBuffer();
 // index.getEnv().forEach((key, val) -> {
 // 	env.append(String.format("<strong>%s</strong>:'%s'" + System.lineSeparator(), key, val));
