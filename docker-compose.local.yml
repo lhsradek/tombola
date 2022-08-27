@@ -34,6 +34,8 @@ services:
       - intnet
     volumes:
       # - /root/bin/ubuntu:/root/bin/ubuntu:ro
+      - ./certs/${CERTNAME}.pem:/usr/local/tomcat/conf/localhost.pem:ro
+      - ./certs/${CERTNAME}-key.pem:/usr/local/tomcat/conf/localhost-key.pem:ro
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
@@ -46,6 +48,9 @@ services:
       - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
       - "traefik.http.routers.${APP_ID}-public.tls=true"
+      # for https:
+      - "traefik.http.services.webltombola-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.services.webltombola-${APP_ID}.loadbalancer.server.port=8443"
 
   postgres:
     image: postgres:13.7-alpine
