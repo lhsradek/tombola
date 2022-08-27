@@ -123,12 +123,10 @@ services:
     # Alpine
     image: adminer:fastcgi
     container_name: "${APP_ID}-adminer"
-    hostname: "ad"
+    hostname: "ad-php"
     restart: "no"
     networks:
-      # for traefik:
-      - default
-       # local network:
+      # local network:
       - intnet
     volumes:
       # - /root/bin/alpine:/root/bin/alpine:ro
