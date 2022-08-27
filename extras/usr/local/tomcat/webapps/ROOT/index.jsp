@@ -232,17 +232,19 @@ public class IndexController {
 %><%
 IndexController index = new IndexController();
 // index.setMess(true);
+String serverDomain = "tomcat.local";
 String serverName = pageContext.getRequest().getServerName();
+// String shortName = serverName.split("\\.", 3)[1];
 String shortName = serverName.split("\\.", 2)[0];
 // String serverSoftware = index.ucFirst(pageContext.getServletContext().getServerInfo().split("/")[0]);
 // boolean isPostgres = index.isSocket("db", 5432);
 boolean isTombola = index.isUrl("http://localhost:8080/tombola/");
-boolean isTombolaJavadoc = index.isUrl("http://localhost:8080/tombola-javadoc/");
+boolean isTombolaJavadoc = index.isUrl("https://" + serverName + "/tombola-javadoc/");
 // boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isDoc = index.isUrl("http://localhost:8080/docs/");
 boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
-boolean isAdminer = index.isUrl("http://adminer." + shortName + ".tomcat.local:8080", 300);
+boolean isAdminer = true; // || index.isUrl("http://ad." + shortName + "." + serverDomain + ":8080", 300);
 boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local") || index.isUrl("https://" + shortName + ".nginx.local:443");
 StringBuffer env = new StringBuffer();
 // index.getEnv().forEach((key, val) -> {
@@ -296,7 +298,7 @@ StringBuffer env = new StringBuffer();
             <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isDoc) { %>
 	    <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
 	    <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
-	    <li><a href="https://adminer.<%=serverName%>/" target="_blank"><%=serverName%> - adminer</a></li><% } %>
+	    <li><a href="https://ad.<%=shortName%>.<%=serverDomain%>" target="_blank">ad.<%=shortName%>.<%=serverDomain%> - adminer</a></li><% } %>
             <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>

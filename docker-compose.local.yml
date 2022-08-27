@@ -1,13 +1,5 @@
 version: '3.9'
 
-volumes:
-  postgres:
-    external: false
-    name: "${APP_ID}-db"
-  redis:
-    external: false
-    name: "${APP_ID}-redis"
-
 networks:
   default:
     external: true
@@ -18,15 +10,49 @@ networks:
     name: ${INT_NETWORK}
 
 services:
+  # Alpine Linux - nginx
   webtombola:
+    image: nginx:alpine
+    # image: lhsradek/lhsdock:v3
+    container_name: "${APP_ID}-nginx"
+    hostname: "${APP_HOST}.${INT_NETWORK}"
+    restart: ${DOCKER_RESTART_POLICY}
+    # ports:
+    # - 80:80
+    # - 443:443
+    volumes:
+      - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
+      - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
+      - ./application/html:/var/www/html:rw
+      - adminer:/var/www/html/ad:rw
+      # for http
+      # - ./extras/nginx/default-http.conf:/etc/nginx/conf.d/default.conf:ro
+      # for https
+      - ./extras/nginx/default-https.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./logs/tombola-nginx:/var/log/nginx:rw
+    networks:
+      # for traefik:
+      - default
+      # local network:
+      - intnet
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.webtombola-public.rule=Host(`ad.${APP_HOST}`, `${APP_HOST}`)"
+      - "traefik.http.routers.webtombola-public.entrypoints=https"
+      - "traefik.http.routers.webtombola-public.tls=true"
+      # for https:
+      - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.scheme=https"
+      - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.port=443"
+
+  webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
     # bash
     image: tomcat:9.0
-    container_name: ${APP_ID}
-    hostname: "${APP_HOST}"
+    container_name: "${APP_ID}-tomcat"
+    hostname: "web"
+    # hostname: "web.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
-    # ports:
-    #  - 8080:8080
     networks:
       # for traefik:
       - default
@@ -36,21 +62,21 @@ services:
       # - /root/bin/ubuntu:/root/bin/ubuntu:ro
       - ./certs/${CERTNAME}.pem:/usr/local/tomcat/conf/localhost.pem:ro
       - ./certs/${CERTNAME}-key.pem:/usr/local/tomcat/conf/localhost-key.pem:ro
-      - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps
+      - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps:rw
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
       - ./extras/usr/local/tomcat/conf/web.xml:/usr/local/tomcat/conf/web.xml:ro
       - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
       - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.${APP_ID}-public.rule=Host(`${APP_HOST}`)"
-      - "traefik.http.routers.${APP_ID}-public.entrypoints=https"
-      - "traefik.http.routers.${APP_ID}-public.tls=true"
-      # for https:
-      - "traefik.http.services.webltombola-${APP_ID}.loadbalancer.server.scheme=https"
-      - "traefik.http.services.webltombola-${APP_ID}.loadbalancer.server.port=8443"
+    # labels:
+    # - "traefik.enable=true"
+    # - "traefik.docker.network=${DOCKER_NETWORK}"
+    # - "traefik.http.routers.webtombola-tomcat-public.rule=Host(`web.${APP_HOST}`)"
+    # - "traefik.http.routers.webtombola-tomcat-public.entrypoints=https"
+    # - "traefik.http.routers.webtombola-tomcat-public.tls=true"
+    # for https:
+    # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
+    # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
 
   postgres:
     image: postgres:13.7-alpine
@@ -59,7 +85,7 @@ services:
     # hostname: "db.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      OSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     # ports:
     #  - 5432:5432
     networks:
@@ -93,21 +119,36 @@ services:
       - redis:/data
       # - ./extras/etc/sysctl.d/sysctl.conf:/etc/sysctl.d/sysctl.conf:ro
 
-#  webtombola-adminer:
-#   # Alpine
-#   image: adminer
-#   container_name: "${APP_ID}-adminer"
-#   hostname: "adminer.${APP_HOST}"
-#   restart: "no"
-#   networks:
-#     # for traefik:
-#     - default
-#     # local network:
-#     - intnet
-#   labels:
-#     - "traefik.enable=true"
-#     - "traefik.docker.network=${DOCKER_NETWORK}"
-#     - "traefik.http.routers.${APP_ID}-adminer-public.rule=Host(`adminer.${APP_HOST}`)"
-#     - "traefik.http.routers.${APP_ID}-adminer-public.entrypoints=https"
-#     - "traefik.http.routers.${APP_ID}-adminer-public.tls=true"
+  webtombola-adminer:
+    # Alpine
+    image: adminer:fastcgi
+    container_name: "${APP_ID}-adminer"
+    hostname: "ad"
+    restart: "no"
+    networks:
+      # for traefik:
+      - default
+       # local network:
+      - intnet
+    volumes:
+      # - /root/bin/alpine:/root/bin/alpine:ro
+      - adminer:/var/www/html:rw
+      - ./logs/tombola-nginx:/var/log/nginx:rw
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.docker.network=${DOCKER_NETWORK}"
+#      - "traefik.http.routers.webtombola-adminer-public.rule=Host(`ad.${APP_HOST}`)"
+#      - "traefik.http.routers.webtombola-adminer-public.entrypoints=https"
+#      - "traefik.http.routers.webtombola-adminer-public.tls=true"
+
+volumes:
+  postgres:
+    external: false
+    name: "${APP_ID}-db"
+  redis:
+    external: false
+    name: "${APP_ID}-redis"
+  adminer:
+    external: false
+    name: "${APP_ID}-adminer"
 

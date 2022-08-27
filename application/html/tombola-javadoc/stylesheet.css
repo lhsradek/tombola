@@ -2,7 +2,9 @@
  * Javadoc style sheet
  */
 
-@import url('resources/fonts/dejavu.css');
+/* @import url('resources/fonts/dejavu.css'); */
+@import "https://www.fontsquirrel.com/fonts/dejavu.css";
+
 
 /*
  * Styles for individual HTML elements.
