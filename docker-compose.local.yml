@@ -78,6 +78,26 @@ services:
     # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
     # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
 
+  webtombola-ad:
+    # Alpine
+    image: adminer:fastcgi
+    container_name: "${APP_ID}-ad-php"
+    hostname: "ad-php"
+    restart: "no"
+    networks:
+      # local network:
+      - intnet
+    volumes:
+      # - /root/bin/alpine:/root/bin/alpine:ro
+      - adminer:/var/www/html:rw
+      - ./logs/tombola-nginx:/var/log/nginx:rw
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.docker.network=${DOCKER_NETWORK}"
+#      - "traefik.http.routers.webtombola-ad-public.rule=Host(`ad.${APP_HOST}`)"
+#      - "traefik.http.routers.webtombola-ad-public.entrypoints=https"
+#      - "traefik.http.routers.webtombola-ad-public.tls=true"
+
   postgres:
     image: postgres:13.7-alpine
     container_name: "${APP_ID}-db"
@@ -118,26 +138,6 @@ services:
       # - /root/bin/alpine:/root/bin/alpine:ro
       - redis:/data
       # - ./extras/etc/sysctl.d/sysctl.conf:/etc/sysctl.d/sysctl.conf:ro
-
-  webtombola-adminer:
-    # Alpine
-    image: adminer:fastcgi
-    container_name: "${APP_ID}-adminer"
-    hostname: "ad-php"
-    restart: "no"
-    networks:
-      # local network:
-      - intnet
-    volumes:
-      # - /root/bin/alpine:/root/bin/alpine:ro
-      - adminer:/var/www/html:rw
-      - ./logs/tombola-nginx:/var/log/nginx:rw
-#    labels:
-#      - "traefik.enable=true"
-#      - "traefik.docker.network=${DOCKER_NETWORK}"
-#      - "traefik.http.routers.webtombola-adminer-public.rule=Host(`ad.${APP_HOST}`)"
-#      - "traefik.http.routers.webtombola-adminer-public.entrypoints=https"
-#      - "traefik.http.routers.webtombola-adminer-public.tls=true"
 
 volumes:
   postgres:
