@@ -83,7 +83,7 @@ services:
     image: adminer:fastcgi
     container_name: "${APP_ID}-ad"
     hostname: "ad-php"
-    restart: "no"
+    restart: ${DOCKER_RESTART_POLICY}
     networks:
       # local network:
       - intnet
