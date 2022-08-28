@@ -320,6 +320,7 @@ StringBuffer env = new StringBuffer();
           <h2>Documentation</h2>
           <p>
             <ul>
+              <li><a href="https://hub.docker.com/_/adminer" target="_blank">hub.docker.com - Official build of Adminer</a></li>
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Official build of Alpine Linux</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - Official build of MariaDB</a></li>
               <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Official build of Nginx</a></li>
