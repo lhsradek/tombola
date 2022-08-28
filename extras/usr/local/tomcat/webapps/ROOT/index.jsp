@@ -324,6 +324,7 @@ StringBuffer env = new StringBuffer();
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Official build of Alpine Linux</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - Official build of MariaDB</a></li>
               <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Official build of Nginx</a></li>
+              <li><a href="https://hub.docker.com/_/node" target="_blank">hub.docker.com - Official build of Node</a></li>
               <li><a href="https://hub.docker.com/_/php" target="_blank">hub.docker.com - Official build of PHP</a></li>
               <li><a href="https://hub.docker.com/_/phpmyadmin" target="_blank">hub.docker.com - Official build of phpMyAdmin</a></li>
               <li><a href="https://hub.docker.com/_/postgres" target="_blank">hub.docker.com - Official build of Postgres</a></li>
