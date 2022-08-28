@@ -105,7 +105,7 @@ services:
     # hostname: "db.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     environment:
-      OSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     # ports:
     #  - 5432:5432
     networks:
@@ -131,7 +131,7 @@ services:
       # local network:
       - intnet
     environment:
-      -  REDIS_ARGS=${REDIS_ARGS}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
     # ports:
     # - 6379:6379
     volumes:
