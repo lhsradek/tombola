@@ -299,7 +299,6 @@ StringBuffer env = new StringBuffer();
 	    <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
 	    <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
 	    <li><a href="https://ad.<%=shortName%>.<%=serverDomain%>" target="_blank">ad.<%=shortName%>.<%=serverDomain%> - adminer</a></li><% } %>
-            <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
           </ul>
         </p>
         <p><img src="tomcat/tomcat.png" width="63" height="40"/></p>
@@ -316,14 +315,24 @@ StringBuffer env = new StringBuffer();
       </div>
 
       <div class="content-column-right">
-	<div class="content-top">
           <h2>Documentation</h2>
+          <p>
+            <ul>
+              <li><a href="https://docs.docker.com/compose/" target="_blank">docker.com</a></li>
+              <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org</a></li>
+              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org</a></li>
+              <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
+            </ul>
+          </p>
+
+          <h2>Docker Hub</h2>
           <p>
             <ul>
               <li><a href="https://hub.docker.com/_/adminer" target="_blank">hub.docker.com - Adminer</a></li>
               <li><a href="https://hub.docker.com/_/alpine" target="_blank">hub.docker.com - Alpine Linux</a></li>
               <li><a href="https://hub.docker.com/_/elasticsearch" target="_blank">hub.docker.com - Elasticsearch</a></li>
               <li><a href="https://hub.docker.com/_/kibana" target="_blank">hub.docker.com - Kibana</a></li>
+              <li><a href="https://hub.docker.com/_/logstash" target="_blank">hub.docker.com - Logstash</a></li>
               <li><a href="https://hub.docker.com/_/mariadb" target="_blank">hub.docker.com - MariaDB</a></li>
               <li><a href="https://hub.docker.com/_/nginx" target="_blank">hub.docker.com - Nginx</a></li>
               <li><a href="https://hub.docker.com/_/node" target="_blank">hub.docker.com - Node</a></li>
@@ -334,13 +343,9 @@ StringBuffer env = new StringBuffer();
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Tomcat</a></li>
               <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Ubuntu</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Wordpress</a></li>
-              <li><a href="https://docs.docker.com/compose/" target="_blank">docs.docker.com - compose</a></li>
-              <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org - Documentation</a></li>
-              <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org - Wiki</a></li>
             </ul>
           </p>
           <p><img src="tomcat/docker-logo.png" width="53" height="40"/></p>
-        </div>
       </div>
 
     </div>
