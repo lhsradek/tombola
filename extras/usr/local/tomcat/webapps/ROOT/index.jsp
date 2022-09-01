@@ -284,7 +284,7 @@ StringBuffer env = new StringBuffer();
         <h2>Links</h2>
         <p>
           <ul>
-            <li><a href="https://<%=shortName%>.traefik.local"><%=shortName%>.traefik.local</a></li>
+            <li><a href="https://<%=shortName%>.traefik.local" target="_blank"><%=shortName%>.traefik.local</a></li>
           </ul>
         </p>
 
