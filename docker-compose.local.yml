@@ -22,7 +22,7 @@ services:
     # - 443:443
     volumes:
       - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
-      - ./certs/${CERTNAME}-key.pem:/etc/ssl/private/cacert-key.pem:ro
+      - ./certs/${CERTNAME}.key:/etc/ssl/private/cacert-key.pem:ro
       - ./application/html:/var/www/html:rw
       - adminer:/var/www/html/ad:rw
       # for http
@@ -61,7 +61,7 @@ services:
     volumes:
       # - /root/bin/ubuntu:/root/bin/ubuntu:ro
       - ./certs/${CERTNAME}.pem:/usr/local/tomcat/conf/localhost.pem:ro
-      - ./certs/${CERTNAME}-key.pem:/usr/local/tomcat/conf/localhost-key.pem:ro
+      - ./certs/${CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps:rw
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
@@ -113,6 +113,7 @@ services:
       - intnet
     volumes:
       - postgres:/var/lib/postgresql/data:rw
+      - /extras/elastic:/root/elastic
       - ./extras/docker-entrypoint-initdb.d/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
       # after init db
       # - ./logs/tombola-postgres:/var/lib/postgresql/data/log:rw
