@@ -47,8 +47,11 @@ services:
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
-    # bash
-    image: tomcat:9.0
+    build:
+      context: ./context
+      dockerfile: Dockerfile 
+    image: lhsradek/tombola:v1
+    # image: tomcat:9.0
     container_name: "${APP_ID}-tomcat"
     hostname: "web"
     # hostname: "web.${INT_NETWORK}"
@@ -59,7 +62,6 @@ services:
       # local network:
       - intnet
     volumes:
-      # - /root/bin/ubuntu:/root/bin/ubuntu:ro
       - ./certs/${CERTNAME}.pem:/usr/local/tomcat/conf/localhost.pem:ro
       - ./certs/${CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps:rw

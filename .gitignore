@@ -5,4 +5,6 @@ extras/elastic/
 tombola-aggregator/tombola.war
 tombola-app/target
 tombola-impl/target
+tombola-v1.img
+context/elastic-agent-8.4.1-linux-x86_64.tar.gz
 logs

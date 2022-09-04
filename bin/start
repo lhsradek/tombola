@@ -45,5 +45,25 @@ then
     ARGS="$ARGS -f $rootPath/docker-compose.extras.yml"
 fi
 
-docker-compose ${ARGS} pull && docker-compose ${ARGS} up -d
-
+IMG="lhsradek/tombola:v1"
+IMGFILE="tombola-v1.img"
+if !(docker-compose ${ARGS} pull) # !
+  then
+  if !(docker image inspect "${IMG}" >/dev/null 2>&1)
+  then
+    if [[ ! -f "$rootPath/${IMGFILE}" ]]
+    then
+      docker compose ${ARGS} build --no-cache --compress --force-rm
+      docker save -o ${IMGFILE} ${IMG}
+      docker image rm ${IMG}
+      docker container prune -f
+    fi
+    if (docker load -i ${IMGFILE})
+    then
+      echo "An image file:'${IMGFILE}' is loaded.."
+    fi
+    docker push ${IMG} # !
+  fi
+  docker-compose ${ARGS} pull # !
+fi
+docker-compose ${ARGS} up -d

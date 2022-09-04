@@ -1,0 +1,511 @@
+id: 4e25f140-29f1-11ed-aa5c-4537ee7b96bf
+revision: 3
+outputs:
+  default:
+    type: elasticsearch
+    hosts:
+      - 'http://localhost:9200'
+    username: '{ES_USERNAME}'
+    password: '{ES_PASSWORD}'
+output_permissions:
+  default:
+    _elastic_agent_monitoring:
+      indices:
+        - names:
+            - logs-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.cloudbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+    _elastic_agent_checks:
+      cluster:
+        - monitor
+    acf7c744-dd77-4cb5-9d82-99df61a07555:
+      indices:
+        - names:
+            - logs-system.auth-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.syslog-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.application-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.system-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.cpu-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.diskio-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.filesystem-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.fsstat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.load-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.memory-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.network-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process.summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.socket_summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.uptime-default
+          privileges:
+            - auto_configure
+            - create_doc
+    aea20a6c-a193-43da-a49b-a35e82801b3e:
+      indices:
+        - names:
+            - logs-postgresql.log-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-postgresql.activity-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-postgresql.bgwriter-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-postgresql.database-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-postgresql.statement-default
+          privileges:
+            - auto_configure
+            - create_doc
+agent:
+  download:
+    source_uri: 'https://artifacts.elastic.co/downloads/'
+  monitoring:
+    enabled: true
+    use_output: default
+    namespace: default
+    logs: true
+    metrics: true
+inputs:
+  - id: logfile-system-acf7c744-dd77-4cb5-9d82-99df61a07555
+    name: system-1
+    revision: 1
+    type: logfile
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: logfile-system.auth-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.auth
+          type: logs
+        ignore_older: 72h
+        paths:
+          - /var/log/auth.log*
+          - /var/log/secure*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        tags:
+          - hashicorp-vault-log
+        processors:
+          - add_locale: null
+      - id: logfile-system.syslog-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.syslog
+          type: logs
+        paths:
+          - /var/log/messages*
+          - /var/log/syslog*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+        ignore_older: 72h
+  - id: winlog-system-acf7c744-dd77-4cb5-9d82-99df61a07555
+    name: system-1
+    revision: 1
+    type: winlog
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: winlog-system.application-acf7c744-dd77-4cb5-9d82-99df61a07555
+        name: Application
+        data_stream:
+          dataset: system.application
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+      - id: winlog-system.security-acf7c744-dd77-4cb5-9d82-99df61a07555
+        name: Security
+        data_stream:
+          dataset: system.security
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+      - id: winlog-system.system-acf7c744-dd77-4cb5-9d82-99df61a07555
+        name: System
+        data_stream:
+          dataset: system.system
+          type: logs
+        condition: '${host.platform} == ''windows'''
+        ignore_older: 72h
+  - id: system/metrics-system-acf7c744-dd77-4cb5-9d82-99df61a07555
+    name: system-1
+    revision: 1
+    type: system/metrics
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.19.3
+    data_stream:
+      namespace: default
+    streams:
+      - id: system/metrics-system.cpu-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        cpu.metrics:
+          - percentages
+          - normalized_percentages
+        period: 10s
+      - id: system/metrics-system.diskio-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        diskio.include_devices: null
+        period: 10s
+      - id: system/metrics-system.filesystem-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.filesystem
+          type: metrics
+        metricsets:
+          - filesystem
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.fsstat-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.fsstat
+          type: metrics
+        metricsets:
+          - fsstat
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.load-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.load
+          type: metrics
+        metricsets:
+          - load
+        condition: '${host.platform} != ''windows'''
+        period: 10s
+      - id: system/metrics-system.memory-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.memory
+          type: metrics
+        metricsets:
+          - memory
+        period: 10s
+      - id: system/metrics-system.network-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.network
+          type: metrics
+        metricsets:
+          - network
+        period: 10s
+        network.interfaces: null
+      - id: system/metrics-system.process-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.process
+          type: metrics
+        metricsets:
+          - process
+        period: 10s
+        process.include_top_n.by_cpu: 5
+        process.include_top_n.by_memory: 5
+        process.cmdline.cache.enabled: true
+        process.cgroups.enabled: false
+        process.include_cpu_ticks: false
+        processes:
+          - .*
+      - id: >-
+          system/metrics-system.process.summary-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.process.summary
+          type: metrics
+        metricsets:
+          - process_summary
+        period: 10s
+      - id: >-
+          system/metrics-system.socket_summary-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.socket_summary
+          type: metrics
+        metricsets:
+          - socket_summary
+        period: 10s
+      - id: system/metrics-system.uptime-acf7c744-dd77-4cb5-9d82-99df61a07555
+        data_stream:
+          dataset: system.uptime
+          type: metrics
+        metricsets:
+          - uptime
+        period: 10s
+  - id: logfile-postgresql-aea20a6c-a193-43da-a49b-a35e82801b3e
+    name: docker.tomcat.local
+    revision: 2
+    type: logfile
+    use_output: default
+    meta:
+      package:
+        name: postgresql
+        version: 1.4.1
+    data_stream:
+      namespace: default
+    streams:
+      - id: logfile-postgresql.log-aea20a6c-a193-43da-a49b-a35e82801b3e
+        data_stream:
+          dataset: postgresql.log
+          type: logs
+        exclude_files:
+          - .gz$
+        paths:
+          - /var/log/postgresql/postgresql-*-*.log*
+          - /var/log/postgresql/postgresql-*-*.csv*
+        multiline:
+          negate: true
+          pattern: '^\d{4}-\d{2}-\d{2} '
+          match: after
+        tags:
+          - postgresql-log
+  - id: postgresql/metrics-postgresql-aea20a6c-a193-43da-a49b-a35e82801b3e
+    name: docker.tomcat.local
+    revision: 2
+    type: postgresql/metrics
+    use_output: default
+    meta:
+      package:
+        name: postgresql
+        version: 1.4.1
+    data_stream:
+      namespace: default
+    streams:
+      - id: >-
+          postgresql/metrics-postgresql.activity-aea20a6c-a193-43da-a49b-a35e82801b3e
+        data_stream:
+          dataset: postgresql.activity
+          type: metrics
+        period: 10s
+        hosts:
+          - 'postgres://localhost:5432'
+        metricsets:
+          - activity
+      - id: >-
+          postgresql/metrics-postgresql.bgwriter-aea20a6c-a193-43da-a49b-a35e82801b3e
+        data_stream:
+          dataset: postgresql.bgwriter
+          type: metrics
+        period: 10s
+        hosts:
+          - 'postgres://localhost:5432'
+        metricsets:
+          - bgwriter
+      - id: >-
+          postgresql/metrics-postgresql.database-aea20a6c-a193-43da-a49b-a35e82801b3e
+        data_stream:
+          dataset: postgresql.database
+          type: metrics
+        period: 10s
+        hosts:
+          - 'postgres://localhost:5432'
+        metricsets:
+          - database
+      - id: >-
+          postgresql/metrics-postgresql.statement-aea20a6c-a193-43da-a49b-a35e82801b3e
+        data_stream:
+          dataset: postgresql.statement
+          type: metrics
+        period: 10s
+        hosts:
+          - 'postgres://localhost:5432'
+        metricsets:
+          - statement
