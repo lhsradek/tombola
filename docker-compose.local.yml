@@ -137,6 +137,8 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     # ports:
     # - 6379:6379
+    volumes:
+      - redis:/data:rw
 
 volumes:
   postgres:
@@ -145,4 +147,7 @@ volumes:
   adminer:
     external: false
     name: "${APP_ID}-adminer"
+  redis:
+    external: false
+    name: "${APP_ID}-redis"
 
