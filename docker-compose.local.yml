@@ -137,18 +137,11 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     # ports:
     # - 6379:6379
-    volumes:
-      # - /root/bin/alpine:/root/bin/alpine:ro
-      - redis:/data
-      # - ./extras/etc/sysctl.d/sysctl.conf:/etc/sysctl.d/sysctl.conf:ro
 
 volumes:
   postgres:
     external: false
     name: "${APP_ID}-db"
-  redis:
-    external: false
-    name: "${APP_ID}-redis"
   adminer:
     external: false
     name: "${APP_ID}-adminer"
