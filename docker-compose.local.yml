@@ -21,7 +21,7 @@ services:
     # - 80:80
     # - 443:443
     volumes:
-      - ./certs/${CERTNAME}.pem:/etc/ssl/private/cacert.pem:ro
+      - ./certs/${CERTNAME}.crt:/etc/ssl/private/cacert.pem:ro
       - ./certs/${CERTNAME}.key:/etc/ssl/private/cacert-key.pem:ro
       - ./application/html:/var/www/html:rw
       - adminer:/var/www/html/ad:rw
@@ -62,7 +62,7 @@ services:
       # local network:
       - intnet
     volumes:
-      - ./certs/${CERTNAME}.pem:/usr/local/tomcat/conf/localhost.pem:ro
+      - ./certs/${CERTNAME}.crt:/usr/local/tomcat/conf/localhost.pem:ro
       - ./certs/${CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps:rw
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
