@@ -21,6 +21,9 @@ services:
     # - 80:80
     # - 443:443
     volumes:
+      # The first mount add bash and ping to nginx:alpine - lhsradek/lhsdock this dont'n need, see:
+      # https://github.com/lhsradek/platypus-lhsdock/blob/main/context/Dockerfile of lhsradek/lhsdock:v3
+      - ./extras/nginx/add.sh:/docker-entrypoint.d/05-add-packages.sh
       - ./certs/${CERTNAME}.crt:/etc/ssl/private/cacert.pem:ro
       - ./certs/${CERTNAME}.key:/etc/ssl/private/cacert-key.pem:ro
       - ./application/html:/var/www/html:rw
@@ -44,6 +47,11 @@ services:
       # for https:
       - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.port=443"
+    healthcheck:
+      test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
+      interval: 10s
+      timeout: 2s
+      retries: 50
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
