@@ -12,6 +12,9 @@ networks:
 services:
   # Alpine Linux - nginx
   webtombola:
+    depends_on:
+      webtombola-tomcat:
+        condition: service_healthy
     image: nginx:alpine
     # image: lhsradek/lhsdock:v3
     container_name: "${APP_ID}-nginx"
@@ -87,6 +90,11 @@ services:
     # for https:
     # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
     # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
+    healthcheck:
+      test: "curl -s -I http://localhost:8080/info.jsp | grep -q 'HTTP/1.1 200'"
+      interval: 10s
+      timeout: 2s
+      retries: 50
 
   webtombola-ad:
     # Alpine
