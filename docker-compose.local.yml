@@ -18,7 +18,7 @@ services:
     image: nginx:alpine
     # image: lhsradek/lhsdock:v3
     container_name: "${APP_ID}-nginx"
-    hostname: "${APP_HOST}.${INT_NETWORK}"
+    hostname: "${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
     # ports:
     # - 80:80
@@ -64,8 +64,8 @@ services:
     image: lhsradek/tombola:v1
     # image: tomcat:9.0
     container_name: "${APP_ID}-tomcat"
-    hostname: "web"
-    # hostname: "web.${INT_NETWORK}"
+    # hostname: "web"
+    hostname: "web.${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
     networks:
       # for traefik:
@@ -152,7 +152,7 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     # ports:
-    # - 6379:6379
+    #  - 6379:6379
     volumes:
       - redis:/data:rw
 

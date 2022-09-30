@@ -244,8 +244,8 @@ boolean isTombolaJavadoc = index.isUrl("https://" + serverName + "/tombola-javad
 boolean isDoc = index.isUrl("http://localhost:8080/docs/");
 boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
-boolean isAdminer =  true; // || index.isUrl("http://ad." + shortName + "." + serverDomain + ":8080", 300);
-boolean isNginx = index.isUrl("http://" + shortName + ".nginx.local:80/downloads/", 300);
+boolean isAdminer =  index.isUrl("https://ad." + shortName + "." + serverDomain + ":443", 300);
+boolean isNginx = index.isUrl("https://" + shortName + ".nginx.local:443/downloads/", 300);
 StringBuffer env = new StringBuffer();
 // index.getEnv().forEach((key, val) -> {
 // 	env.append(String.format("<strong>%s</strong>:'%s'" + System.lineSeparator(), key, val));
