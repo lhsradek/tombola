@@ -109,12 +109,43 @@ services:
       # - /root/bin/alpine:/root/bin/alpine:ro
       - adminer:/var/www/html:rw
       - ./logs/tombola-nginx:/var/log/nginx:rw
+#
+# Now is loadbalanced by service webtombola and trafik's loadbalancing is disabled
+#
 #    labels:
 #      - "traefik.enable=true"
 #      - "traefik.docker.network=${DOCKER_NETWORK}"
 #      - "traefik.http.routers.webtombola-ad-public.rule=Host(`ad.${APP_HOST}`)"
 #      - "traefik.http.routers.webtombola-ad-public.entrypoints=https"
 #      - "traefik.http.routers.webtombola-ad-public.tls=true"
+
+
+#       
+#   Redis Commander - Web Console for Redis
+#        
+#   webtombola-rc:
+#     image: rediscommander/redis-commander:latest
+#     container_name: "${APP_ID}-webrc"
+#     hostname: "webrc.${INT_NETWORK}"
+#     # build: .
+#     restart: ${DOCKER_RESTART_POLICY}
+#     networks:
+#       # for traefik:
+#       - default
+#       # local network:
+#       - intnet
+#     environment:
+#       - REDIS_HOSTS=redis
+#     #ports:
+#     # - "8081:8081"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
+#       - "traefik.http.routers.webtombola-rc-public.rule=Host(`rc.${APP_HOST}`)"
+#       - "traefik.http.routers.webtombola-rc-public.entrypoints=https"
+#       - "traefik.http.routers.webtombola-rc-public.tls=true"
+#       - "traefik.http.services.webtombola-rc-platypus-${APP_ID}.loadbalancer.server.port=8081"
+#       - "traefik.http.services.webtombola-rc-platypus-${APP_ID}.loadbalancer.server.scheme=http"
 
   postgres:
     image: postgres:13.7-alpine
