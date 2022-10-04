@@ -62,5 +62,7 @@
 <role rolename="manager-script"/>
 <role rolename="manager-jmx"/>
 <role rolename="manager-status"/>
-<user name="admin" password="dockeradmin321" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" />
+<role rolename="jolokia"/>
+<user name="admin" password="dockeradmin321" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status,jolokia" />
+<user name="jolokia" password="jolokia" roles="jolokia" />
 </tomcat-users>
