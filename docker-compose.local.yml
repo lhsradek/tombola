@@ -162,7 +162,7 @@ services:
       - intnet
     volumes:
       - postgres:/var/lib/postgresql/data:rw
-      - /extras/elastic:/root/elastic
+      - ./extras/elastic:/root/elastic
       - ./extras/docker-entrypoint-initdb.d/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
       # after init db
       # - ./logs/tombola-postgres:/var/lib/postgresql/data/log:rw
