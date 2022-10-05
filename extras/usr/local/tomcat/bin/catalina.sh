@@ -394,6 +394,7 @@ if [ "$1" = "debug" ] ; then
         -Dcatalina.base="$CATALINA_BASE" \
         -Dcatalina.home="$CATALINA_HOME" \
         -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+        -Dhostname="\"$HOSTNAME\"" \
         org.apache.catalina.startup.Bootstrap "$@" start
     else
       eval exec "\"$_RUNJDB\"" "\"$CATALINA_LOGGING_CONFIG\"" $LOGGING_MANAGER "$JAVA_OPTS" "$CATALINA_OPTS" \
@@ -403,6 +404,7 @@ if [ "$1" = "debug" ] ; then
         -Dcatalina.base="$CATALINA_BASE" \
         -Dcatalina.home="$CATALINA_HOME" \
         -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+        -Dhostname="\"$HOSTNAME\"" \
         org.apache.catalina.startup.Bootstrap "$@" start
     fi
   fi
@@ -423,6 +425,7 @@ elif [ "$1" = "run" ]; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+      -Dhostname="\"$HOSTNAME\"" \
       org.apache.catalina.startup.Bootstrap "$@" start
   else
     eval exec "\"$_RUNJAVA\"" "\"$CATALINA_LOGGING_CONFIG\"" $LOGGING_MANAGER "$JAVA_OPTS" "$CATALINA_OPTS" \
@@ -431,6 +434,7 @@ elif [ "$1" = "run" ]; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+      -Dhostname="\"$HOSTNAME\"" \
       org.apache.catalina.startup.Bootstrap "$@" start
   fi
 
@@ -504,6 +508,7 @@ elif [ "$1" = "start" ] ; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+      -Dhostname="\"$HOSTNAME\"" \
       org.apache.catalina.startup.Bootstrap "$@" start \
       >> "$CATALINA_OUT" 2>&1 "&"
 
@@ -514,6 +519,7 @@ elif [ "$1" = "start" ] ; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+      -Dhostname="\"$HOSTNAME\"" \
       org.apache.catalina.startup.Bootstrap "$@" start \
       >> "$CATALINA_OUT" 2>&1 "&"
 
@@ -567,6 +573,7 @@ elif [ "$1" = "stop" ] ; then
     -Dcatalina.base="\"$CATALINA_BASE\"" \
     -Dcatalina.home="\"$CATALINA_HOME\"" \
     -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+    -Dhostname="\"$HOSTNAME\"" \
     org.apache.catalina.startup.Bootstrap "$@" stop
 
   # stop failed. Shutdown port disabled? Try a normal kill.
@@ -654,6 +661,7 @@ elif [ "$1" = "configtest" ] ; then
       -Dcatalina.base="\"$CATALINA_BASE\"" \
       -Dcatalina.home="\"$CATALINA_HOME\"" \
       -Djava.io.tmpdir="\"$CATALINA_TMPDIR\"" \
+      -Dhostname="\"$HOSTNAME\"" \
       org.apache.catalina.startup.Bootstrap configtest
     result=$?
     if [ $result -ne 0 ]; then

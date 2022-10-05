@@ -1,6 +1,5 @@
 .env
 certs/
-extras/usr/local/tomcat/conf/server.xml
 extras/elastic/
 tombola-aggregator/tombola.war
 tombola-app/target

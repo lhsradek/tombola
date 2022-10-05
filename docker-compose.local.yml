@@ -65,7 +65,7 @@ services:
     # image: tomcat:9.0
     container_name: "${APP_ID}-tomcat"
     # hostname: "web"
-    hostname: "web.${APP_HOST}"
+    hostname: "tombola.${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
     networks:
       # for traefik:
@@ -81,15 +81,20 @@ services:
       - ./extras/usr/local/tomcat/conf/web.xml:/usr/local/tomcat/conf/web.xml:ro
       - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
       - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
-    # labels:
-    # - "traefik.enable=true"
-    # - "traefik.docker.network=${DOCKER_NETWORK}"
-    # - "traefik.http.routers.webtombola-tomcat-public.rule=Host(`web.${APP_HOST}`)"
-    # - "traefik.http.routers.webtombola-tomcat-public.entrypoints=https"
-    # - "traefik.http.routers.webtombola-tomcat-public.tls=true"
+    # for elastic beats, see:
+    # https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/heartbeat/heartbeat.yml
+    # https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/metricbeat/modules.d/tomcat.yml
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.webtombola-tomcat-public.rule=Host(`tombola.${APP_HOST}`)"
+      - "traefik.http.routers.webtombola-tomcat-public.entrypoints=https"
+      - "traefik.http.routers.webtombola-tomcat-public.tls=true"
+      #- "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=http"
+      #- "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8080"
     # for https:
-    # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
-    # - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
+      - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
+      - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
     healthcheck:
       test: "curl -s -I http://localhost:8080/info.jsp | grep -q 'HTTP/1.1 200'"
       interval: 10s
