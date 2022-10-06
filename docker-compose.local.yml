@@ -112,8 +112,8 @@ services:
       - intnet
     volumes:
       # - /root/bin/alpine:/root/bin/alpine:ro
-      - adminer:/var/www/html:rw
       - ./logs/tombola-nginx:/var/log/nginx:rw
+      - adminer:/var/www/html:rw
 #
 # Now is loadbalanced by service webtombola and trafik's loadbalancing is disabled
 #
