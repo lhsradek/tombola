@@ -73,8 +73,8 @@ services:
       # local network:
       - intnet
     volumes:
-      - ./certs/${CERTNAME}.crt:/usr/local/tomcat/conf/localhost.pem:ro
-      - ./certs/${CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
+      - ./certs/${TOMBOLA_CERTNAME}.crt:/usr/local/tomcat/conf/localhost.pem:ro
+      - ./certs/${TOMBOLA_CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
       - ./extras/usr/local/tomcat/webapps:/usr/local/tomcat/webapps:rw
       - ./extras/usr/local/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml:ro
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
