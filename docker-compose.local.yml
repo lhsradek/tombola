@@ -48,8 +48,8 @@ services:
       - "traefik.http.routers.webtombola-public.entrypoints=https"
       - "traefik.http.routers.webtombola-public.tls=true"
       # for https:
-      - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.scheme=https"
-      - "traefik.http.services.webtombola-${APP_ID}.loadbalancer.server.port=443"
+      - "traefik.http.services.webtombola.loadbalancer.server.scheme=https"
+      - "traefik.http.services.webtombola.loadbalancer.server.port=443"
     healthcheck:
       test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
       interval: 10s
