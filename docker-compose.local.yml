@@ -58,11 +58,11 @@ services:
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
-    build:
-      context: ./context
-      dockerfile: Dockerfile 
-    image: lhsradek/tombola:v1
-    # image: tomcat:9.0
+    #build:
+    #  context: ./context
+    #  dockerfile: Dockerfile 
+    #image: lhsradek/tombola:v1
+    image: tomcat:9
     container_name: "${APP_ID}-tomcat"
     # hostname: "web"
     hostname: "tombola.${APP_HOST}"
