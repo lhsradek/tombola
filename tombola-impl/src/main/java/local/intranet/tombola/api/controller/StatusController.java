@@ -139,10 +139,12 @@ public class StatusController {
 	 */
 	public static final String STATUS_HOST_NAME = "hostName";
 
-	private static final String STATUS_TYPE_PROTOCOL_HANDLER = "*:type=ProtocolHandler,*";
-	private static final String STATUS_PROTOCOL_HTTPS = "\"https-*";
-	private static final String STATUS_SECURED_PORT_NOT_DEFINED = "SecuredPort not defined!";
-	private static final String SOCKET_PORT = "port";
+	// private static final String STATUS_TYPE_PROTOCOL_HANDLER =
+	// "*:type=ProtocolHandler,*";
+	// private static final String STATUS_PROTOCOL_HTTPS = "\"https-*";
+	// private static final String STATUS_SECURED_PORT_NOT_DEFINED = "SecuredPort
+	// not defined!";
+	// private static final String SOCKET_PORT = "port";
 	private static final String STATUS_BRACKET = "_";
 	private static final String STATUS_BRACKETS = "__";
 	private static final String STATUS_ORG_APACHE_CATALINA_JSP_CLASSPATH = "org.apache.catalina.jsp_classpath";
@@ -167,7 +169,7 @@ public class StatusController {
 	private static final String STATUS_FORMAT_INDEX_API_NAME = "/tombola-javadoc/%s.html#%s";
 	private static final String STATUS_BEAN = "%s:%s";
 	private static final String STATUS_FORMAT_BEAN = "%s:<strong class=\"data\">%s</strong>";
-	private static final String STATUS_NAME = "name";
+	// private static final String STATUS_NAME = "name";
 	private static final String STATUS_HREF = "<a href=\"%s\" target=\"_blank\">[%s]</a>";
 	private static final String STATUS_HREF_BEAN = "<a href=\"%s\" target=\"_blank\">%s</a>";
 	private static final String STATUS_X_FORWARDED_FOR = "X-Forwarded-For";
