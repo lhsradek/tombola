@@ -176,7 +176,7 @@ services:
       ## - ./extras/var/lib/postgresql/data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.new.conf:ro
 
   redis:
-    image: redis:7-alpine
+    image: redis:7-alpine3.16
     # Alpine Linux
     container_name: "${APP_ID}-redis"
     hostname: "redis"
