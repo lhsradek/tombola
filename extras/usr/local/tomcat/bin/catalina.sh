@@ -273,6 +273,8 @@ JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true"
 JAVA_OPTS="$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom"
 JAVA_OPTS="$JAVA_OPTS -Djava.util.Arrays.useLegacyMergeSort=true"
 JAVA_OPTS="$JAVA_OPTS -Djava.protocol.handler.pkgs=org.apache.catalina.webresources"
+JAVA_OPTS="$JAVA_OPTS -Xms512m" # by lhs
+JAVA_OPTS="$JAVA_OPTS -Xmx512m" # by lhs
 
 # Check for the deprecated LOGGING_CONFIG
 # Only use it if CATALINA_LOGGING_CONFIG is not set and LOGGING_CONFIG starts with "-D..."

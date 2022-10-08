@@ -187,7 +187,7 @@ public class IndexController {
 
         public String getProfile() {
                 String ret = "";
-                String opts = System.getenv(ENV_JAVA_OPTS);
+		String opts = System.getenv("ENV_JAVA_OPTS");
                 if (opts != null) {
                         for (String p : opts.split(" ")) {
                                 String[] k = p.split("=");

@@ -153,15 +153,15 @@ services:
 #       - "traefik.http.services.webtombola-rc-platypus-${APP_ID}.loadbalancer.server.scheme=http"
 
   postgres:
-    image: postgres:13.7-alpine
+    image: postgres:13-alpine
     container_name: "${APP_ID}-db"
-    hostname: "db"
+    hostname: "db.${APP_HOST}"
     # hostname: "db.${INT_NETWORK}"
     restart: ${DOCKER_RESTART_POLICY}
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    # ports:
-    #  - 5432:5432
+    ports:
+      - 5432:5432
     networks:
       # local network:
       - intnet
@@ -176,7 +176,7 @@ services:
       ## - ./extras/var/lib/postgresql/data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.new.conf:ro
 
   redis:
-    image: redis:7.0.4-alpine
+    image: redis:7-alpine
     # Alpine Linux
     container_name: "${APP_ID}-redis"
     hostname: "redis"
