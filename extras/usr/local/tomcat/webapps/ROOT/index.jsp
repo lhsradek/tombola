@@ -35,7 +35,6 @@ SOFTWARE.
   java.security.NoSuchAlgorithmException,
   java.security.SecureRandom,
   java.security.cert.X509Certificate,
-  java.security.cert.X509Certificate,
   java.util.LinkedHashMap,
   java.util.Arrays,
   java.util.Collections,
