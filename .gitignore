@@ -5,5 +5,4 @@ tombola-aggregator/tombola.war
 tombola-app/target
 tombola-impl/target
 tombola-v1.img
-context/elastic-agent-*
 logs
