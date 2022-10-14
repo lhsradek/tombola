@@ -10,11 +10,12 @@ networks:
     name: ${INT_NETWORK}
 
 services:
+
   # Alpine Linux - nginx
   webtombola:
-    depends_on:
-      webtombola-tomcat:
-        condition: service_healthy
+    # depends_on:
+    #  webtombola-tomcat:
+    #    condition: service_healthy
     image: nginx:alpine
     # image: lhsradek/lhsdock:v3
     container_name: "${APP_ID}-nginx"
@@ -50,19 +51,19 @@ services:
       # for https:
       - "traefik.http.services.webtombola.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola.loadbalancer.server.port=443"
-    healthcheck:
-      test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
-      interval: 10s
-      timeout: 2s
-      retries: 50
+    # healthcheck:
+    #  test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
+    #  interval: 10s
+    #  timeout: 2s
+    #  retries: 50
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
-    #build:
-    #  context: ./context
-    #  dockerfile: Dockerfile 
-    #image: lhsradek/tombola:v1
-    image: tomcat:9
+    build:
+      context: ./context
+      dockerfile: Dockerfile 
+    image: lhsradek/tombola:v1
+    #image: tomcat:9
     container_name: "${APP_ID}-tomcat"
     # hostname: "web"
     hostname: "tombola.${APP_HOST}"
@@ -95,11 +96,11 @@ services:
     # for https:
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
-    healthcheck:
-      test: "curl -s -I http://localhost:8080/info.jsp | grep -q 'HTTP/1.1 200'"
-      interval: 10s
-      timeout: 2s
-      retries: 50
+    # healthcheck:
+    #  test: "curl -s -I http://localhost:8080/info.jsp | grep -q 'HTTP/1.1 200'"
+    #  interval: 10s
+    #  timeout: 2s
+    #  retries: 50
 
   webtombola-ad:
     # Alpine
