@@ -59,9 +59,9 @@ services:
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
-    build:
-      context: ./context
-      dockerfile: Dockerfile 
+    # build:
+    #   context: ./context
+    #   dockerfile: Dockerfile 
     image: lhsradek/tombola:v1
     #image: tomcat:9
     container_name: "${APP_ID}-tomcat"
@@ -177,7 +177,7 @@ services:
       ## - ./extras/var/lib/postgresql/data/pg_hba.conf:/var/lib/postgresql/data/pg_hba.new.conf:ro
 
   redis:
-    image: redis:7-alpine3.16
+    image: redis:7-alpine
     # Alpine Linux
     container_name: "${APP_ID}-redis"
     hostname: "redis"
