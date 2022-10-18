@@ -319,7 +319,7 @@ StringBuffer env = new StringBuffer();
             <ul>
               <li><a href="https://wiki.alpinelinux.org" target="_blank">alpinelinux.org</a></li>
               <li><a href="https://docs.docker.com/compose/" target="_blank">docker.com</a></li>
-              <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.4/docker.html" target="_blank">elastic.co</a></li>
+              <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html" target="_blank">elastic.co</a></li>
               <li><a href="https://nginx.org/en/docs/" target="_blank">nginx.org</a></li>
               <li><a href="https://tomcat.apache.org" target="_blank">tomcat.apache.org</a></li>
             </ul>
