@@ -1,5 +1,5 @@
 # Tombola
-Tombola for tomcat
+Tombola for tomcat and connection to Elasticsearch in [platypus-lhsdock](https://github.com/lhsradek/platypus-lhsdock)
 
 ## Setup
 1) create .env file ```cp .env.dist .env```
