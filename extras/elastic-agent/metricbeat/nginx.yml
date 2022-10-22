@@ -1,0 +1,20 @@
+# Module: nginx
+# Docs: https://www.elastic.co/guide/en/beats/metricbeat/main/metricbeat-module-nginx.html
+
+- module: nginx
+  # metricsets:
+  #  - stubstatus
+  period: 10s
+
+  # Nginx hosts
+  hosts: 
+    - "http://${APP_NICK}.${LOC_NET}"
+
+  # Path to server status. Default nginx_status
+  #server_status_path: "nginx_status"
+
+  #username: "user"
+  #password: "secret"
+  #ssl:
+  #  enabled: true
+  #  certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]

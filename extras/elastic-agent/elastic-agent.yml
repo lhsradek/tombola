@@ -1,0 +1,23 @@
+fleet:
+  enabled: true
+
+xpack.monitoring.enabled: true
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
+# outputs:
+#   default:
+#     type: elasticsearch
+#     hosts:
+#       - 'https://es01.${APP_HOST}.${APP_NET}:9200'
+#       - 'https://es02.${APP_HOST}.${APP_NET}:9201'
+#     # username: ${FLEET_SERVER_ELASTICSEARCH_USERNAME}
+#     # password: ${FLEET_SERVER_ELASTICSEARCH_PASSWORD}
+#     service_token: ${FLEET_SERVER_SERVICE_TOKEN}
+#     api_key: ${FLEET_ENROLLMENT_TOKEN}
+#     ssl:
+#       enabled: true
+#       certificate_authorities:
+#         - ${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}
+#       verification_mode: certificate

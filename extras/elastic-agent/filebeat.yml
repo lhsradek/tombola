@@ -1,0 +1,82 @@
+###################### Filebeat Configuration #######################
+
+http.enabled: true
+http.port: 5066
+http.host: "0.0.0.0"
+#http.host: "file.nginx.local"
+
+xpack.monitoring.enabled: true
+monitoring:
+  enabled: false
+  cluster_uuid: "${CLUSTER_UUID}"
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+processors:
+  - add_host_metadata: ~
+  - add_kubernetes_metadata: ~
+  - add_docker_metadata: ~
+  - add_cloud_metadata: ~
+
+output:
+  # for provisioning:
+  logstash:
+    enabled: true
+    hosts: 
+      - "logstash.${APP_HOST}.${APP_NET}:5044"
+      # - "logstash.${APP_HOST}.${APP_NET}:5055"
+  
+  # for /filebeat -e setup --dashboards:
+  # elasticsearch:
+  #   hosts: 
+  #    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+  #    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+  #   protocol: "https"
+  #   username: "${ELASTICSEARCH_USERNAME}"
+  #   password: "${ELASTICSEARCH_PASSWORD}"
+  #   # api_key: "${AGENT_API_KEY}"
+  #   ssl:
+  #     enabled: true
+  #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #     # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+  #     verification_mode: "certificate"
+
+setup:      
+  ilm.overwrite: true
+  template.settings:
+    index.number_of_shards: 1
+    #index.codec: best_compression
+    source.enabled: false
+  elasticsearch:
+    hosts: 
+      - "https://es01.${APP_HOST}.${APP_NET}:9200"
+      - "https://es02.${APP_HOST}.${APP_NET}:9201"
+      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    protocol: "https"
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    # api_key: "${AGENT_API_KEY}"
+    ssl:
+      enabled: true
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+      verification_mode: "certificate"
+  
+  kibana:
+    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+    username: '${ELASTICSEARCH_USERNAME}'
+    password: '${ELASTICSEARCH_PASSWORD}'
+    protocol: "https"
+    # api_key: ${AGENT_API_KEY}
+    ssl:
+      enabled: true
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: "certificate"
+  apm:
+    enabled: true
+    protocol: "http"
+    server_url: "http://apm.${LOC_NET}:8200"
