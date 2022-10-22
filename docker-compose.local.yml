@@ -86,14 +86,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.webtombola-tomcat-public.rule=Host(`tombola.${APP_HOST}`)"
+      - "traefik.http.routers.webtombola-tomcat-public.rule=Host(`${APP_ID}.${APP_HOST}`)"
       - "traefik.http.routers.webtombola-tomcat-public.entrypoints=https"
       - "traefik.http.routers.webtombola-tomcat-public.tls=true"
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
-      - "traefik.http.services.webtombola-tomcat.loadbalancer.healthcheck.hostname=tombola.${APP_HOST}"
+      - "traefik.http.services.webtombola-tomcat.loadbalancer.healthcheck.hostname=${APP_ID}.${APP_HOST}"
     healthcheck:
-     test: "curl -s -I http://localhost:8080/info.jsp | grep -q 'HTTP/1.1 200'"
+     test: "curl -s -I http://${APP_ID}.${APP_HOST}:8080/${APP_ID}/actuator/health | grep -q 'HTTP/1.1 200'"
      interval: 10s
      timeout: 2s
      retries: 50

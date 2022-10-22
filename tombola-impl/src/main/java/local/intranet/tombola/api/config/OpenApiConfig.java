@@ -58,7 +58,7 @@ public class OpenApiConfig {
 						.contact(new Contact().name("Radek Kádner").url("https://www.linkedin.com/in/radekkadner/")
 								.email("radek.kadner@gmail.com"))
 						.license(new License().name("The MIT License").url("https://opensource.org/licenses/MIT")))
-				.externalDocs(new ExternalDocumentation().description("Java Documentation").url("/index-javadoc/"));
+				.externalDocs(new ExternalDocumentation().description("Java Documentation").url("/tombola-javadoc/"));
 		return ret;
 	}
 
