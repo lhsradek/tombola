@@ -199,6 +199,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
+      - /run:/run
+      - /var/run:/var/run
       - /:/hostfs:ro
       - ./certs:/usr/share/elastic-agent/certs
       # - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
