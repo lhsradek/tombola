@@ -28,7 +28,7 @@ output:
     hosts: 
       - "logstash.${APP_HOST}.${APP_NET}:5044"
       # - "logstash.${APP_HOST}.${APP_NET}:5055"
-  
+   
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
   #   hosts: 
