@@ -30,22 +30,6 @@ apm-server:
       # Index pattern in which to search for source maps, when fetching source maps from Elasticsearch.
       # index_pattern: "apm-*-sourcemap*"
 
-#============================= Instrumentation =============================
-instrumentation:
-  enabled: true
-  environment: "${STAGE}"
-
-  hosts:
-    - http://apm.nginx.local:8200
-  profiling:
-    cpu:
-      enabled: true
-      interval: 60s
-      duration: 10s
-    heap:
-      enabled: true
-      interval: 60s
-
   #---------------------------- APM Server - Agent Configuration ----------------------------
   kibana:
     enabled: true
@@ -58,6 +42,21 @@ instrumentation:
     ssl.enabled: true
     ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
     ssl.verification_mode: "certificate"
+
+#============================= Instrumentation =============================
+# instrumentation:
+#   enabled: true
+#   environment: "${STAGE}"
+#   hosts:
+#     - http://apm.nginx.local:8200
+#   profiling:
+#     cpu:
+#       enabled: true
+#       interval: 60s
+#       duration: 10s
+#     heap:
+#       enabled: true
+#       interval: 60s
 
 #================================ Outputs =================================
 
