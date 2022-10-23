@@ -148,6 +148,7 @@ services:
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     environment:
       # my vars to configs yamls in extras/elastic-agent
+      - "monitoring.cluster_uuid=${CLUSTER_UUID}"
       - APP_ID=${APP_ID}
       - APP_HOST=docker
       - APP_NET=nginx.local
@@ -159,10 +160,8 @@ services:
       - STV=${STV}
       # without configs in extras/elastic-agent, volumes links are disabled by comment, install with empty volume fleet
       # All is sets in kibana https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml
-      - cluster.name=${CLUSTER_NAME}
-      - cluster.uuid=${CLUSTER_UUID}
       - AMP_SERVER_ENABLE=1
-      - ELASTIC_AGENT_TAGS=docker,dev
+      - ELASTIC_AGENT_TAGS=${ELASTIC_AGENT_TAGS}
       - ELASTIC_APM_SERVICE_NAME=${APP_NICK}-${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}
       - ELASTIC_APM_ENVIRONMENT=${STAGE}
