@@ -90,14 +90,14 @@ output.elasticsearch:
 
 #=============================== HTTP Endpoint ===============================
 
-http.enabled: true
-http.host: "0.0.0.0"
+#http.enabled: true
+#http.host: "0.0.0.0"
 #http.host: "apm.wordpress.local"
-http.port: 5066
+#http.port: 5066
 
 #============================= X-pack Monitoring =============================
 
-xpack.monitoring.enabled: true
+#xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

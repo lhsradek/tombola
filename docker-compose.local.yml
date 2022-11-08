@@ -48,12 +48,11 @@ services:
       # for https:
       - "traefik.http.services.webtombola.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola.loadbalancer.server.port=443"
-      - "traefik.http.services.webtombola.loadbalancer.healthcheck.hostname=${APP_HOST}"
     healthcheck:
       test: "curl -s -I http://localhost/nginx_status | grep -q 'HTTP/1.1 200 OK'"
       interval: 10s
-      timeout: 2s
-      retries: 50
+      timeout: 10s
+      retries: 200
 
   webtombola-tomcat:
     # Ubuntu 22.04.1 LTS
@@ -91,7 +90,6 @@ services:
       - "traefik.http.routers.webtombola-tomcat-public.tls=true"
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.scheme=https"
       - "traefik.http.services.webtombola-tomcat.loadbalancer.server.port=8443"
-      - "traefik.http.services.webtombola-tomcat.loadbalancer.healthcheck.hostname=${APP_ID}.${APP_HOST}"
     healthcheck:
      test: "curl -s -I http://${APP_ID}.${APP_HOST}:8080/${APP_ID}/actuator/health | grep -q 'HTTP/1.1 200'"
      interval: 10s
@@ -131,15 +129,9 @@ services:
     restart: ${DOCKER_RESTART_POLICY}
     networks:
       # for traefik:
-      default:
-        aliases:
-          - "apm.${INT_NETWORK}"
-          - "fleet.${APP_NICK}.${INT_NETWORK}"
+      - default
       # local network:
-      intnet:
-        aliases:
-          - "apm.${INT_NETWORK}"
-          - "fleet.${APP_NICK}.${INT_NETWORK}"
+      - intnet
     # ports:
     #  - ${APM_PORT}:8200
     #  - ${FLEET_PORT}:8220
@@ -147,69 +139,61 @@ services:
     hostname: "fleet.${APP_NICK}.${INT_NETWORK}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     environment:
-      # my vars to configs yamls in extras/elastic-agent
-      - "monitoring.cluster_uuid=${CLUSTER_UUID}"
       - APP_ID=${APP_ID}
-      - APP_HOST=docker
-      - APP_NET=nginx.local
+      - APP_HOST=${HOST_NICK}
+      - APP_NET=${APP_NET}
       - LOC_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - STAGE=${STAGE}
-      - STACK_VERSION=${STACK_VERSION}
-      - STV=${STV}
-      # without configs in extras/elastic-agent, volumes links are disabled by comment, install with empty volume fleet
-      # All is sets in kibana https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/kibana/kibana.yml
       - AMP_SERVER_ENABLE=1
       - ELASTIC_AGENT_TAGS=${ELASTIC_AGENT_TAGS}
       - ELASTIC_APM_SERVICE_NAME=${APP_NICK}-${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}
       - ELASTIC_APM_ENVIRONMENT=${STAGE}
       - ELASTIC_APM_LOG_LEVEL_STDERR=info
-      - ELASTIC_APM_SECRET_TOKEN=${ELASTIC_APM_SECRET_TOKEN}
-      # - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
-      - ELASTIC_APM_SERVER_URL=http://apm.${INT_NETWORK}:8200
-      - ELASTICSEARCH_HOSTS=https://es01.docker.nginx.local:9200
+      - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
+      - ELASTIC_APM_SERVER_URL=http://fleet.${HOST_NICK}.${APP_NET}:8200
+      - ELASTICSEARCH_HOSTS=https://es01.${HOST_NICK}.${APP_NET}:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca.crt
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
+      - ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - FLEET_ENROLL=1
       - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
       - FLEET_SERVER_ENABLE=1
-      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.docker.nginx.local:9200
+      - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${HOST_NICK}.${APP_NET}:9200
       - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
       - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
-      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca.crt
+      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
+      - FLEET_SERVER_HOST=fleet.${APP_HOST}
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
+      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:8220
       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.crt
       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.key
-      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:8220
       - KIBANA_FLEET_USERNAME=elastic
       - KIBANA_FLEET_PASSWORD=${ELASTIC_PASSWORD}
-      - KIBANA_FLEET_HOST=https://kibana.docker.nginx.local:5601
-      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
+      - KIBANA_FLEET_HOST=https://kibana.${HOST_NICK}.${APP_NET}:5601
+      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
+      - STAGE=${STAGE}
+      - STACK_VERSION=${STACK_VERSION}
+      - STV=${STV}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
-      - /run:/run
-      - /var/run:/var/run
       - /:/hostfs:ro
       - ./certs:/usr/share/elastic-agent/certs
-      # - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
+      - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
       - ./extras/elastic-agent/apm-server.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/apm-server.yml
       - ./extras/elastic-agent/filebeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/filebeat.yml
       - ./extras/elastic-agent/metricbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/metricbeat.yml
-      - ./extras/elastic-agent/heartbeat.yml:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/heartbeat.yml
       - ./logs/fleet/elastic-agent:/usr/share/elastic-agent/state/data/logs
       - ./logs/fleet/apm-server:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/apm-server-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/filebeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/logs
-      - ./logs/fleet/heartbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/heartbeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
       - ./logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
@@ -217,12 +201,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_NICK}.${INT_NETWORK}`, `apm.${INT_NETWORK}`)"
+      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_NICK}.${INT_NETWORK}`)"
       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
       - "traefik.http.routers.webtombola-fleet-public.tls=true"
-      - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8200"
-      - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=http"
-      - "traefik.http.services.webtombola-fleet.loadbalancer.healthcheck.hostname=apm.${INT_NETWORK}"
+      - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8220"
+      - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 30s

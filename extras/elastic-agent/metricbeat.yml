@@ -1,11 +1,11 @@
 ###################### Metricbeat Configuration #######################
 
-http.enabled: true
-http.port: 5066
-http.host: "0.0.0.0"
+#http.enabled: true
+#http.port: 5066
+#http.host: "0.0.0.0"
 #http.host: "metric.nginx.local"
 
-xpack.monitoring.enabled: true
+#xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
