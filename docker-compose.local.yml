@@ -125,6 +125,9 @@ services:
     depends_on:
       webtombola:
         condition: service_healthy
+    depends_on:
+      webtombola-tomcat:
+        condition: service_healthy
     # Ubuntu - fleet
     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
