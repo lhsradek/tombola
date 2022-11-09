@@ -5,7 +5,7 @@
 # http.host: "0.0.0.0"
 #http.host: "file.nginx.local"
 
-xpack.monitoring.enabled: true
+# xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -76,7 +76,3 @@ setup:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
       verification_mode: "certificate"
-  apm:
-    enabled: true
-    protocol: "http"
-    server_url: "http://apm.${LOC_NET}:8200"

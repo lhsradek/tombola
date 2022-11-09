@@ -59,8 +59,8 @@ services:
     # build:
     #   context: ./context
     #   dockerfile: Dockerfile 
-    image: lhsradek/tombola:v1
-    #image: tomcat:9
+    # image: lhsradek/tombola:v1
+    image: tomcat:9
     container_name: "${APP_ID}-tomcat"
     # hostname: "web"
     hostname: "tombola.${APP_HOST}"
@@ -156,15 +156,15 @@ services:
       - ELASTICSEARCH_HOSTS=https://es01.${HOST_NICK}.${APP_NET}:9200
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
-      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca/ca.crt
-      - ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca.crt
+      - ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca.crt
       - FLEET_ENROLL=1
       - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
       - FLEET_SERVER_ENABLE=1
       - FLEET_SERVER_ELASTICSEARCH_HOST=https://es01.${HOST_NICK}.${APP_NET}:9200
       - FLEET_SERVER_ELASTICSEARCH_USERNAME=elastic
       - FLEET_SERVER_ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
-      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca.crt
       - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
       - FLEET_SERVER_HOST=fleet.${APP_HOST}
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
@@ -176,7 +176,7 @@ services:
       - KIBANA_FLEET_USERNAME=elastic
       - KIBANA_FLEET_PASSWORD=${ELASTIC_PASSWORD}
       - KIBANA_FLEET_HOST=https://kibana.${HOST_NICK}.${APP_NET}:5601
-      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca/ca.crt
+      - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
       - STAGE=${STAGE}

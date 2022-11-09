@@ -1,7 +1,7 @@
 fleet:
   enabled: true
 
-xpack.monitoring.enabled: true
+# xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"

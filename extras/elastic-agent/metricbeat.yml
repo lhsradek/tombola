@@ -94,6 +94,3 @@ setup:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: certificate
       # verification_mode: none
-  apm:
-    enabled: true
-    server_url: "http://apm.${LOC_NET}:8200"
