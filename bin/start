@@ -45,7 +45,7 @@ IMGFILE="tombola-v1.img"
 if !(docker-compose ${ARGS} pull); then
   if !(docker image inspect "${IMG}" >/dev/null 2>&1); then
     if [[ ! -f "$rootPath/${IMGFILE}" ]]; then
-      docker compose ${ARGS} build --no-cache --compress --force-rm
+      docker-compose ${ARGS} build --no-cache --force-rm
       docker save -o ${IMGFILE} ${IMG}
       docker image rm ${IMG}
       docker container prune -f
