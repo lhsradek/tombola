@@ -121,7 +121,7 @@ services:
 #
 # === Elastic Agent as fleet server ===
 #
-  webtombola-fleet:
+  fleet:
     depends_on:
       webtombola:
         condition: service_healthy
