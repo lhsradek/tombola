@@ -7,7 +7,7 @@
 
 # xpack.monitoring.enabled: true
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
 
 filebeat.config:
