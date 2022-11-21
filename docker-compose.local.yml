@@ -140,11 +140,15 @@ services:
       default:
         aliases:
           - apm-server
+          - filebeat
+          - metricbet
           - apm-server.${APP_NICK}.${INT_NETWORK}
           - fleet.${APP_NICK}.${INT_NETWORK}
       # local network:
       intnet:
         aliases:
+          - filebeat
+          - metricbet
           - apm-server
           - apm-server.${APP_NICK}.${INT_NETWORK}
           - fleet.${APP_NICK}.${INT_NETWORK}
