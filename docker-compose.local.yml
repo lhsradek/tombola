@@ -132,17 +132,25 @@ services:
     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
     restart: ${DOCKER_RESTART_POLICY}
-    networks:
-      # for traefik:
-      - default
-      # local network:
-      - intnet
-    # ports:
-    #  - ${APM_PORT}:8200
-    #  - ${FLEET_PORT}:8220
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${APP_NICK}.${INT_NETWORK}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
+    networks:
+      # for traefik:
+      default:
+        aliases:
+          - apm-server
+          - apm-server.${APP_NICK}.${INT_NETWORK}
+          - fleet.${APP_NICK}.${INT_NETWORK}
+      # local network:
+      intnet:
+        aliases:
+          - apm-server
+          - apm-server.${APP_NICK}.${INT_NETWORK}
+          - fleet.${APP_NICK}.${INT_NETWORK}
+    # ports:
+    #  - ${APM_PORT}:8200
+    #  - ${FLEET_PORT}:8220
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${HOST_NICK}
@@ -206,7 +214,15 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
+      - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_NICK}.${INT_NETWORK}`)"
+      - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
+      - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
+      - "traefik.http.routers.webtombola-apm-server-public.tls=true"
+      - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
+      - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
+      #
       - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_NICK}.${INT_NETWORK}`)"
+      - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
       - "traefik.http.routers.webtombola-fleet-public.tls=true"
       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8220"
