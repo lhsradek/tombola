@@ -138,20 +138,10 @@ services:
     networks:
       # for traefik:
       default:
-        aliases:
-          - apm-server
-          - filebeat
-          - metricbet
-          - apm-server.${APP_NICK}.${INT_NETWORK}
-          - fleet.${APP_NICK}.${INT_NETWORK}
       # local network:
       intnet:
         aliases:
-          - filebeat
-          - metricbet
           - apm-server
-          - apm-server.${APP_NICK}.${INT_NETWORK}
-          - fleet.${APP_NICK}.${INT_NETWORK}
     # ports:
     #  - ${APM_PORT}:8200
     #  - ${FLEET_PORT}:8220
@@ -162,7 +152,6 @@ services:
       - LOC_NET=${INT_NETWORK}
       - CLUSTER_NAME=${CLUSTER_NAME}
       - CLUSTER_UUID=${CLUSTER_UUID}
-      - AMP_SERVER_ENABLE=1
       - ELASTIC_AGENT_TAGS=${ELASTIC_AGENT_TAGS}
       - ELASTIC_APM_SERVICE_NAME=${APP_NICK}-${APP_ID}
       - ELASTIC_APM_SERVICE_NODE_NAME=${APP_HOST}
@@ -218,17 +207,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_NICK}.${INT_NETWORK}`)"
-      - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
-      - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
-      - "traefik.http.routers.webtombola-apm-server-public.tls=true"
-      - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
-      - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
+      # disable 'cause use external apm-server
+      # - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_NICK}.${INT_NETWORK}`)"
+      # - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
+      # - "traefik.http.routers.webtombola-apm-server-public.tls=true"
+      # - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
+      # - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
+      # - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
       #
       - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_NICK}.${INT_NETWORK}`)"
-      - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
       - "traefik.http.routers.webtombola-fleet-public.tls=true"
+      - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8220"
       - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
     healthcheck:
