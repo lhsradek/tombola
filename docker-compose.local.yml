@@ -105,7 +105,7 @@ services:
     # Alpine
     image: adminer:fastcgi
     container_name: "${APP_ID}-ad"
-    hostname: "ad-php"
+    hostname: "ad-php.${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
     networks:
       # local network:
@@ -139,7 +139,7 @@ services:
     # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-fleet"
-    hostname: "fleet.${APP_NICK}.${INT_NETWORK}"
+    hostname: "fleet.${APP_HOST}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
       # for traefik
@@ -213,14 +213,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=${DOCKER_NETWORK}"
-#       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_NICK}.${INT_NETWORK}`)"
+#       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_HOST}`)"
 #       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
 #       - "traefik.http.routers.webtombola-apm-server-public.tls=true"
 #       - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
 #       #
-      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_NICK}.${INT_NETWORK}`)"
+      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
       - "traefik.http.routers.webtombola-fleet-public.tls=true"
       - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
