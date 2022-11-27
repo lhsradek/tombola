@@ -142,7 +142,6 @@ services:
     hostname: "fleet.${APP_HOST}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
-      # for traefik
       default:
         aliases:
           - fleet.${APP_NICK}.${INT_NETWORK}
