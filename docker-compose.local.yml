@@ -149,9 +149,9 @@ services:
       # intnet:
       #   aliases:
       #     - apm-server
-    # ports:
+    ports:
     #  - ${APM_PORT}:8200
-    #  - ${FLEET_PORT}:8220
+      - 8223:8223
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${HOST_NICK}
@@ -177,7 +177,7 @@ services:
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
-      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:8220
+      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:8223
       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.crt
       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.key
       - KIBANA_FLEET_USERNAME=elastic
@@ -209,9 +209,9 @@ services:
       - ./logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
       - /var/log:/usr/share/filebeat/elogs/system
       - fleet:/usr/share/elastic-agent
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.docker.network=${DOCKER_NETWORK}"
 #       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_HOST}`)"
 #       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
 #       - "traefik.http.routers.webtombola-apm-server-public.tls=true"
@@ -219,12 +219,12 @@ services:
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
 #       #
-      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
-      - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
-      - "traefik.http.routers.webtombola-fleet-public.tls=true"
-      - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
-      - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8220"
-      - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
+#       - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
+#       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
+#       - "traefik.http.routers.webtombola-fleet-public.tls=true"
+#       - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
+#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8223"
+#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 30s
