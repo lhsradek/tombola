@@ -69,6 +69,11 @@ services:
       - default
       # local network:
       - intnet
+    environment:
+      - ELASTIC_APM_ENVIRONMENT=${STAGE}
+      - ELASTIC_APM_SERVER_URL=${ELASTIC_APM_SERVER_URL}
+      - ELASTIC_APM_SERVICE_NAME=${APP_NICK}-tomcat
+      - ELASTIC_APM_API_KEY=${ELASTIC_APM_API_KEY}
     volumes:
       - ./certs/${TOMBOLA_CERTNAME}.crt:/usr/local/tomcat/conf/localhost.pem:ro
       - ./certs/${TOMBOLA_CERTNAME}.key:/usr/local/tomcat/conf/localhost-key.pem:ro
@@ -77,6 +82,7 @@ services:
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
       - ./extras/usr/local/tomcat/conf/web.xml:/usr/local/tomcat/conf/web.xml:ro
       - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
+      - /root/platypus-lhsdock/application/html/downloads/elastic-apm-agent-1.34.1.jar:/usr/local/tomcat/lib/elastic-apm-agent-1.34.1.jar
       - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
     # for elastic beats, see:
     # https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/heartbeat/heartbeat.yml
@@ -177,12 +183,15 @@ services:
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
       - KIBANA_FLEET_SETUP=1
       - KIBANA_FLEET_REQUESTTIMEOUT=1200000
+      - LOGSTASH_SERVER_CERT=/usr/share/elastic-agent/certs/${LOGSTASH_CERTNAME}.crt
+      - LOGSTASH_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/${LOGSTASH_CERTNAME}.key
       - STAGE=${STAGE}
       - STACK_VERSION=${STACK_VERSION}
       - STV=${STV}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
       - /:/hostfs:ro
       - ./certs:/usr/share/elastic-agent/certs
       - ./extras/elastic-agent/elastic-agent.yml:/usr/share/elastic-agent/elastic-agent.yml
@@ -195,6 +204,7 @@ services:
       - ./logs/fleet/metricbeat:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/metricbeat-${STACK_VERSION}-linux-x86_64/logs
       - ./logs/tombola-nginx/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/nginx/tombola
       - ./logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
+      - /var/log:/usr/share/filebeat/elogs/system
       - fleet:/usr/share/elastic-agent
 #     labels:
 #       - "traefik.enable=true"
