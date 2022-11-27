@@ -36,6 +36,7 @@ output:
   logstash:
     enabled: true
     hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
+    timeout: 500s
     ssl:
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       certificate: "${LOGSTASH_SERVER_CERT}"
