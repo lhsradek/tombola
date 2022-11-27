@@ -9,17 +9,14 @@ logging:
   level: trace
 
 fleet:
-  hosts:
-    - "https://fleet.wordpress.local:8220"
-  agent:
-    id: "fb41b289-10cf-40c7-94fb-ee854e748e1e"
+  hosts: ["https://fleet.wordpress.local:8220"]
+  # agent:
+  #   id: "fb41b289-10cf-40c7-94fb-ee854e748e1e"
 
 id: "${FLEET_SERVER_POLICY_ID}"
 outputs:
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_ID}.${APP_NET}:9200"
-      - "https://es02.${APP_ID}.${APP_NET}:9201"
+    hosts: ["https://es01.${APP_ID}.${APP_NET}:9200"]
     protocol: "https"
     # username: "${ELASTICSEARCH_USERNAME}"
     # password: "${ELASTICSEARCH_PASSWORD}"

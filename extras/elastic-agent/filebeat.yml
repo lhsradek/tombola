@@ -35,8 +35,7 @@ output:
   # for provisioning:
   logstash:
     enabled: true
-    hosts:
-      - "logstash.${APP_HOST}.${APP_NET}:5044"
+    hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
     ssl:
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       certificate: "${LOGSTASH_SERVER_CERT}"
@@ -44,32 +43,27 @@ output:
       verification_mode: "none"
 
   # for /filebeat -e setup --dashboards:
-  elasticsearch:
-    hosts: 
-     - "https://es01.${APP_HOST}.${APP_NET}:9200"
-     - "https://es02.${APP_HOST}.${APP_NET}:9201"
-     # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-    protocol: "https"
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
-    # api_key: "${AGENT_API_KEY}"
-    ssl:
-      enabled: true
-      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-      verification_mode: "certificate"
+  # elasticsearch:
+  #  hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+  #  protocol: "https"
+  #  username: "${ELASTICSEARCH_USERNAME}"
+  #  password: "${ELASTICSEARCH_PASSWORD}"
+  #  # api_key: "${AGENT_API_KEY}"
+  #  ssl:
+  #    enabled: true
+  #    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #    # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+  #    verification_mode: "certificate"
 
 setup:      
   ilm.overwrite: true
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 2
     #index.codec: best_compression
     source.enabled: false
+
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -88,5 +82,5 @@ setup:
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
-      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       verification_mode: "certificate"

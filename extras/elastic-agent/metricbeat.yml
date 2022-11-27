@@ -1,11 +1,10 @@
 ###################### Metricbeat Configuration #######################
 
-#http.enabled: true
-#http.port: 5066
-#http.host: "0.0.0.0"
-#http.host: "metric.nginx.local"
+# http.enabled: true
+# http.port: 5068
+# http.host: "0.0.0.0"
+# http.host: "metric.nginx.local"
 
-#xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
@@ -36,27 +35,16 @@ inputs:
         data_stream.dataset: system.filesystem
 
 output:
-  # for provisioning:
-  # logstash:
-  #   # Boolean flag to enable or disable the output module.
-  #   enabled: true
-  #   # The Logstash hosts.
-  #   hosts: ["logstash.docker.nginx.local:5044"]
-   
   # for /metricbeat -e setup --dashboards:
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: certificate
-      # verification_mode: none
+      verification_mode: "certificate"
     #indices:
     #  - index: "warning-%{[agent.version]}-%{+yyyy.MM.dd}"
     #    when.contains:
@@ -68,22 +56,19 @@ output:
 setup:
   template.settings:
     index.number_of_shards: 1
-    index.codec: best_compression
+    index.codec: "best_compression"
     source.enabled: false
+
   elasticsearch:
-    hosts: 
-      - "https://es01.${APP_HOST}.${APP_NET}:9200"
-      - "https://es02.${APP_HOST}.${APP_NET}:9201"
-      # - "https://es03.${APP_HOST}.${APP_NET}:9202"
-    # api_key: ${AGENT_API_KEY}
+    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: certificate
-      # verification_mode: none
+      verification_mode: "certificate"
+
   kibana:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
     # api_key: ${AGENT_API_KEY}
@@ -92,5 +77,4 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: certificate
-      # verification_mode: none
+      verification_mode: "certificate"
