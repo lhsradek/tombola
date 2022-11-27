@@ -142,16 +142,16 @@ services:
     hostname: "fleet.${APP_HOST}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
-      default:
-        aliases:
-          - fleet.${APP_NICK}.${INT_NETWORK}
-      # local network:
-      # intnet:
+      # default:
       #   aliases:
-      #     - apm-server
+      #     - fleet.${APP_NICK}.${INT_NETWORK}
+      # local network:
+      intnet:
+        aliases:
+          - apm-server
     ports:
     #  - ${APM_PORT}:8200
-      - 8223:8223
+      - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${HOST_NICK}
@@ -174,6 +174,7 @@ services:
       - FLEET_SERVER_ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca.crt
       - FLEET_SERVER_ELASTICSEARCH_REQUESTTIMEOUT=180000
       - FLEET_SERVER_HOST=fleet.${APP_HOST}
+      - FLEET_SERVER_PORT=${FLEET_SERVER_PORT}
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
@@ -223,7 +224,7 @@ services:
 #       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
 #       - "traefik.http.routers.webtombola-fleet-public.tls=true"
 #       - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
-#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=8223"
+#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=${FLEET_SERVER_PORT}"
 #       - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
