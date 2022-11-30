@@ -136,22 +136,23 @@ services:
         condition: service_healthy
     # Ubuntu - fleet
     image: docker.elastic.co/beats/elastic-agent:${STACK_VERSION}
-    # image: docker.elastic.co/beats/elastic-agent-complete:${STACK_VERSION} # ;-)
     restart: ${DOCKER_RESTART_POLICY}
     container_name: "${APP_ID}-fleet"
     hostname: "fleet.${APP_HOST}"
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
+      # for traefik
       # default:
       #   aliases:
-      #     - fleet.${APP_NICK}.${INT_NETWORK}
+      #     - fleet.${APP_HOST}
+      #     - apm-server.${APP_HOST}
       # local network:
       intnet:
         aliases:
           - apm-server
-    ports:
-    #  - ${APM_PORT}:8200
-      - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
+    #ports:
+    #  - ${APM_PORT}:${APM_PORT}
+    #  - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${HOST_NICK}
@@ -178,7 +179,7 @@ services:
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
-      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:8223
+      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:${FLEET_SERVER_PORT}
       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.crt
       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.key
       - KIBANA_FLEET_USERNAME=elastic
@@ -192,6 +193,7 @@ services:
       - STAGE=${STAGE}
       - STACK_VERSION=${STACK_VERSION}
       - STV=${STV}
+      - VERIFICATION_MODE=${VERIFICATION_MODE}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
@@ -217,9 +219,8 @@ services:
 #       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
 #       - "traefik.http.routers.webtombola-apm-server-public.tls=true"
 #       - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
-#       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=8200"
+#       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=${APM_PORT}"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
-#       #
 #       - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
 #       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
 #       - "traefik.http.routers.webtombola-fleet-public.tls=true"

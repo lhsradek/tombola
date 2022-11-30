@@ -3,7 +3,6 @@
 # http.enabled: true
 # http.port: 5068
 # http.host: "0.0.0.0"
-# http.host: "metric.nginx.local"
 
 monitoring:
   enabled: false
@@ -14,11 +13,11 @@ metricbeat.config.modules:
   reload.enabled: false
 
 processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
+  # - add_host_metadata:
+  #     when.not.contains.tags: forwarded
   - add_docker_metadata: ~
-  - add_cloud_metadata: ~
-  - add_kubernetes_metadata: ~
+  # - add_cloud_metadata: ~
+  # - add_kubernetes_metadata: ~
 
 inputs:
   - type: system/metrics
@@ -31,8 +30,8 @@ inputs:
         data_stream.dataset: system.memory
       - metricset: network
         data_stream.dataset: system.network
-      - metricset: filesystem
-        data_stream.dataset: system.filesystem
+      # - metricset: filesystem
+      #   data_stream.dataset: system.filesystem
 
 output:
   # for /metricbeat -e setup --dashboards:
@@ -41,11 +40,12 @@ output:
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    timeout: 500s
+    timeout: 300s
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
+        
     #indices:
     #  - index: "warning-%{[agent.version]}-%{+yyyy.MM.dd}"
     #    when.contains:
@@ -65,10 +65,11 @@ setup:
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
+    timeout: 300s
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
 
   kibana:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
@@ -78,4 +79,4 @@ setup:
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"

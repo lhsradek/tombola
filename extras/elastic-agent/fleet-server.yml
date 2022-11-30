@@ -18,12 +18,12 @@ outputs:
   elasticsearch:
     hosts: ["https://es01.${APP_ID}.${APP_NET}:9200"]
     protocol: "https"
-    # username: "${ELASTICSEARCH_USERNAME}"
-    # password: "${ELASTICSEARCH_PASSWORD}"
-    service_token: '${FLEET_SERVER_SERVICE_TOKEN}'
-    api_key:  '${FLEET_ENROLLMENT_TOKEN}'
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    # service_token: '${FLEET_SERVER_SERVICE_TOKEN}'
+    # api_key:  '${FLEET_ENROLLMENT_TOKEN}'
 
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"

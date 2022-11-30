@@ -1,61 +1,57 @@
 ###################### Filebeat Configuration #######################
 
 # http.enabled: true
-# http.port: 5066
+# http.port: 5067
 # http.host: "0.0.0.0"
-#http.host: "file.nginx.local"
 
-# xpack.monitoring.enabled: true
 monitoring:
   enabled: false
   cluster_uuid: "${CLUSTER_UUID}"
-#   elasticsearch:
-#     hosts: 
-#       - "https://es01.${APP_HOST}.${APP_NET}:9200"
-#     protocol: "https"
-#     username: "${ELASTICSEARCH_USERNAME}"
-#     password: "${ELASTICSEARCH_PASSWORD}"
-#     ssl:
-#       enabled: true
-#       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-#       verification_mode: "${VERIFICATION_MODE}"
-
-filebeat.config:
-  modules:
-    path: ${path.config}/modules.d/*.yml
-    reload.enabled: false
+#    elasticsearch:
+#      hosts: 
+#        - "https://es01.${APP_HOST}.${APP_NET}:9200"
+#      protocol: "https"
+#      username: "${ELASTICSEARCH_USERNAME}"
+#      password: "${ELASTICSEARCH_PASSWORD}"
+#      ssl:
+#        enabled: true
+#        certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+#        verification_mode: "${VERIFICATION_MODE}"
 
 processors:
-  - add_host_metadata: ~
-  - add_kubernetes_metadata: ~
+  # - add_host_metadata: ~
+  # - add_kubernetes_metadata: ~
   - add_docker_metadata: ~
-  - add_cloud_metadata: ~
+  # - add_cloud_metadata: ~
 
 output:
   # for provisioning:
   logstash:
     enabled: true
     hosts: ["logstash.${APP_HOST}.${APP_NET}:5044"]
-    timeout: 500s
+    timeout: 300s
     ssl:
-      # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       certificate: "${LOGSTASH_SERVER_CERT}"
       key: "${LOGSTASH_SERVER_CERT_KEY}"
-      verification_mode: "none"
-
+      verification_mode: "${VERIFICATION_MODE}"
+   
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
-  #  hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
-  #  protocol: "https"
-  #  username: "${ELASTICSEARCH_USERNAME}"
-  #  password: "${ELASTICSEARCH_PASSWORD}"
-  #  # api_key: "${AGENT_API_KEY}"
-  #  ssl:
-  #    enabled: true
-  #    certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-  #    # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-  #    verification_mode: "certificate"
-
+  #   hosts: 
+  #    - "https://es01.${APP_HOST}.${APP_NET}:9200"
+  #    - "https://es02.${APP_HOST}.${APP_NET}:9201"
+  #    # - "https://es03.${APP_HOST}.${APP_NET}:9202"
+  #   protocol: "https"
+  #   username: "${ELASTICSEARCH_USERNAME}"
+  #   password: "${ELASTICSEARCH_PASSWORD}"
+  #   # api_key: "${AGENT_API_KEY}"
+  #   ssl:
+  #     enabled: true
+  #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #     # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
+  #     verification_mode: "certificate"
+   
 setup:      
   ilm.overwrite: true
   template.settings:
@@ -73,7 +69,7 @@ setup:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       # ca_trusted_fingerprint: D633B648E805E0C5099928D9FEFD3E8F513C5CCF
-      verification_mode: "certificate"
+      verification_mode: "${VERIFICATION_MODE}"
   
   kibana:
     host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
@@ -83,5 +79,5 @@ setup:
     # api_key: ${AGENT_API_KEY}
     ssl:
       enabled: true
-      certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      verification_mode: "certificate"
+      certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
+      verification_mode: "${VERIFICATION_MODE}"
