@@ -142,9 +142,9 @@ services:
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
       # for traefik
-      # -default:
+      # - default
       # local network:
-      - intnet:
+      - intnet
     ports:
       # - ${APM_PORT}:${APM_PORT}
       - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
