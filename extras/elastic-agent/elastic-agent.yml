@@ -2,8 +2,17 @@ fleet:
   enabled: true
 
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
+
+agent.monitoring:
+  enabled: true 
+  logs: true 
+  metrics: true 
+  http:
+      enabled: true 
+      host: localhost 
+      port: 6791
 
 # outputs:
 #   default:
