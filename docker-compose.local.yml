@@ -142,17 +142,13 @@ services:
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
       # for traefik
-      # default:
-      #   aliases:
-      #     - fleet.${APP_HOST}
-      #     - apm-server.${APP_HOST}
+      # -default:
       # local network:
-      intnet:
-        aliases:
-          - apm-server
-    #ports:
-    #  - ${APM_PORT}:${APM_PORT}
-    #  - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
+      - intnet:
+    ports:
+      # - ${APM_PORT}:${APM_PORT}
+      - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
+    # https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${HOST_NICK}
@@ -165,7 +161,6 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=/usr/share/elastic-agent/certs/ca.crt
-      - ELASTICSEARCH_CA=/usr/share/elastic-agent/certs/ca.crt
       - FLEET_ENROLL=1
       - FLEET_ENROLLMENT_TOKEN=${FLEET_ENROLLMENT_TOKEN}
       - FLEET_SERVER_ENABLE=1
@@ -179,11 +174,9 @@ services:
       - FLEET_SERVER_POLICY_ID=${FLEET_SERVER_POLICY_ID}
       - FLEET_SERVER_SERVICE_TOKEN=${FLEET_SERVER_SERVICE_TOKEN}
       - FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
-      - FLEET_URL=https://fleet.${APP_NICK}.${INT_NETWORK}:${FLEET_SERVER_PORT}
+      - FLEET_URL=https://fleet.${APP_HOST}:${FLEET_SERVER_PORT}
       - FLEET_SERVER_CERT=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.crt
       - FLEET_SERVER_CERT_KEY=/usr/share/elastic-agent/certs/${FLEET_CERTNAME}.key
-      - KIBANA_FLEET_USERNAME=elastic
-      - KIBANA_FLEET_PASSWORD=${ELASTIC_PASSWORD}
       - KIBANA_FLEET_HOST=https://kibana.${HOST_NICK}.${APP_NET}:5601
       - KIBANA_FLEET_CA=/usr/share/elastic-agent/certs/ca.crt
       - KIBANA_FLEET_SETUP=1

@@ -56,7 +56,7 @@ output:
 
 setup:
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 2
     index.codec: "best_compression"
     source.enabled: false
 
