@@ -142,12 +142,12 @@ services:
     user: root # note, synthetic browser monitors require this set to `elastic-agent`
     networks:
       # for traefik
-      # - default
+      - default
       # local network:
       - intnet
-    ports:
-      # - ${APM_PORT}:${APM_PORT}
-      - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
+    # ports:
+    #   - ${APM_PORT}:${APM_PORT}
+    #   - ${FLEET_SERVER_PORT}:${FLEET_SERVER_PORT}
     # https://www.elastic.co/guide/en/fleet/current/agent-environment-variables.html
     environment:
       - APP_ID=${APP_ID}
@@ -205,21 +205,21 @@ services:
       - ./logs/tombola-tomcat/:/usr/share/elastic-agent/data/elastic-agent-${STV}/install/filebeat-${STACK_VERSION}-linux-x86_64/elogs/tomcat/tombola
       - /var/log:/usr/share/filebeat/elogs/system
       - fleet:/usr/share/elastic-agent
-#     labels:
-#       - "traefik.enable=true"
-#       - "traefik.docker.network=${DOCKER_NETWORK}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${DOCKER_NETWORK}"
 #       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_HOST}`)"
-#       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=https"
-#       - "traefik.http.routers.webtombola-apm-server-public.tls=true"
+#       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=http-${APM_PORT}"
+#       - "traefik.http.routers.webtombola-apm-server-public.tls=false"
 #       - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.port=${APM_PORT}"
 #       - "traefik.http.services.webtombola-apm-server.loadbalancer.server.scheme=http"
-#       - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
-#       - "traefik.http.routers.webtombola-fleet-public.entrypoints=https"
-#       - "traefik.http.routers.webtombola-fleet-public.tls=true"
-#       - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
-#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=${FLEET_SERVER_PORT}"
-#       - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.webtombola-fleet-public.rule=Host(`fleet.${APP_HOST}`)"
+      - "traefik.http.routers.webtombola-fleet-public.entrypoints=https-${FLEET_SERVER_PORT}"
+      - "traefik.http.routers.webtombola-fleet-public.tls=true"
+      - "traefik.http.routers.webtombola-fleet-public.service=webtombola-fleet"
+      - "traefik.http.services.webtombola-fleet.loadbalancer.server.port=${FLEET_SERVER_PORT}"
+      - "traefik.http.services.webtombola-fleet.loadbalancer.server.scheme=https"
     healthcheck:
       test: ["CMD-SHELL", "elastic-agent status | grep 'Status: HEALTHY'"]
       interval: 30s
