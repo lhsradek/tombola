@@ -108,21 +108,11 @@ services:
     hostname: "ad-php.${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
     networks:
-      # for traefik:
-      - default
       # local network:
       - intnet
     volumes:
       - ./logs/tombola-nginx:/var/log/nginx:rw
       - adminer:/var/www/html:rw
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.webtombola-ad-public.rule=Host(`ad.${APP_HOST}`)"
-      - "traefik.http.routers.webtombola-ad-public.entrypoints=https"
-      - "traefik.http.routers.webtombola-ad-public.tls=true"
-      - "traefik.http.services.webtombola-ad-tomcat.loadbalancer.server.scheme=https"
-      - "traefik.http.services.webtombola-ad-tomcat.loadbalancer.server.port=443"
 
 #
 # === Elastic Agent as fleet server ===
