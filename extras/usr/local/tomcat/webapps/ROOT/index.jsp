@@ -344,6 +344,7 @@ StringBuffer env = new StringBuffer();
               <li><a href="https://hub.docker.com/_/postgres" target="_blank">hub.docker.com - Postgres</a></li>
               <li><a href="https://hub.docker.com/_/redis" target="_blank">hub.docker.com - Redis</a></li>
               <li><a href="https://hub.docker.com/_/tomcat" target="_blank">hub.docker.com - Tomcat</a></li>
+              <li><a href="https://hub.docker.com/_/traefik" target="_blank">hub.docker.com - Traefik</a></li>
               <li><a href="https://hub.docker.com/_/ubuntu" target="_blank">hub.docker.com - Ubuntu</a></li>
               <li><a href="https://hub.docker.com/_/wordpress" target="_blank">hub.docker.com - Wordpress</a></li>
             </ul>
