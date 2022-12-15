@@ -82,7 +82,7 @@ services:
       - ./extras/usr/local/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml:ro
       - ./extras/usr/local/tomcat/conf/web.xml:/usr/local/tomcat/conf/web.xml:ro
       - ./extras/usr/local/tomcat/bin/catalina.sh:/usr/local/tomcat/bin/catalina.sh:ro
-      - ./extras/elastic-agent/elastic-apm-agent-1.34.1.jar:/usr/local/tomcat/lib/elastic-apm-agent-1.34.1.jar
+      - ./extras/elastic-agent/elastic-apm-agent-1.35.0.jar:/usr/local/tomcat/lib/elastic-apm-agent-1.35.0.jar
       - ./logs/tombola-tomcat:/usr/local/tomcat/logs:rw
     # for elastic beats, see:
     # https://github.com/lhsradek/platypus-lhsdock/blob/main/extras/heartbeat/heartbeat.yml

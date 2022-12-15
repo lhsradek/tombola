@@ -1,6 +1,6 @@
 .env
 certs/
-extras/elastic-agent/elastic-apm-agent-1.34.1.jar
+extras/elastic-agent/elastic-apm-agent-1.35.0.jar
 tombola-aggregator/tombola.war
 tombola-app/target
 tombola-impl/target
