@@ -22,7 +22,7 @@ processors:
       tags: ["${STAGE}"]
       target: "environment"
   - add_tags:
-      tags: ["${APP_HOST}-${APP_ID}"]
+      tags: ["${APP_NICK}-${APP_ID}"]
       target: "app.id"
 
 inputs:
