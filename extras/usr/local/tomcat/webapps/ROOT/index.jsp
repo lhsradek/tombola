@@ -240,7 +240,6 @@ String shortName = serverName.split("\\.", 2)[0];
 boolean isTombola = index.isUrl("http://localhost:8080/tombola/");
 boolean isTombolaJavadoc = index.isUrl("https://" + serverName + "/tombola-javadoc/");
 // boolean isManager = index.isUrl("http://localhost:8080/manager/");
-boolean isDoc = index.isUrl("http://localhost:8080/docs/");
 boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
 boolean isAdminer =  index.isUrl("https://ad." + shortName + "." + serverDomain + ":443", 300);
@@ -294,8 +293,7 @@ StringBuffer env = new StringBuffer();
             <li><a href="https://<%=serverName%>/tomcat.jsp" target="_blank"><%=serverName%></a></li><% if (isTombola) { %>
             <li><a href="https://<%=serverName%>/tombola/" target="_blank"><%=serverName%> - tombola</a></li><% }; if (isTombolaJavadoc) { %>
             <li><a href="https://<%=serverName%>/tombola-javadoc/" target="_blank"><%=serverName%> - tombola-javadoc</a></li><% }; if (isManager) { %>
-            <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isDoc) { %>
-	    <li><a href="https://<%=serverName%>/docs/" target="_blank"><%=serverName%> - documentation</a></li><% }; if (isJSPinfo) { %>
+            <li><a href="https://<%=serverName%>/manager/" target="_blank"><%=serverName%> - manager</a></li><% }; if (isJSPinfo) { %>
 	    <li><a href="https://<%=serverName%>/info.jsp" target="_blank"><%=serverName%> - jspinfo</a></li><% }; if (isAdminer) { %>
 	    <li><a href="https://ad.<%=shortName%>.<%=serverDomain%>" target="_blank">ad.<%=shortName%>.<%=serverDomain%> - adminer</a></li><% } %>
           </ul>
