@@ -18,6 +18,12 @@ processors:
   - add_docker_metadata: ~
   # - add_cloud_metadata: ~
   # - add_kubernetes_metadata: ~
+  - add_tags:
+      tags: ["${STAGE}"]
+      target: "environment"
+  - add_tags:
+      tags: ["${APP_HOST}-${APP_ID}"]
+      target: "app.id"
 
 inputs:
   - type: system/metrics
