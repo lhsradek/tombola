@@ -245,7 +245,7 @@ services:
 #       - "traefik.http.services.webtombola-rc-platypus-${APP_ID}.loadbalancer.server.scheme=http"
 
   postgres:
-    image: postgres:13-alpine
+    image: postgres:14-alpine
     container_name: "${APP_ID}-db"
     hostname: "db.${APP_HOST}"
     # hostname: "db.${INT_NETWORK}"
