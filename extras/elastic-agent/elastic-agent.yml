@@ -17,7 +17,7 @@ agent.monitoring:
 # outputs:
 #   default:
 #     type: elasticsearch
-#     hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+#     hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
 #     username: ${ELASTICSEARCH_USERNAME}
 #     password: ${ELASTICSEARCH_PASSWORD}
 #     # service_token: ${FLEET_SERVER_SERVICE_TOKEN}

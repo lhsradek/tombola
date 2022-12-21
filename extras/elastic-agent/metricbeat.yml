@@ -22,7 +22,7 @@ processors:
       tags: ["${STAGE}"]
       target: "environment"
   - add_tags:
-      tags: ["${APP_NICK}-${APP_ID}"]
+      tags: ["${APP_HOST}-${APP_ID}"]
       target: "app.id"
 
 inputs:
@@ -42,7 +42,7 @@ inputs:
 output:
   # for /metricbeat -e setup --dashboards:
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -67,7 +67,7 @@ setup:
     source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${APP_HOST}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
@@ -78,7 +78,7 @@ setup:
       verification_mode: "${VERIFICATION_MODE}"
 
   kibana:
-    host: "https://kibana.${APP_HOST}.${APP_NET}:5601"
+    host: "https://kibana.${HOST_NICK}.${APP_NET}:5601"
     # api_key: ${AGENT_API_KEY}
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"

@@ -16,7 +16,7 @@ fleet:
 id: "${FLEET_SERVER_POLICY_ID}"
 outputs:
   elasticsearch:
-    hosts: ["https://es01.${APP_ID}.${APP_NET}:9200"]
+    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
