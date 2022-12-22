@@ -142,6 +142,7 @@ services:
     environment:
       - APP_ID=${APP_ID}
       - APP_HOST=${APP_HOST}
+      - APP_NICK=${APP_NICK}
       - HOST_NICK=${HOST_NICK}
       - APP_NET=${APP_NET}
       - LOC_NET=${INT_NETWORK}
