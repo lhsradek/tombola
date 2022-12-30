@@ -279,7 +279,7 @@ JAVA_OPTS="$JAVA_OPTS -Xmx400m" # by lhs
 CATALINA_OPTS="$CATALINA_OPTS -javaagent:/usr/local/tomcat/lib/elastic-apm-agent-1.35.0.jar"
 CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.environment=$ELASTIC_APM_ENVIRONMENT"
 CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.service_name=$ELASTIC_APM_SERVICE_NAME"
-CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.server_urls=$ELASTIC_APM_SERVER_URL"
+CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.server_url=$ELASTIC_APM_SERVER_URL"
 CATALINA_OPTS="$CATALINA_OPTS -Delastic.apm.api_key=$ELASTIC_APM_API_KEY"
 
 # Check for the deprecated LOGGING_CONFIG
