@@ -31,13 +31,14 @@ output:
   # for provisioning:
   logstash:
     enabled: true
-    hosts: ["logstash.${APP_NICK}.${APP_NET}:${LOGSTASH_PORT}"]
+    hosts: ["${LOGSTASH_HOST}"]
     ssl:
+      enabled: false
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-      certificate: "${LOGSTASH_SERVER_CERT}"
-      key: "${LOGSTASH_SERVER_CERT_KEY}"
+      # certificate: "${LOGSTASH_SERVER_CERT}"
+      # key: "${LOGSTASH_SERVER_CERT_KEY}"
       # verification_mode: "${VERIFICATION_MODE}"
-      verification_mode: "none"
+      # verification_mode: "none"
     index: "logs"
    
   # for /filebeat -e setup --dashboards:

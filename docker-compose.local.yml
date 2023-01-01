@@ -174,7 +174,7 @@ services:
       - KIBANA_HOST=${KIBANA_HOST}
       - LOGSTASH_SERVER_CERT=/usr/share/filebeat/certs/${LOGSTASH_CERTNAME}.crt
       - LOGSTASH_SERVER_CERT_KEY=/usr/share/filebeat/certs/${LOGSTASH_CERTNAME}.key
-      - LOGSTASH_PORT=${LOGSTASH_PORT}
+      - LOGSTASH_HOST=${LOGSTASH_HOST}
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
     labels:
