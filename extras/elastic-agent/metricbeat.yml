@@ -64,7 +64,7 @@ setup:
   template.settings:
     index.number_of_shards: 2
     index.codec: "best_compression"
-    source.enabled: false
+    # source.enabled: false
 
   elasticsearch:
     hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]

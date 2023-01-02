@@ -24,8 +24,8 @@ output:
   # for provisioning:
   logstash:
     enabled: true
-    hosts: ["logstash.${HOST_NICK}.${APP_NET}:5044"]
-    timeout: 300s
+    hosts: ["${LOGSTASH_HOST}"]
+    timeout: 20s
     ssl:
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
       certificate: "${LOGSTASH_SERVER_CERT}"
@@ -55,8 +55,8 @@ setup:
   ilm.overwrite: true
   template.settings:
     index.number_of_shards: 1
-    #index.codec: best_compression
-    source.enabled: false
+    index.codec: "best_compression"
+    # source.enabled: false
 
   elasticsearch:
     hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]
