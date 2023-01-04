@@ -54,9 +54,9 @@ output:
 setup:      
   ilm.overwrite: true
   template.settings:
-    index.number_of_shards: 1
+    index.number_of_shards: 4
     index.codec: "best_compression"
-    # source.enabled: false
+    # _source.enabled: false
 
   elasticsearch:
     hosts: ["https://es01.${HOST_NICK}.${APP_NET}:9200"]

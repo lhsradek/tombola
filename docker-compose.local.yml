@@ -4,9 +4,6 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
-  elastic:
-    external: true
-    name: ${ELASTIC_NETWORK}
   # local network:
   intnet:
     external: false
@@ -139,8 +136,6 @@ services:
     hostname: "filebeat.${APP_HOST}"
     networks:
       - default
-      # for local logstash
-      - elastic
       - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
