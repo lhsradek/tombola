@@ -140,7 +140,7 @@ services:
     #   - ${MONITOR_PORT}:5066
     user: root
     volumes:
-      - /:/hostfs:ro
+      - /var/log:/hostfs/var/log:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./extras/filebeat/filebeat:/root/bin
@@ -204,7 +204,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro
-      # - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./extras/metricbeat/metricbeat:/root/bin
