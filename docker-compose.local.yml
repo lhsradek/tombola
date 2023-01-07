@@ -136,13 +136,12 @@ services:
     hostname: "filebeat.${APP_HOST}"
     networks:
       - default
-      - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
     user: root
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
-      - ./certs/:/usr/share/filebeat/certs/
+      - /:/hostfs:ro
+      - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./extras/filebeat/filebeat:/root/bin
       - ./logs/filebeat:/usr/share/filebeat/logs
@@ -200,13 +199,13 @@ services:
       - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
-    user: root
+    # user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      # - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
       # - /:/hostfs:ro
-      - ./certs/:/usr/share/metricbeat/certs/
+      - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./extras/metricbeat/metricbeat:/root/bin
       - ./logs/metricbeat:/usr/share/metricbeat/logs
