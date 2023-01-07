@@ -44,7 +44,7 @@ output:
    
   # for /filebeat -e setup --dashboards:
   # elasticsearch:
-  #   hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES_PORT}"]
+  #   hosts: ["${ELASTIC_HOST}"]
   #   protocol: "https"
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
@@ -64,7 +64,7 @@ setup:
     # _source.enabled: false
 
   elasticsearch:
-    hosts: ["https://es01.${HOST_NICK}.${APP_NET}:${ES_PORT}"]
+    hosts: ["${ELASTIC_HOST}"]
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
