@@ -329,7 +329,7 @@ services:
 #     labels:
 #       - "traefik.enable=true"
 #       - "traefik.docker.network=${DOCKER_NETWORK}"
-# #       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`apm-server.${APP_HOST}`)"
+#       - "traefik.http.routers.webtombola-apm-server-public.rule=Host(`fleet.${APP_HOST}`)"
 #       - "traefik.http.routers.webtombola-apm-server-public.entrypoints=http-${APM_PORT}"
 #       - "traefik.http.routers.webtombola-apm-server-public.tls=false"
 #       - "traefik.http.routers.webtombola-apm-server-public.service=webtombola-apm-server"
