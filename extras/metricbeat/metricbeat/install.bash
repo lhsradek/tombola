@@ -23,5 +23,5 @@ rm -f /usr/share/metricbeat/modules.d/system.yml.disabled
 cp /root/bin/system.yml /usr/share/metricbeat/modules.d/system.yml.disabled
 rm -f /usr/share/metricbeat/modules.d/docker.yml
 rm -f /usr/share/metricbeat/modules.d/docker.yml.disabled
-cp /root/bin/docker.yml /usr/share/metricbeat/modules.d/docker.yml
+cp /root/bin/docker.yml /usr/share/metricbeat/modules.d/docker.yml.disabled
 chown root.root /usr/share/metricbeat/modules.d/*

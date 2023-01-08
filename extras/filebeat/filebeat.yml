@@ -5,8 +5,17 @@ http.port: ${MONITOR_PORT}
 http.host: "0.0.0.0"
 
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
+
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: ["${ELASTIC_HOST}"]
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "${VERIFICATION_MODE}"
 
 filebeat.config:
   modules:

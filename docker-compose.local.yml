@@ -140,7 +140,7 @@ services:
     #   - ${MONITOR_PORT}:5066
     user: root
     volumes:
-      - /var/log:/hostfs/var/log:ro
+      # - /var/log:/hostfs/var/log:ro
       - ./certs:/usr/share/filebeat/certs
       - ./extras/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./extras/filebeat/filebeat:/root/bin
@@ -172,15 +172,15 @@ services:
       - LOGSTASH_HOST=${LOGSTASH_HOST}
       - STAGE=${STAGE}
       - VERIFICATION_MODE=${VERIFICATION_MODE}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=${DOCKER_NETWORK}"
-      - "traefik.http.routers.webtombola-filebeat.rule=Host(`filebeat.${APP_HOST}`)"
-      - "traefik.http.routers.webtombola-filebeat.entrypoints=http-${MONITOR_PORT}"
-      - "traefik.http.routers.webtombola-filebeat.tls=false"
-      - "traefik.http.routers.webtombola-filebeat.service=webtombola-filebeat-${APP_ID}"
-      - "traefik.http.services.webtombola-filebeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
-      - "traefik.http.services.webtombola-filebeat-${APP_ID}.loadbalancer.server.scheme=http"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=${DOCKER_NETWORK}"
+    #   - "traefik.http.routers.webtombola-filebeat.rule=Host(`filebeat.${APP_HOST}`)"
+    #   - "traefik.http.routers.webtombola-filebeat.entrypoints=http-${MONITOR_PORT}"
+    #   - "traefik.http.routers.webtombola-filebeat.tls=false"
+    #   - "traefik.http.routers.webtombola-filebeat.service=webtombola-filebeat-${APP_ID}"
+    #   - "traefik.http.services.webtombola-filebeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}"
+    #   - "traefik.http.services.webtombola-filebeat-${APP_ID}.loadbalancer.server.scheme=http"
 
 #
 # === Metricbeat ===
@@ -200,13 +200,12 @@ services:
       - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
     user: root
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /proc:/hostfs/proc:ro
+      # - /var/run/docker.sock:/var/run/docker.sock
+      # - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      # - /proc:/hostfs/proc:ro
+      # - /:/hostfs:ro
       - ./certs:/usr/share/metricbeat/certs
       - ./extras/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
       - ./extras/metricbeat/metricbeat:/root/bin
@@ -235,15 +234,15 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - STAGE=${STAGE} 
       - VERIFICATION_MODE=${VERIFICATION_MODE} 
-    labels: 
-      - "traefik.enable=true" 
-      - "traefik.docker.network=${DOCKER_NETWORK}" 
-      - "traefik.http.routers.webtombola-metricbeat.rule=Host(`metricbeat.${APP_HOST}`)" 
-      - "traefik.http.routers.webtombola-metricbeat.entrypoints=http-${MONITOR_PORT}" 
-      - "traefik.http.routers.webtombola-metricbeat.tls=false" 
-      - "traefik.http.routers.webtombola-metricbeat.service=webtombola-metricbeat-${APP_ID}" 
-      - "traefik.http.services.webtombola-metricbeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}" 
-      - "traefik.http.services.webtombola-metricbeat-${APP_ID}.loadbalancer.server.scheme=http" 
+    # labels: 
+    #   - "traefik.enable=true" 
+    #   - "traefik.docker.network=${DOCKER_NETWORK}" 
+    #   - "traefik.http.routers.webtombola-metricbeat.rule=Host(`metricbeat.${APP_HOST}`)" 
+    #   - "traefik.http.routers.webtombola-metricbeat.entrypoints=http-${MONITOR_PORT}" 
+    #   - "traefik.http.routers.webtombola-metricbeat.tls=false" 
+    #   - "traefik.http.routers.webtombola-metricbeat.service=webtombola-metricbeat-${APP_ID}" 
+    #   - "traefik.http.services.webtombola-metricbeat-${APP_ID}.loadbalancer.server.port=${MONITOR_PORT}" 
+    #   - "traefik.http.services.webtombola-metricbeat-${APP_ID}.loadbalancer.server.scheme=http" 
  
 #
 # === Elastic Agent as fleet server ===

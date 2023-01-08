@@ -5,19 +5,28 @@ http.port: ${MONITOR_PORT}
 http.host: "0.0.0.0"
 
 monitoring:
-  enabled: false
+  enabled: true
   cluster_uuid: "${CLUSTER_UUID}"
+
+  elasticsearch:
+    username: "${ELASTICSEARCH_USERNAME}"
+    password: "${ELASTICSEARCH_PASSWORD}"
+    hosts: ["${ELASTIC_HOST}"]
+    protocol: "https"
+    ssl.enabled: true
+    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+    ssl.verification_mode: "${VERIFICATION_MODE}"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
   reload.enabled: false
 
 processors:
-  # - add_host_metadata:
-  #     when.not.contains.tags: forwarded
-  # - add_docker_metadata: ~
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_docker_metadata: ~
   # - add_cloud_metadata: ~
-  # - add_kubernetes_metadata: ~
+  - add_kubernetes_metadata: ~
   - add_tags:
       tags: ["${STAGE}"]
       target: "environment"
@@ -30,20 +39,22 @@ instrumentation:
   environment: "${STAGE}"
   hosts: ["${ELASTIC_APM_SERVER_URL}"]
   api_key: "${ELASTIC_APM_API_KEY}"
+ 
+hostPid: true
 
-# inputs:
-#   - type: system/metrics
-#     data_stream.namespace: default
-#     use_output: default
-#     streams:
-#       - metricset: cpu
-#         data_stream.dataset: system.cpu
-#       - metricset: memory
-#         data_stream.dataset: system.memory
-#       - metricset: network
-#         data_stream.dataset: system.network
-#       - metricset: filesystem
-#         data_stream.dataset: system.filesystem
+inputs:
+  - type: system/metrics
+    data_stream.namespace: default
+    use_output: default
+    streams:
+      - metricset: cpu
+        data_stream.dataset: system.cpu
+      - metricset: memory
+        data_stream.dataset: system.memory
+      - metricset: network
+        data_stream.dataset: system.network
+      - metricset: filesystem
+        data_stream.dataset: system.filesystem
 
 output:
   # for /metricbeat -e setup --dashboards:
