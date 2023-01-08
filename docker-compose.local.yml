@@ -199,6 +199,8 @@ services:
       - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
