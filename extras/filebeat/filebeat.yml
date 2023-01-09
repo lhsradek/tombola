@@ -41,7 +41,6 @@ output:
   logstash:
     enabled: true
     hosts: ["${LOGSTASH_HOST}"]
-    timeout: 20s
     ssl:
       enabled: false
       # certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -58,7 +57,6 @@ output:
   #   username: "${ELASTICSEARCH_USERNAME}"
   #   password: "${ELASTICSEARCH_PASSWORD}"
   #   # api_key: "${AGENT_API_KEY}"
-  #   timeout: 20s
   #   ssl:
   #     enabled: true
   #     certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -77,7 +75,6 @@ setup:
     protocol: "https"
     username: "${ELASTICSEARCH_USERNAME}"
     password: "${ELASTICSEARCH_PASSWORD}"
-    timeout: 20s
     ssl:
       enabled: true
       certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
@@ -88,7 +85,6 @@ setup:
     username: '${ELASTICSEARCH_USERNAME}'
     password: '${ELASTICSEARCH_PASSWORD}'
     protocol: "https"
-    timeout: 20s
     ssl:
       enabled: true
       certificate_authorities: ['${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}']
