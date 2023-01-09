@@ -4,6 +4,9 @@ networks:
   default:
     external: true
     name: ${DOCKER_NETWORK}
+  elastic:
+    external: true
+    name: ${ELASTIC_NETWORK}
   # local network:
   intnet:
     external: false
@@ -73,6 +76,8 @@ services:
     networks:
       # for traefik:
       - default
+      # for APM:
+      - elastic
       # local network:
       - intnet
     environment:
@@ -136,6 +141,8 @@ services:
     hostname: "filebeat.${APP_HOST}"
     networks:
       - default
+      # for kibana setup
+      - elastic
     # ports:
     #   - ${MONITOR_PORT}:5066
     user: root
@@ -197,6 +204,8 @@ services:
     hostname: "metricbeat.${APP_HOST}"
     networks:
       - default
+      # for kibana setup
+      - elastic
       - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
@@ -263,6 +272,8 @@ services:
 #     networks:
 #       # for traefik
 #       - default
+#       # for kibana setup
+#       - elastic
 #       # local network:
 #       - intnet
 #     # ports:
