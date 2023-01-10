@@ -140,6 +140,7 @@ services:
     container_name: "${APP_NICK}-${APP_ID}-filebeat"
     hostname: "filebeat.${APP_HOST}"
     networks:
+      # for traefik or logstash
       - default
       # for kibana, elastic and APM
       - elastic
