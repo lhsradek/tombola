@@ -5,17 +5,17 @@ http.port: ${MONITOR_PORT}
 http.host: "0.0.0.0"
 
 monitoring:
-  enabled: true
-  cluster_uuid: "${CLUSTER_UUID}"
-
-  elasticsearch:
-    username: "${ELASTICSEARCH_USERNAME}"
-    password: "${ELASTICSEARCH_PASSWORD}"
-    hosts: ["${ELASTIC_HOST}"]
-    protocol: "https"
-    ssl.enabled: true
-    ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
-    ssl.verification_mode: "${VERIFICATION_MODE}"
+  enabled: false
+  # cluster_uuid: "${CLUSTER_UUID}"
+    
+  # elasticsearch:
+  #   username: "${ELASTICSEARCH_USERNAME}"
+  #   password: "${ELASTICSEARCH_PASSWORD}"
+  #   hosts: ["${ELASTIC_HOST}"]
+  #   protocol: "https"
+  #   ssl.enabled: true
+  #   ssl.certificate_authorities: ["${ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES}"]
+  #   ssl.verification_mode: "${VERIFICATION_MODE}"
 
 metricbeat.config.modules:
   path: ${path.config}/modules.d/*.yml
@@ -69,10 +69,13 @@ output:
       verification_mode: "${VERIFICATION_MODE}"
 
 setup:
-  template.settings:
-    index.number_of_shards: 4
-    index.codec: "best_compression"
-    # _source.enabled: false
+  ilm.overwrite: false
+  template:
+    settings:
+      index.number_of_shards: 2
+      index.number_of_replicas: 1
+      index.codec: best_compression
+      _source.enabled: false
 
   elasticsearch:
     hosts: ["${ELASTIC_HOST}"]
