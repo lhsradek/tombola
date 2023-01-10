@@ -141,7 +141,7 @@ services:
     hostname: "filebeat.${APP_HOST}"
     networks:
       - default
-      # for kibana setup
+      # for kibana, elastic and APM
       - elastic
     # ports:
     #   - ${MONITOR_PORT}:5066
@@ -203,8 +203,9 @@ services:
     container_name: "${APP_NICK}-${APP_ID}-metricbeat"
     hostname: "metricbeat.${APP_HOST}"
     networks:
-      - default
-      # for kibana setup
+      # for traefik
+      # - default
+      # for kibana, elastic and APM
       - elastic
       - intnet
     # ports:
