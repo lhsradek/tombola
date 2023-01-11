@@ -144,6 +144,7 @@ services:
       - default
       # for kibana, elastic and APM
       - elastic
+      - intnet
     # ports:
     #   - ${MONITOR_PORT}:5066
     user: root

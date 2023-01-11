@@ -6,7 +6,7 @@ http.host: "0.0.0.0"
 
 monitoring:
   enabled: false
-  # cluster_uuid: "${CLUSTER_UUID}"
+  cluster_uuid: "${CLUSTER_UUID}"
     
   # elasticsearch:
   #   username: "${ELASTICSEARCH_USERNAME}"
