@@ -239,7 +239,6 @@ String shortName = serverName.split("\\.", 2)[0];
 // boolean isPostgres = index.isSocket("db", 5432);
 boolean isTombola = index.isUrl("http://localhost:8080/tombola/");
 boolean isTombolaJavadoc = index.isUrl("https://" + serverName + "/tombola-javadoc/");
-// boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isManager = index.isUrl("http://localhost:8080/manager/");
 boolean isJSPinfo = index.isUrl("http://localhost:8080/info.jsp");
 boolean isAdminer =  index.isUrl("https://ad." + shortName + "." + serverDomain + ":443", 300);
