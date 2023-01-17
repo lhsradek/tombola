@@ -56,7 +56,7 @@ public class TombolaDbAppender extends DBAppender {
 			} catch (IllegalAccessException e) {
 				// System out is OK here.
 				System.out.println(
-						MessageFormat.format("IndexDbAppender error during fixing message: {0}", e.getMessage()));
+						MessageFormat.format("TombolaDbAppender error during fixing message: {0}", e.getMessage()));
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class TombolaDbAppender extends DBAppender {
 			} catch (IllegalAccessException e) {
 				// System out is OK here.
 				System.out.println(
-						MessageFormat.format("IndexDbAppender error during fixing message: {0}", e.getMessage()));
+						MessageFormat.format("TombolaDbAppender error during fixing message: {0}", e.getMessage()));
 			}
 		}
 	}
