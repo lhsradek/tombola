@@ -156,8 +156,8 @@ public class StatusController {
 	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_PATHWITHINHANDLERMAPPING = "org.springframework.web.servlet.HandlerMapping.pathWithinHandlerMapping";
 	private static final String STATUS_ORG_SPRINGFRAMEWORK_WEB_SERVLET_HANDLERMAPPING_URITEMPLATEVARIABLES = "org.springframework.web.servlet.HandlerMapping.uriTemplateVariables";
 	private static final String STATUS_JAVAX_SERVLET_REQUEST_SSL_SESSION_ID = "javax.servlet.request.ssl_session_id";
-	private static final String STATUS_APPLICATION_CONFIG_PROPERTIES = "applicationConfig: [classpath:/application.properties]";
-	private static final String STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES = "applicationConfig: [classpath:/application-%s.properties]";
+	private static final String STATUS_APPLICATION_CONFIG_PROPERTIES = "Config resource 'class path resource [application.properties]' via location 'optional:classpath:/'";
+	private static final String STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES = "Config resource 'class path resource [application-%s.properties]' via location 'optional:classpath:/'";
 	private static final String STATUS_SERVLET_CONTEXT = "@\\w+";
 	private static final String STATUS_USER_NAME = "username";
 	private static final String STATUS_SECURITY_USER_NAME = "security.user.name";
@@ -299,44 +299,71 @@ public class StatusController {
 	public List<Map.Entry<String, String>> getTombolaProperties() {
 		List<Map.Entry<String, String>> ret = new ArrayList<>();
 		Map<String, String> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
 		String profile = String.join(" ", environment.getActiveProfiles());
+
 		MutablePropertySources mps = ((ConfigurableEnvironment) environment).getPropertySources();
 
-		PropertySource<?> ps = mps.get(STATUS_APPLICATION_CONFIG_PROPERTIES);
-		@SuppressWarnings("unchecked")
-		Map<String, Object> smap = ((Map<String, Object>) ps.getSource());
-		for (Map.Entry<String, Object> e : smap.entrySet()) {
-			if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
-					|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
-					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
-				map.put(e.getKey(), STATUS_PROTECTED);
-			} else {
-				map.put(e.getKey(), e.getValue().toString());
-			}
-		}
+		try {
+			PropertySource<?> ps = mps.get(STATUS_APPLICATION_CONFIG_PROPERTIES);
+			@SuppressWarnings("unchecked")
+			Map<String, Object> smap = ((Map<String, Object>) ps.getSource());
 
-		ps = mps.get(String.format(STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES, profile));
-		@SuppressWarnings("unchecked")
-		Map<String, Object> smap2 = (Map<String, Object>) ps.getSource();
-		for (Map.Entry<String, Object> e : smap2.entrySet()) {
-			if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
-					|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
-					|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
-				map.put(e.getKey(), STATUS_PROTECTED);
-			} else {
-				map.put(e.getKey(), e.getValue().toString());
-			}
-		}
+			// applicationConfig: [classpath:/application.properties]
 
-		for (Map.Entry<String, String> e : map.entrySet()) {
-			if (emptyParams) {
-				ret.add(Map.entry(e.getKey(), e.getValue()));
-			} else {
-				if (e.getValue() != null && e.getValue().length() > 0) {
-					ret.add(Map.entry(e.getKey(), e.getValue()));
+			// OriginTrackedMapPropertySource {name='Config resource 'class path resource
+			// [application.properties]' via location 'optional:classpath:/''}
+			/*
+			 * [ConfigurationPropertySourcesPropertySource {name='configurationProperties'},
+			 * StubPropertySource {name='servletConfigInitParams'},
+			 * ServletContextPropertySource {name='servletContextInitParams'},
+			 * JndiPropertySource {name='jndiProperties'}, PropertiesPropertySource
+			 * {name='systemProperties'}, OriginAwareSystemEnvironmentPropertySource
+			 * {name='systemEnvironment'}, RandomValuePropertySource {name='random'},
+			 * OriginTrackedMapPropertySource { name='Config resource 'class path resource
+			 * [application-default.properties]' via location 'optional:classpath:/''},
+			 * OriginTrackedMapPropertySource { name='Config resource 'class path resource
+			 * [application.properties]' via location 'optional:classpath:/''},
+			 * MapPropertySource {name='prizeConfig: [classpath:/prize.json]'},
+			 * {name='Management Server'}]
+			 */
+
+			for (Map.Entry<String, Object> e : smap.entrySet()) {
+				if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
+						|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
+						|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
+					map.put(e.getKey(), STATUS_PROTECTED);
+				} else {
+					map.put(e.getKey(), e.getValue().toString());
 				}
 			}
+
+			ps = mps.get(String.format(STATUS_APPLICATION_CONFIG_PROFILE_PROPERTIES, profile));
+			@SuppressWarnings("unchecked")
+			Map<String, Object> smap2 = (Map<String, Object>) ps.getSource();
+			for (Map.Entry<String, Object> e : smap2.entrySet()) {
+				if (e.getKey().contains(STATUS_PASSWORD) || e.getKey().contains(STATUS_SECRET)
+						|| e.getKey().contains(STATUS_USER_NAME) || e.getKey().contains(STATUS_SECURITY_USER_NAME)
+						|| e.getKey().startsWith(STATUS_TOMBOLA_SEC)) { // nelíbí
+					map.put(e.getKey(), STATUS_PROTECTED);
+				} else {
+					map.put(e.getKey(), e.getValue().toString());
+				}
+			}
+
+			for (Map.Entry<String, String> e : map.entrySet()) {
+				if (emptyParams) {
+					ret.add(Map.entry(e.getKey(), e.getValue()));
+				} else {
+					if (e.getValue() != null && e.getValue().length() > 0) {
+						ret.add(Map.entry(e.getKey(), e.getValue()));
+					}
+				}
+			}
+		} catch (Exception e) {
+			LOG.debug("{}", e.getMessage());
 		}
+
 		// LOG.debug("{}", ret);
 		return ret;
 	}
