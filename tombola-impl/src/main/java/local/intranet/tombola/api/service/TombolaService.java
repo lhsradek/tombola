@@ -87,16 +87,16 @@ public class TombolaService {
 	 * <p>
 	 * used {@link local.intranet.tombola.api.controller.IndexController#setManager}
 	 * 
-	 * @param Id        {@link Long}
+	 * @param id        {@link Long}
 	 * @param secretKey {@link SecretKey}
 	 * @param iv        {@link IvParameterSpec}
 	 * @return {@link String}
 	 * @throws TombolaException
 	 */
-	public synchronized static String secForManagerSet(Long Id, SecretKey secretKey, IvParameterSpec iv)
+	public synchronized static String secForManagerSet(Long id, SecretKey secretKey, IvParameterSpec iv)
 			throws TombolaException {
 		try {
-			String ret = AESUtil.setHex(AESUtil.encrypt(String.valueOf(Id), secretKey, iv));
+			String ret = AESUtil.setHex(AESUtil.encrypt(String.valueOf(id), secretKey, iv));
 			return ret;
 		} catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
 				| InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
