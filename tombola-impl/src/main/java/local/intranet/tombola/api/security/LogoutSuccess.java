@@ -53,7 +53,6 @@ public class LogoutSuccess extends SimpleUrlLogoutSuccessHandler implements Logo
 					}
 				}
 			}
-			;
 			String username = "";
 			if (authentication != null) {
 				if (authentication.getPrincipal() != null) {
