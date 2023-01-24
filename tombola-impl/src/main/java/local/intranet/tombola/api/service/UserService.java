@@ -111,10 +111,12 @@ public class UserService implements UserDetailsService {
 	 * @throws LockedException           if the user is locked.
 	 * @throws UsernameNotFoundException if the user could not be found or the user
 	 *                                   has no GrantedAuthority
+	 * @throws BadCredentialsException   credentials are invalid
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public UserInfo loadUserByUsername(@NotNull String username) throws LockedException, UsernameNotFoundException {
+	public UserInfo loadUserByUsername(@NotNull String username)
+			throws LockedException, UsernameNotFoundException, BadCredentialsException {
 		UserInfo ret;
 		String ip = statusController.getClientIP();
 		if (loginAttemptService.isBlocked(ip)) {
@@ -134,6 +136,9 @@ public class UserService implements UserDetailsService {
 						.collect(Collectors.toList());
 				ret = UserInfo.build(user, authorities);
 			} else {
+				if (!user.isCredentialsNonExpired()) {
+					throw new BadCredentialsException(IndexController.INDEX_ERROR_BAD_CREDENTIALS);
+				}
 				throw new LockedException(IndexController.INDEX_ERROR_USERNAME_IS_LOCKED);
 			}
 			return ret;

@@ -109,6 +109,12 @@ public class IndexController {
 
 	/**
 	 * 
+	 * INDEX_ERROR_BAD_CREDENTIALS = "Bad credetials!"
+	 */
+	public static final String INDEX_ERROR_BAD_CREDENTIALS = "Bad credetials!";
+
+	/**
+	 * 
 	 * INDEX_ROLE_PREFIX = "ROLE_"
 	 */
 	public static final String INDEX_ROLE_PREFIX = "ROLE_";
