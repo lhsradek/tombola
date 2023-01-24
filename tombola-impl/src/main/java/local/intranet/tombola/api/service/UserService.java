@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -112,11 +113,15 @@ public class UserService implements UserDetailsService {
 	 * @throws UsernameNotFoundException if the user could not be found or the user
 	 *                                   has no GrantedAuthority
 	 * @throws BadCredentialsException   credentials are invalid
+	 * @throws AccountExpiredException   if an authentication request is rejected
+	 *                                   because the account has expired. Makes no
+	 *                                   assertion as to whether or not the
+	 *                                   credentials were valid.
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public UserInfo loadUserByUsername(@NotNull String username)
-			throws LockedException, UsernameNotFoundException, BadCredentialsException {
+			throws LockedException, UsernameNotFoundException, BadCredentialsException, AccountExpiredException {
 		UserInfo ret;
 		String ip = statusController.getClientIP();
 		if (loginAttemptService.isBlocked(ip)) {
@@ -138,6 +143,8 @@ public class UserService implements UserDetailsService {
 			} else {
 				if (!user.isCredentialsNonExpired()) {
 					throw new BadCredentialsException(IndexController.INDEX_ERROR_BAD_CREDENTIALS);
+				} else if (!user.isAccountNonExpired()) {
+					throw new AccountExpiredException(IndexController.INDEX_ERROR_ACCOUNT_EXPIRED);
 				}
 				throw new LockedException(IndexController.INDEX_ERROR_USERNAME_IS_LOCKED);
 			}

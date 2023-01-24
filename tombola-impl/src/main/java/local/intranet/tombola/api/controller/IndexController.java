@@ -37,6 +37,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
@@ -112,6 +113,12 @@ public class IndexController {
 	 * INDEX_ERROR_BAD_CREDENTIALS = "Bad credetials!"
 	 */
 	public static final String INDEX_ERROR_BAD_CREDENTIALS = "Bad credetials!";
+
+	/**
+	 *
+	 * INDEX_ERROR_ACCOUNT_EXPIRED = "Account expired!"
+	 */
+	public static final String INDEX_ERROR_ACCOUNT_EXPIRED = "Account expired!";
 
 	/**
 	 * 
@@ -783,7 +790,8 @@ public class IndexController {
 				}
 				LOG.info("Login username:'{}' redirect:'{}' sessionId:'{}'", username, redirect,
 						request.getSession().getId());
-			} catch (UsernameNotFoundException | BadCredentialsException | LockedException e) {
+			} catch (UsernameNotFoundException | AccountExpiredException | BadCredentialsException
+					| LockedException e) {
 				String ret = "/tombola/login"
 						+ provider.queryProvider(Arrays.asList(Map.entry(INDEX_ERROR, Boolean.TRUE.toString()),
 								Map.entry("exception", e.getClass().getSimpleName())));
