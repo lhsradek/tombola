@@ -29,14 +29,15 @@ import local.intranet.tombola.api.domain.DefaultFieldLengths;
  *
  */
 @Entity
-@Table(name = "tombola_role" /*
-								 * , indexes = { // @Index(name = "tombola_role_pkey", columnList = "id")},
-								 * 
-								 * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
-								 * = "tombola_role_name_uk", columnNames = "role_name")
-								 * 
-								 * @UniqueConstraint(columnNames = { "role_name" }) }
-								 */
+@Table(name = "tombola_role"
+/*
+ * , indexes = { // @Index(name = "tombola_role_pkey", columnList = "id")},
+ * 
+ * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
+ * = "tombola_role_name_uk", columnNames = "role_name")
+ * 
+ * @UniqueConstraint(columnNames = { "role_name" }) }
+ */
 )
 @GenericGenerator(name = "RoleGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
 		@Parameter(name = "sequence_name", value = "ROLE_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),
@@ -96,22 +97,23 @@ public class Role {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tombola_user_role" /*
-											 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList
-											 * = "user_id"),
-											 * 
-											 * @Index(columnList = "user_id"), // @Index(name =
-											 * "tombola_user_role_role_id", columnList = "role_id")
-											 * 
-											 * @Index(columnList = "role_id") }, uniqueConstraints = {
-											 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames =
-											 * {"user_id", "role_id"})},
-											 * 
-											 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
-											 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
-											 * inverseJoinColumns = @JoinColumn(name = "role_id",
-											 * referencedColumnName="id")
-											 */
+	@JoinTable(name = "tombola_user_role"
+
+	/*
+	 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList =
+	 * "user_id"),
+	 * 
+	 * @Index(columnList = "user_id"), // @Index(name = "tombola_user_role_role_id",
+	 * columnList = "role_id")
+	 * 
+	 * @Index(columnList = "role_id") }, uniqueConstraints = {
+	 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames = {"user_id",
+	 * "role_id"})},
+	 * 
+	 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
+	 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
+	 * inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName="id")
+	 */
 	)
 	private Set<User> user = new HashSet<>();
 

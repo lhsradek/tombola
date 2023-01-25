@@ -31,14 +31,15 @@ import local.intranet.tombola.api.security.AESUtil;
  *
  */
 @Entity
-@Table(name = "tombola_user" /*
-								 * , indexes = { // @Index(name = "tombola_user_pkey", columnList = "id")},
-								 * 
-								 * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
-								 * = "tombola_user_name_uk", columnNames = "user_name")}
-								 * 
-								 * @UniqueConstraint(columnNames = { "user_name" }) }
-								 */
+@Table(name = "tombola_user"
+/*
+ * , indexes = { // @Index(name = "tombola_user_pkey", columnList = "id")},
+ * 
+ * @Index(columnList = "id") }, uniqueConstraints = { // @UniqueConstraint(name
+ * = "tombola_user_name_uk", columnNames = "user_name")}
+ * 
+ * @UniqueConstraint(columnNames = { "user_name" }) }
+ */
 )
 @GenericGenerator(name = "UserGenerator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
 		@Parameter(name = "sequence_name", value = "USER_SEQUENCE"), @Parameter(name = "initial_value", value = "1"),

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import local.intranet.tombola.api.domain.DefaultFieldLengths;
 import local.intranet.tombola.api.domain.Nameable;
-import local.intranet.tombola.api.model.entity.Role;
 import local.intranet.tombola.api.service.RoleService;
 
 /**
@@ -42,7 +41,7 @@ public class RoleInfo implements Nameable {
 	 * <p>
 	 * &#64;JsonInclude(JsonInclude.Include.NON_NULL)
 	 * 
-	 * @return {@link List}&lt;{@link Role}&gt;
+	 * @return {@link List}&lt;{@link RolePlain}&gt;
 	 */
 	@Size(min = 0)
 	@JsonInclude(JsonInclude.Include.NON_NULL)
