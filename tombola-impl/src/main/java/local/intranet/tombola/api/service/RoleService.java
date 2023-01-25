@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import local.intranet.tombola.api.info.RoleInfo;
 import local.intranet.tombola.api.info.RolePlain;
-import local.intranet.tombola.api.model.entity.Role;
 import local.intranet.tombola.api.model.repository.RoleRepository;
 
 /**
@@ -36,7 +35,7 @@ public class RoleService {
 	 * 
 	 * Get userRole
 	 * 
-	 * @return {@link List}&lt;{@link Role}&gt;
+	 * @return {@link List}&lt;{@link RolePlain}&gt;
 	 */
 	@Transactional(readOnly = true)
 	protected List<RolePlain> getUsersRoles() {
