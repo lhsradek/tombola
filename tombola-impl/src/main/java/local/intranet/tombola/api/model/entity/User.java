@@ -128,22 +128,23 @@ public class User {
 	private Boolean enabled;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tombola_user_role" /*
-											 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList
-											 * = "user_id"),
-											 * 
-											 * @Index(columnList = "user_id"), // @Index(name =
-											 * "tombola_user_role_role_id", columnList = "role_id")
-											 * 
-											 * @Index(columnList = "role_id") }, uniqueConstraints = {
-											 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames =
-											 * {"user_id", "role_id"})},
-											 * 
-											 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
-											 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
-											 * inverseJoinColumns = @JoinColumn(name = "role_id",
-											 * referencedColumnName="id")
-											 */
+	@JoinTable(name = "tombola_user_role"
+
+	/*
+	 * , /* indexes = { // @Index(name = "tombola_user_role_user_id", columnList =
+	 * "user_id"),
+	 * 
+	 * @Index(columnList = "user_id"), // @Index(name = "tombola_user_role_role_id",
+	 * columnList = "role_id")
+	 * 
+	 * @Index(columnList = "role_id") }, uniqueConstraints = {
+	 * // @UniqueConstraint(name = "tombola_user_role_uk", columnNames = {"user_id",
+	 * "role_id"})},
+	 * 
+	 * @UniqueConstraint(columnNames = {"user_id", "role_id"}) }, joinColumns
+	 * = @JoinColumn(name = "user_id", referencedColumnName="id"),
+	 * inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName="id")
+	 */
 	)
 	private Set<Role> role = new HashSet<>();
 
