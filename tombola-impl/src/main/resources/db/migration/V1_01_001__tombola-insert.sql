@@ -45,8 +45,6 @@ INSERT INTO tombola_user
     
 -- For H2, Postgresql, MariaDB (MySQL)
 
--- new, but we are role and user in redis 
-
 INSERT INTO tombola_user_role (user_id, role_id) (
     SELECT id user_id, (SELECT id FROM tombola_role
     WHERE role_name='adminRole') role_id
