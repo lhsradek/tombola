@@ -80,7 +80,8 @@ public class UserService implements UserDetailsService {
 	 * Bean for logout
 	 * {@link local.intranet.tombola.api.listener.LogoutSuccess#onLogoutSuccess}.
 	 * <p>
-	 * Login is in {@link local.intranet.bttf.api.controller.IndexController#signin}
+	 * Login is in
+	 * {@link local.intranet.tombola.api.controller.IndexController#signin}
 	 * 
 	 * @return {@link LogoutSuccess}
 	 */

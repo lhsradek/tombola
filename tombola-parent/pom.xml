@@ -322,8 +322,8 @@
                     <optional>true</optional>
                 </dependency>
                 <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
                     <version>8.0.32</version>
                 </dependency>
                 <dependency>
@@ -376,8 +376,8 @@
 <!-- Sessions in Spring Boot had problems with drivers for mariadb. This is why I define the secondary data source in the ApplicationConfig -->
             <dependencies>
                 <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
+                    <groupId>com.mysql</groupId>
+                    <artifactId>mysql-connector-j</artifactId>
                     <version>8.0.32</version>
                 </dependency>
                 <dependency>

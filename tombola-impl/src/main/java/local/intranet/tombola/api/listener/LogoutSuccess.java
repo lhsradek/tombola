@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 /**
  * 
  * {@link LogoutSuccess} for
- * {@link local.intranet.tombola.api.security.SecurityConfig#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)}
+ * {@link local.intranet.tombola.api.security.SecurityConfig#configure}
  * <br>
  * https://www.baeldung.com/spring-security-logout
  * 
