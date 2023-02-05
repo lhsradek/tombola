@@ -30,9 +30,6 @@ import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import local.intranet.tombola.InitData;
-import local.intranet.tombola.api.service.TombolaService;
-
 /**
  *
  * {@link ApplicationConfig} for
@@ -63,12 +60,6 @@ public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer
 
 	@Autowired(required = false)
 	private Flyway flyway;
-
-	@Autowired
-	private InitData initData;
-
-	@Autowired
-	private TombolaService tombolaService;
 
 	@Autowired
 	private ServletContext servletContext;
@@ -187,17 +178,6 @@ public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer
 
 	/**
 	 * 
-	 * Make data
-	 * 
-	 * @param tombolaService {@link TombolaService}
-	 */
-	@Autowired
-	public void makeData(TombolaService tombolaService) {
-		initData.makeData(tombolaService);
-	}
-
-	/**
-	 * 
 	 * Get Prizes from classpath:/prize-${spring.profiles.active}.json
 	 * 
 	 * @return {@link List}&lt;{@link Map}&lt;{@link String},{@link Object}&gt;&gt;
@@ -217,7 +197,7 @@ public class ApplicationConfig extends AbstractHttpSessionApplicationInitializer
 	 */
 	public void setPrizes(List<Map<String, Object>> prizes) {
 		this.prizes = prizes;
-		tombolaService.putPrizes(prizes);
+
 	}
 
 }

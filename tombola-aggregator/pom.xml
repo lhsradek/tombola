@@ -10,6 +10,9 @@
     <modules>
         <module>../tombola-parent</module>
         <module>../tombola-impl</module>
+        <!--
+        <module>../tombola-impl-test</module>
+        -->
         <module>../tombola-app</module>
     </modules>
 

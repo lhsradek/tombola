@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.Locale;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -80,7 +81,7 @@ public class AESUtil {
 	public static String decrypt(String cipherText, SecretKey key, IvParameterSpec iv)
 			throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException,
 			InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
-		Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING.toUpperCase());
+		Cipher cipher = Cipher.getInstance(AESUTIL_AES_PADDING.toUpperCase(Locale.US));
 		cipher.init(Cipher.DECRYPT_MODE, key, iv);
 		byte[] ret = cipher.doFinal(Base64.getDecoder().decode(cipherText));
 		return new String(ret);

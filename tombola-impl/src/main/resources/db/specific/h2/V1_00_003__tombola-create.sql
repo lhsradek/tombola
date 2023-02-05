@@ -5,26 +5,34 @@
 
 ----- SEQUENCE hibernate_sequence -----
 
-CREATE SEQUENCE hibernate_sequence MINVALUE 1 START 1;
+CREATE SEQUENCE hibernate_sequence MINVALUE 1;
 
-CREATE SEQUENCE tombola_prize_id_seq MINVALUE 1 START 1;
+----- SEQUENCE revinfo_seq -----
 
-CREATE SEQUENCE tombola_ticket_id_seq MINVALUE 1 START 1;
+CREATE SEQUENCE revinfo_seq MINVALUE 1;
+
+
+----- SEQUENCE tombola_prize_seq -----
+
+CREATE SEQUENCE tombola_prize_seq MINVALUE 1;
+
+
+----- SEQUENCE tombola_ticket_seq -----
+
+CREATE SEQUENCE tombola_ticket_seq MINVALUE 1;
 
 
 ----- TABLE revinfo -----
 
 CREATE TABLE revinfo (
-    rev BIGINT IDENTITY NOT NULL,
-    revtstmp BIGINT,
-    CONSTRAINT primary_key_revinfo PRIMARY KEY (rev)
+    rev BIGINT DEFAULT nextval('revinfo_seq') PRIMARY KEY,
+    revtstmp BIGINT
 );
-
 
 ----- TABLE tombola_prize -----
 
 CREATE TABLE tombola_prize (
-    id BIGINT IDENTITY NOT NULL,
+    id BIGINT DEFAULT nextval('tombola_prize_seq') PRIMARY KEY,
     prize_name VARCHAR(255) NOT NULL,
     cnt INTEGER NOT NULL,
     issued INTEGER NOT NULL,
@@ -32,7 +40,6 @@ CREATE TABLE tombola_prize (
     modified_date BIGINT NOT NULL,
     created_by VARCHAR(255) NOT NULL,
     modified_by VARCHAR(255) NOT NULL,
-    CONSTRAINT primary_key_tombola_prize PRIMARY KEY (id),
     CONSTRAINT tombola_prize_name_uk UNIQUE (prize_name)
 );
 
@@ -65,13 +72,12 @@ CREATE INDEX key_tombola_prize_a_rev ON tombola_prize_a (rev);
 ----- TABLE tombola_ticket -----
 
 CREATE TABLE tombola_ticket (
-    id BIGINT IDENTITY NOT NULL,
+    id BIGINT DEFAULT nextval('tombola_ticket_seq') PRIMARY KEY,
     win BIGINT NULL,
     created_date BIGINT NOT NULL,
     modified_date BIGINT NOT NULL,
     created_by VARCHAR(255) NOT NULL,
-    modified_by VARCHAR(255) NOT NULL,
-    CONSTRAINT primary_key_tombola_ticket PRIMARY KEY (id)
+    modified_by VARCHAR(255) NOT NULL
 );
 CREATE INDEX key_tombola_ticket_win ON tombola_ticket (win);
 
@@ -111,7 +117,7 @@ CREATE INDEX key_tombola_prize_ticket_prize_id ON tombola_prize_ticket (prize_id
 ----- TABLE tombola_role -----
 
 CREATE TABLE tombola_role (
-  id BIGINT IDENTITY NOT NULL,
+  id BIGINT NOT NULL,
   role_name CHARACTER VARYING(255) NOT NULL,
   enabled BOOLEAN,
   CONSTRAINT primary_key_role PRIMARY KEY (id),
@@ -122,7 +128,7 @@ CREATE TABLE tombola_role (
 ----- TABLE tombola_user -----
 
 CREATE TABLE tombola_user (
-  id BIGINT IDENTITY NOT NULL,
+  id BIGINT NOT NULL,
   user_name CHARACTER VARYING(255) NOT NULL,
   password CHARACTER VARYING(255) NOT NULL,
   account_non_expired BOOLEAN,

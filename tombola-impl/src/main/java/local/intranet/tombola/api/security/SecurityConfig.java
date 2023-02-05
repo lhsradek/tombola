@@ -43,6 +43,7 @@ import local.intranet.tombola.api.service.UserService;
  * @author Radek Kádner
  *
  */
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableAutoConfiguration
 @EnableWebSecurity

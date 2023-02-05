@@ -8,7 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * 
- * {@link AuditorAwareImpl} for {@link local.intranet.tombola.TombolaApplication}
+ * {@link AuditorAwareImpl} for
+ * {@link local.intranet.tombola.TombolaApplication}
  * <p>
  * https://www.baeldung.com/database-auditing-jpa
  *
@@ -18,14 +19,19 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 	/**
 	 * 
 	 * Get current auditor
+	 * 
 	 * @return {@link Optional}&lt;{@link String}&gt;
 	 */
-    @Override
-    public Optional<String> getCurrentAuditor() {
-    	Optional<String> ret = Optional.ofNullable(SecurityContextHolder.getContext())
-                .map(e -> e.getAuthentication())
-                .map(Authentication::getName); 
-        return ret;
-    }
+	@Override
+	public Optional<String> getCurrentAuditor() {
+		final Optional<String> ret;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (SecurityContextHolder.getContext().getAuthentication() != null && authentication.isAuthenticated()) {
+			ret = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication().getName());
+		} else {
+			ret = Optional.empty();
+		}
+		return ret;
+	}
 
 }

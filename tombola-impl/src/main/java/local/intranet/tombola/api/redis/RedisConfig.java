@@ -1,5 +1,7 @@
 package local.intranet.tombola.api.redis;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -55,11 +57,13 @@ public class RedisConfig {
 	@Bean
 	public JedisConnectionFactory jedisConnectionFactory() {
 		JedisConnectionFactory ret = new JedisConnectionFactory();
-		ret.getStandaloneConfiguration().setPassword(password);
-		ret.getStandaloneConfiguration().setDatabase(database);
-		ret.getStandaloneConfiguration().setHostName(host);
-		ret.getStandaloneConfiguration().setPort(port);
-		ret.getClientConfiguration().getPoolConfig().get().setMaxWaitMillis(timeout);
+		if (ret.getStandaloneConfiguration() != null) {
+			ret.getStandaloneConfiguration().setPassword(password);
+			ret.getStandaloneConfiguration().setDatabase(database);
+			ret.getStandaloneConfiguration().setHostName(host);
+			ret.getStandaloneConfiguration().setPort(port);
+			ret.getClientConfiguration().getPoolConfig().get().setMaxWait(Duration.ofSeconds(timeout));
+		}
 		return ret;
 	}
 

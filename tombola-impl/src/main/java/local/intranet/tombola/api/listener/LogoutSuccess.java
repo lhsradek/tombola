@@ -1,4 +1,4 @@
-package local.intranet.tombola.api.security;
+package local.intranet.tombola.api.listener;
 
 import java.io.IOException;
 

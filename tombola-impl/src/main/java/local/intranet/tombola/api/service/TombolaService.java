@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -35,20 +36,28 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import local.intranet.tombola.api.config.ApplicationConfig;
 import local.intranet.tombola.api.controller.StatusController;
+import local.intranet.tombola.api.domain.type.RoleType;
 import local.intranet.tombola.api.exception.TombolaException;
+import local.intranet.tombola.api.info.LevelCount;
 import local.intranet.tombola.api.info.PrizeInfo;
 import local.intranet.tombola.api.info.TicketAudit;
 import local.intranet.tombola.api.info.TicketInfo;
 import local.intranet.tombola.api.info.TicketInfoComparator;
 import local.intranet.tombola.api.info.content.Provider;
 import local.intranet.tombola.api.model.entity.Prize;
+import local.intranet.tombola.api.model.entity.Role;
 import local.intranet.tombola.api.model.entity.Ticket;
+import local.intranet.tombola.api.model.entity.User;
 import local.intranet.tombola.api.model.repository.PrizeRepository;
+import local.intranet.tombola.api.model.repository.RoleRepository;
 import local.intranet.tombola.api.model.repository.TicketRepository;
+import local.intranet.tombola.api.model.repository.UserRepository;
 import local.intranet.tombola.api.security.AESUtil;
 
 /**
@@ -66,6 +75,9 @@ public class TombolaService {
 	@Value("${tombola.sec.key}")
 	private String key;
 
+	@Value("${tombola.app.putTicket}")
+	private int putTicket;
+
 	@Autowired
 	private UserService userService;
 
@@ -79,7 +91,23 @@ public class TombolaService {
 	private TicketRepository ticketRepository;
 
 	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private LoggingEventService loggingEventService;
+
+	@Autowired
+	private ApplicationConfig applicationConfig;
+
+	@Autowired
 	private Provider provider;
+
+	private static final String ADMIN_PASSWORD = "243261243034246a77614b5352774e75766e4433596734426849714b2e5856724b5a594c37494543316a5765374e74757867454369554a35726c4e65";
+	private static final String LHS_PASSWORD = "24326124303424655569755352476f2e30737873636f4a3832515878756875656d573634436a7054674f784d5656654b3379586c4f584f6c32684447";
+	private static final String USER_PASSWORD = "243261243034244358565237544c4f3853754a6f695552384d386f572e5259693672486c6b6b4b36724163542e624c4b44716878365a735a306a6d75";
 
 	/**
 	 * 
@@ -102,6 +130,81 @@ public class TombolaService {
 				| InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
 			LOG.error(e.getMessage(), e);
 			throw new TombolaException(e.getMessage());
+		}
+	}
+
+	/**
+	 * 
+	 * Init be executed after injecting this service.
+	 */
+	@PostConstruct
+	public void init() {
+		forJdbc();
+		if (ticketRepository.count() == 0) {
+			putTickets(putTicket);
+		}
+		makePrizeIfNot();
+		makeDataEnd();
+	}
+
+	/**
+	 * 
+	 * makeDataEnd
+	 */
+	@Transactional(readOnly = true)
+	protected void makeDataEnd() {
+		for (CrudRepository<?, Long> r : Arrays.asList(roleRepository, userRepository, prizeRepository,
+				ticketRepository)) {
+			Optional<?> o = r.findById((long) 1);
+			if (!o.isEmpty()) {
+				LOG.debug("MakeData entity:'{}' cnt:{} repository:'{}'",
+						StringUtils.uncapitalize(o.get().getClass().getSimpleName()), r.count(), "jpa");
+			}
+		}
+		for (LevelCount l : loggingEventService.countTotalLoggingEvents()) {
+			LOG.info("MakeData levelString:'{}' total:{}", l.getLevel(), l.getTotal());
+		}
+	}
+
+	/**
+	 * 
+	 * makePrizeInfo
+	 */
+	@Transactional
+	private synchronized void makePrizeIfNot() {
+		if (prizeRepository.count() == 0) {
+			putPrizes(applicationConfig.getPrizes());
+			/*
+			 * ArrayList<Prize> arr = new ArrayList<>(Arrays.asList( new Prize("Zájezd", 1),
+			 * new Prize("Hasící přístroj", 2), new Prize("Telefon", 3), new
+			 * Prize("Pytel brambor", 4), new Prize("Pytel cibule", 5), new Prize("Váza",
+			 * 6), new Prize("Kuchyňské hodiny", 7), new Prize("Outdoorové hodinky", 8), new
+			 * Prize("Sauna", 9), new Prize("Sportovní prádlo", 10), new Prize("Kniha", 12),
+			 * new Prize("Kalendář", 13))); prizeRepository.saveAll(arr);
+			 */
+		}
+	}
+
+	/**
+	 * 
+	 * forJdbc
+	 */
+	@Transactional
+	protected void forJdbc() {
+		if (roleRepository.count() == 0 && userRepository.count() == 0) { // forTestingWithoutFlyware
+			roleRepository.save(new Role(RoleType.ADMIN_ROLE.getRole()));
+			roleRepository.save(new Role(RoleType.MANAGER_ROLE.getRole()));
+			roleRepository.save(new Role(RoleType.USER_ROLE.getRole()));
+			userRepository.save(new User("admin", ADMIN_PASSWORD,
+					new HashSet<Role>(Arrays.asList(roleRepository.findByName(RoleType.ADMIN_ROLE.getRole()),
+							roleRepository.findByName(RoleType.MANAGER_ROLE.getRole()),
+							roleRepository.findByName(RoleType.USER_ROLE.getRole())))));
+			userRepository.save(new User("lhs", LHS_PASSWORD,
+					new HashSet<Role>(Arrays.asList(roleRepository.findByName(RoleType.MANAGER_ROLE.getRole()),
+							roleRepository.findByName(RoleType.USER_ROLE.getRole())))));
+			userRepository.save(new User("user", USER_PASSWORD,
+					new HashSet<Role>(Arrays.asList(roleRepository.findByName(RoleType.USER_ROLE.getRole())))));
+			LOG.debug("MakeData data is saved");
 		}
 	}
 

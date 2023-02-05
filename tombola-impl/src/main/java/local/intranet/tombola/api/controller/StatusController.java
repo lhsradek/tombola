@@ -50,7 +50,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import local.intranet.tombola.InitData;
 import local.intranet.tombola.TombolaApplication;
 import local.intranet.tombola.api.config.ApplicationConfig;
 import local.intranet.tombola.api.config.AuditorAwareImpl;
@@ -63,13 +62,11 @@ import local.intranet.tombola.api.info.TicketInfo;
 import local.intranet.tombola.api.info.content.Provider;
 import local.intranet.tombola.api.listener.AuthenticationFailureListener;
 import local.intranet.tombola.api.listener.AuthenticationSuccessEventListener;
-import local.intranet.tombola.api.listener.EndpointsListener;
 import local.intranet.tombola.api.model.repository.PrizeRepository;
 import local.intranet.tombola.api.model.repository.TicketRepository;
 import local.intranet.tombola.api.redis.RedisConfig;
 import local.intranet.tombola.api.redis.RedisMessagePublisher;
 import local.intranet.tombola.api.redis.RedisMessageSubscriber;
-import local.intranet.tombola.api.security.LogoutSuccess;
 import local.intranet.tombola.api.security.SecurityConfig;
 import local.intranet.tombola.api.service.TombolaService;
 import local.intranet.tombola.api.service.UserService;
@@ -991,10 +988,7 @@ public class StatusController {
 				cl.getSimpleName().startsWith(AuditorAwareImpl.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(AuthenticationSuccessEventListener.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(AuthenticationFailureListener.class.getSimpleName()) ||
-				cl.getSimpleName().startsWith(EndpointsListener.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(Provider.class.getSimpleName()) ||
-				cl.getSimpleName().startsWith(InitData.class.getSimpleName()) ||
-				cl.getSimpleName().startsWith(LogoutSuccess.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(SecurityConfig.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(OpenApiConfig.class.getSimpleName()) ||
 				cl.getSimpleName().startsWith(RedisConfig.class.getSimpleName()) ||

@@ -37,9 +37,9 @@ import local.intranet.tombola.api.controller.IndexController;
 import local.intranet.tombola.api.controller.StatusController;
 import local.intranet.tombola.api.domain.type.RoleType;
 import local.intranet.tombola.api.info.UserInfo;
+import local.intranet.tombola.api.listener.LogoutSuccess;
 import local.intranet.tombola.api.model.entity.User;
 import local.intranet.tombola.api.model.repository.UserRepository;
-import local.intranet.tombola.api.security.LogoutSuccess;
 
 /**
  * 
@@ -78,7 +78,7 @@ public class UserService implements UserDetailsService {
 	/**
 	 * 
 	 * Bean for logout
-	 * {@link local.intranet.bttf.api.security.LogoutSuccess#onLogoutSuccess}.
+	 * {@link local.intranet.tombola.api.listener.LogoutSuccess#onLogoutSuccess}.
 	 * <p>
 	 * Login is in {@link local.intranet.bttf.api.controller.IndexController#signin}
 	 * 
