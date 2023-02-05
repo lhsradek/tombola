@@ -6,11 +6,7 @@
 <body>
   <h1><span>
     <th:block th:if="${headerSoftware}" th:text="${serverSoftware}"/> <strong th:text="${T(org.apache.commons.lang3.StringUtils).capitalize(serverName)}"/>
-    <a href="https://github.com/lhsradek/tombola" target="_blank"><img th:src="@{/res/github.png}" th:width="'30'" th:height="'30'"/></a>
-    <a href="https://www.facebook.com/radek.kadner/" target="_blank"><img th:src="@{/res/facebook.png}" th:width="'15'" th:height="'30'"/></a>
-    <a href="https://www.linkedin.com/in/radekkadner/" target="_blank"><img th:src="@{/res/in.png}" th:width="'30'" th:height="'30'"/></a>
-    <a href="mailto:radek.kadner@gmail.com"><img th:src="@{/res/mail.png}" th:width="'30'" th:height="'30'"/></a></span>
-  </h1>
+    <a th:href="'/'"><img th:src="@{/res/poweredby.png}" th:width="'88px'" th:height="'31px'" th:class="'borderoff'"/></a></span></h1>
   <div th:class="'content'">
     <div th:class="'content-middle'">
       <div th:if="${param.error}" th:class="'top'">
