@@ -138,6 +138,7 @@ public class SecurityConfig {
 	 * @return {@link SecurityFilterChain}
 	 * @throws {@link Exception}
 	 */
+	//@formatter:off
 	@Bean
 	public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests(authorizeRequests -> {
@@ -151,17 +152,24 @@ public class SecurityConfig {
 					authorizeRequests.antMatchers(key).authenticated();
 				}
 			});
-		}).headers().xssProtection().and()
-				.contentSecurityPolicy("script-src 'self'; object-src 'self'; form-action 'self'; style-src 'self'")
-				.and().cacheControl().and().httpStrictTransportSecurity().and().frameOptions().disable().frameOptions()
-				.sameOrigin().and().httpBasic().and().formLogin().loginPage("/login").permitAll()
-				.failureUrl("/login?error=true").and().exceptionHandling().accessDeniedPage("/login?error=403").and()
-				.logout().logoutSuccessHandler(userService.logoutSuccess())
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
-				.invalidateHttpSession(true).deleteCookies("JSESSIONID").and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS).sessionFixation().migrateSession()
-				.maximumSessions(1);
+		}).headers().xssProtection()
+		.and()
+		.contentSecurityPolicy("script-src 'self'; object-src 'self'; form-action 'self'; style-src 'self'")
+		.and().cacheControl()
+		.and().httpStrictTransportSecurity()
+		.and()
+		.frameOptions().disable().frameOptions().sameOrigin()
+		.and().httpBasic()
+		.and().formLogin().loginPage("/login").permitAll()
+		.failureUrl("/login?error=true").and().exceptionHandling().accessDeniedPage("/login?error=403").and()
+		.logout().logoutSuccessHandler(userService.logoutSuccess())
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+		.invalidateHttpSession(true).deleteCookies("JSESSIONID")
+		.and().sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.ALWAYS).sessionFixation().migrateSession()
+		.maximumSessions(1);
 		return http.build();
 	}
+	//@formatter:on
 
 }
