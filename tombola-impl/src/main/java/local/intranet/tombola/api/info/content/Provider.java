@@ -2,7 +2,6 @@ package local.intranet.tombola.api.info.content;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -48,11 +47,9 @@ public class Provider {
 	 */
 	public String queryProvider(List<Map.Entry<String, String>> params) {
 		StringBuilder query = new StringBuilder();
-		AtomicBoolean first = new AtomicBoolean(true);
 		params.forEach(pair -> {
-			if (first.get()) {
+			if (query.length() == 0) {
 				query.append("?");
-				first.set(false);
 			} else {
 				query.append("&");
 			}
