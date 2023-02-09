@@ -46,7 +46,7 @@ public class Provider {
 	 * @return {@link String}
 	 */
 	public String queryProvider(List<Map.Entry<String, String>> params) {
-		StringBuilder query = new StringBuilder();
+		StringBuffer query = new StringBuffer();
 		params.forEach(pair -> {
 			if (query.length() > 0) {
 				query.append("&");
