@@ -52,12 +52,11 @@ public class Provider {
 		params.forEach(pair -> {
 			if (first.get()) {
 				query.append("?");
-				query.append(pair.toString());
 				first.set(false);
 			} else {
 				query.append("&");
-				query.append(pair.toString());
 			}
+			query.append(pair.toString());
 		});
 		return query.toString();
 	}
