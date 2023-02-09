@@ -48,10 +48,10 @@ public class Provider {
 	public String queryProvider(List<Map.Entry<String, String>> params) {
 		StringBuilder query = new StringBuilder();
 		params.forEach(pair -> {
-			if (query.length() == 0) {
-				query.append("?");
-			} else {
+			if (query.length() > 0) {
 				query.append("&");
+			} else {
+				query.append("?");
 			}
 			query.append(pair.toString());
 		});
