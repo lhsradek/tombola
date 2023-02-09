@@ -1,6 +1,7 @@
 .env
 certs/
 extras/elastic-agent/elastic-apm-agent-1.35.0.jar
+extras/usr/local/tomcat/webapps/bttf/WEB-INF/lib/
 tombola-aggregator/tombola.war
 tombola-app/target
 tombola-impl/target
