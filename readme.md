@@ -4,5 +4,5 @@ Tombola for Tomcat and connection to Elasticsearch in [platypus-lhsdock](https:/
 ## Setup
 1) create .env file ```cp .env.dist .env```
 2) run docker ```./bin/start```
-3) stop docker ```./bin/stop`
-4) restart docker ```./bin/restart```
+3) restart docker ```./bin/restart```
+4) stop docker ```./bin/stop`
