@@ -30,7 +30,7 @@
         <code th:if="${logsTotal.size() > 0}"><span>
         <table th:class="'data-table'">
 <thead><tr><th th:class="'left'"><img th:src="@{/res/hibernate.png}" th:width="'12px'" th:height="'13px'" th:class="'borderoff'"/></th>
-<th><big th:utext="'Level &#8681;'"/></big></th>
+<th><big th:utext="'Level &#8681;'"/></th>
 <th><big th:text="'Total'"/></th></tr></thead>
 <tr th:class="${k.level.toLowerCase()}" th:each="k : ${logsTotal}">
 <td><small><strong th:text="${logsTotalCounter.incrementAndGet()}"/></small></td>
@@ -60,10 +60,10 @@
 <td th:class="'right nowrap'"><small><strong th:text="${k.id}"/></small></td>
 <td th:class="'center nowrap'"><small th:text="${#dates.format(k.date, dateFormat)}"/></td>
 <td th:class="'left'"><small th:utext="${k.formattedMessage}"/></td>
-<td th:class="'left'"><small><smaller th:if="${k.arg0 == '[NULL]'}" th:class="'data'" th:text="${k.arg0}"/><strong th:if="${k.arg0 != '[NULL]'}" th:utext="${k.arg0}"/></small></td>
-<td th:class="'left'"><small><smaller th:if="${k.arg1 == '[NULL]'}" th:class="'data'" th:text="${k.arg1}"/><strong th:if="${k.arg1 != '[NULL]'}" th:utext="${k.arg1}"/></small></td>
-<td th:class="'left'"><small><smaller th:if="${k.arg2 == '[NULL]'}" th:class="'data'" th:text="${k.arg2}"/><strong th:if="${k.arg2 != '[NULL]'}" th:utext="${k.arg2}"/></small></td>
-<td th:class="'left'"><small><smaller th:if="${k.arg3 == '[NULL]'}" th:class="'data'" th:text="${k.arg3}"/><strong th:if="${k.arg3 != '[NULL]'}" th:utext="${k.arg3}"/></small></td>
+<td th:class="'left'"><small th:if="${k.arg0 == '[NULL]'}" th:class="'data'" th:text="${k.arg0}"/><strong th:if="${k.arg0 != '[NULL]'}" th:utext="${k.arg0}"/></td>
+<td th:class="'left'"><small th:if="${k.arg1 == '[NULL]'}" th:class="'data'" th:text="${k.arg1}"/><strong th:if="${k.arg1 != '[NULL]'}" th:utext="${k.arg1}"/></td>
+<td th:class="'left'"><small th:if="${k.arg2 == '[NULL]'}" th:class="'data'" th:text="${k.arg2}"/><strong th:if="${k.arg2 != '[NULL]'}" th:utext="${k.arg2}"/></td>
+<td th:class="'left'"><small th:if="${k.arg3 == '[NULL]'}" th:class="'data'" th:text="${k.arg3}"/><strong th:if="${k.arg3 != '[NULL]'}" th:utext="${k.arg3}"/></td>
 <td th:class="'left'"><small th:utext="${k.callerClass}"/><br/><small><strong th:utext="${k.callerMethod}"/></small></td>
 <td th:class="'left'"><small><strong th:text="${k.levelString}"/></small></td>
 </tr></table></span></code>
