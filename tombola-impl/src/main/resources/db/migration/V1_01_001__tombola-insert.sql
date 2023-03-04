@@ -2,14 +2,14 @@
 -- TombolaApplication 3.14.15 Flyway script 
 --
   
------ TABLE tombola_role -----
+-- TABLE tombola_role -----
   
 INSERT INTO tombola_role (id, role_name, enabled) VALUES (1, 'adminRole', true);
 INSERT INTO tombola_role (id, role_name, enabled) VALUES (2, 'managerRole', true);
 INSERT INTO tombola_role (id, role_name, enabled) VALUES (3, 'userRole', true);
 
 
------ TABLE tombola_user -----
+-- TABLE tombola_user -----
   
 INSERT INTO tombola_user
   (id, user_name, password, account_non_expired, account_non_locked, credentials_non_expired, enabled)
@@ -28,7 +28,7 @@ INSERT INTO tombola_user
     true, true, true, true);
 
     
------ TABLE tombola_user_role -----
+-- TABLE tombola_user_role -----
   
     
 -- old
@@ -72,7 +72,7 @@ INSERT INTO tombola_user_role (user_id, role_id) (
 
     
 /*
------ TABLE tombola_prize -----
+-- TABLE tombola_prize -----
 
 INSERT INTO tombola_prize (id, prize_name, cnt, issued, created_date, modified_date, created_by, modified_by)
     VALUES (1, 'Kanec', 1, 0, 0, 0, 'admin', '');
