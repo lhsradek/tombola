@@ -27,7 +27,6 @@
           <small th:if="${userRoles.get('adminRole')}"><a th:href="@{/properties}" th:text="'Properties'"/></small>
           <small th:if="${userRoles.get('managerRole') or userRoles.get('adminRole')}"><a th:href="@{/swagger-ui/}" th:target="'_blank'" th:text="'Swagger'"/></small>
           <small><a th:href="'/tombola-javadoc/'" th:target="'_blank'" th:text="'Tombola API Javadoc'"/></small>
-          </span>
         </span></h5>
       </div>
     </div>
@@ -35,7 +34,7 @@
       <div th:class="'top'">
         <div th:class="'content-column-left'">
           <h5 th:if="${ticketDraft.size() > 0}" th:text="'Tombola'"/>
-          <code th:if="${ticketDraft.size() > 0}"><span><table th:class="'data-table'" th:width="'400px'" th:height:"'200px'">
+          <code th:if="${ticketDraft.size() > 0}"><span><table th:class="'data-table'" th:width="'400px'" th:height="'200px'">
 <thead><tr><th th:width="'7%'" th:class="'left'"><img th:src="@{/res/hibernate.png}" th:width="'12px'" th:height="'13px'" th:class="'borderoff'"/></th>
 <th th:width="'7%'"/>
 <th th:width="'50%'"><big><strong th:text="'Name'"/></big></th>
@@ -46,7 +45,7 @@
 <tr th:each="k : ${ticketDraft}" th:with="ticketId=${T(local.intranet.tombola.api.service.TombolaService).secForManagerSet(k.id, secretKey, secretIv)}">
 <td th:class="'right nowrap'"><strong th:text="${ticketCounter.incrementAndGet()}"/></td>
 <td th:class="'right nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].id}"/></td>
-<td th:class="'left nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].prizeName}"></td>
+<td th:class="'left nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].prizeName}"/></td>
 <td th:class="'right nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].cnt}"/></td>
 <td th:class="'right nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].cnt - prizeAll[prizeAll.size() - k.win].issued}"/></td>
 <td th:if="${prizeAll[prizeAll.size() - k.win].issued == 0}"/><td th:if="${prizeAll[prizeAll.size() - k.win].issued > 0}" th:class="'right nowrap'"><strong th:text="${prizeAll[prizeAll.size() - k.win].issued}"/></td>
@@ -77,7 +76,8 @@
           <th:block th:text="'Ticket Count:' + ${ticketCnt} + ' [' + ${ticketPage + 1} + '/' + ${ticketMax + 1} + ']'"/>
           <span th:if="${ticketPage >= ticketMax}" th:class="'disabled'" th:utext="' &#8680; '"/><a th:if="${ticketPage < ticketMax}" th:utext="' &#8680; '" th:href="@{|/manager/page/${next}|}" th:class="'decorationoff'"/>
           <span th:if="${(ticketPage + 1) >= ticketMax}" th:class="'disabled'" th:utext="' &#8679; '"/><a th:if="${(ticketPage + 1) < ticketMax}" th:utext="' &#8679; '" th:href="@{|/manager/page/${ticketMax}|}" th:class="'decorationoff'"/></span></h5>
-          <code><span><table th:class="'data-table'" th:width="'380px'">
+          <code><span>
+<table th:class="'data-table'" th:width="'380px'">
 <thead><tr><th th:width="'6%'" th:class="'left'"><img th:src="@{/res/hibernate.png}" th:width="'12px'" th:height="'13px'" th:class="'borderoff'"/></th>
 <th th:width="'5%'"><big><strong th:text="'T'"/></big></th>
 <th th:width="'33%'"><big><strong th:text="'Name'"/></big></th>
@@ -85,7 +85,7 @@
 <tr th:each="k : ${ticketAll}">
 <td th:class="'right nowrap'"><strong th:text="${counter.incrementAndGet()}"/></td>
 <td th:class="'right nowrap'"><strong th:text="${k.id}"/></td>
-<td th:if="${k.win == 0}"/><td th:if="${k.win > 0}" th:class="'left'"><strong th:text="${prizeAll[prizeAll.size() - k.win].prizeName}"/>
+<td th:if="${k.win == 0}"/><td th:if="${k.win > 0}" th:class="'left'"><strong th:text="${prizeAll[prizeAll.size() - k.win].prizeName}"/></td>
 <td th:if="${(k.date == null) or (#strings.length(k.date) == 0)}"/><td th:if="${(k.date != null) and (#strings.length(k.date) > 0)}" th:class="'center nowrap'"><th:block th:text="${#dates.format(k.date, dateFormat)}"/></td></tr>
 </table></span></code>
         </div>

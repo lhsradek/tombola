@@ -324,11 +324,14 @@
                 <dependency>
                     <groupId>com.mysql</groupId>
                     <artifactId>mysql-connector-j</artifactId>
-                    <version>8.0.32</version>
                 </dependency>
                 <dependency>
                     <groupId>org.mariadb.jdbc</groupId>
                     <artifactId>mariadb-java-client</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-mysql</artifactId>
                 </dependency>
             </dependencies>
         </profile>
@@ -378,11 +381,14 @@
                 <dependency>
                     <groupId>com.mysql</groupId>
                     <artifactId>mysql-connector-j</artifactId>
-                    <version>8.0.32</version>
                 </dependency>
                 <dependency>
                     <groupId>org.mariadb.jdbc</groupId>
                     <artifactId>mariadb-java-client</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-mysql</artifactId>
                 </dependency>
             </dependencies>
         </profile>
