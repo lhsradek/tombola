@@ -16,7 +16,7 @@ CREATE SEQUENCE tombola_ticket_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036
 ----- TABLE revinfo -----
 
 CREATE TABLE revinfo (
-    rev BIGINT NOT NULL,
+    rev INT NOT NULL,
     revtstmp BIGINT NULL,
     CONSTRAINT revinfo_rev_pkey PRIMARY KEY (rev)
 );
@@ -42,7 +42,7 @@ CREATE TABLE tombola_prize (
 
 CREATE TABLE tombola_prize_a (
     id BIGINT NOT NULL,
-    rev BIGINT REFERENCES revinfo (rev) NOT NULL,
+    rev INT REFERENCES revinfo (rev) NOT NULL,
     revtype SMALLINT NULL,
     prize_name VARCHAR(255) NOT NULL,
     prize_name_m BOOLEAN NULL,
@@ -80,7 +80,7 @@ CREATE TABLE tombola_ticket (
 
 CREATE TABLE tombola_ticket_a (
     id BIGINT NOT NULL,
-    rev BIGINT REFERENCES revinfo (rev) NOT NULL,
+    rev INT REFERENCES revinfo (rev) NOT NULL,
     revtype SMALLINT NULL,
     win BIGINT NULL,
     win_m BOOLEAN NULL,

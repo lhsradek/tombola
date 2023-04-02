@@ -11,7 +11,7 @@ CREATE SEQUENCE hibernate_sequence MINVALUE 1;
 -- TABLE revinfo -----
 
 CREATE TABLE revinfo (
-  rev BIGINT(20) NOT NULL AUTO_INCREMENT,
+  rev INTEGER NOT NULL AUTO_INCREMENT,
   revtstmp BIGINT(20) DEFAULT NULL,
   PRIMARY KEY (rev)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -37,7 +37,7 @@ CREATE TABLE tombola_prize (
 
 CREATE TABLE tombola_prize_a (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    rev BIGINT(20) REFERENCES revinfo (rev),
+    rev INTEGER REFERENCES revinfo (rev),
     revtype TINYINT(4),
     prize_name VARCHAR(255) NOT NULL,
     prize_name_m BIT(1),
@@ -75,7 +75,7 @@ CREATE TABLE tombola_ticket (
 
 CREATE TABLE tombola_ticket_a (
     id BIGINT(20) NOT NULL AUTO_INCREMENT,
-    rev BIGINT(20) REFERENCES revinfo (rev),
+    rev INTEGER REFERENCES revinfo (rev),
     revtype TINYINT(4),
     win BIGINT(20) DEFAULT NULL,
     win_m BIT(1),

@@ -25,7 +25,7 @@ CREATE SEQUENCE tombola_ticket_seq MINVALUE 1;
 ----- TABLE revinfo -----
 
 CREATE TABLE revinfo (
-    rev BIGINT DEFAULT nextval('revinfo_seq') PRIMARY KEY,
+    rev INTEGER DEFAULT nextval('revinfo_seq') PRIMARY KEY,
     revtstmp BIGINT
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE tombola_prize (
 
 CREATE TABLE tombola_prize_a (
     id BIGINT NOT NULL,
-    rev BIGINT REFERENCES revinfo (rev),
+    rev INTEGER REFERENCES revinfo (rev),
     revtype TINYINT,
     prize_name VARCHAR(255) NOT NULL,
     prize_name_m BOOLEAN,
@@ -86,7 +86,7 @@ CREATE INDEX key_tombola_ticket_win ON tombola_ticket (win);
 
 CREATE TABLE tombola_ticket_a (
     id BIGINT NOT NULL,
-    rev BIGINT REFERENCES revinfo (rev),
+    rev INTEGER REFERENCES revinfo (rev),
     revtype TINYINT,
     win BIGINT NULL,
     win_m BOOLEAN,
