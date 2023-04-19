@@ -68,8 +68,8 @@ services:
     # build:
     #   context: ./context
     #   dockerfile: Dockerfile 
-    image: lhsradek/tombola:v1
-    # image: tomcat:9
+    # image: lhsradek/tombola:v1
+    image: tomcat:9
     container_name: "${APP_NICK}-${APP_ID}-tomcat"
     hostname: "tombola.${APP_HOST}"
     restart: ${DOCKER_RESTART_POLICY}
